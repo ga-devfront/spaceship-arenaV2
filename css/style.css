@@ -11,7 +11,8 @@
 html {
     cursor: url("../img/pointeur.png"), default;
     height: 100%;
-    background-image: url("../img/test.jpg");
+    background-image: url("../img/background.png"),
+    radial-gradient(ellipse at 50% 90%, rgba(1,33,50,1) 0%, rgba(116, 179, 180,1) 0%, rgba(1,130,173,1) 40%, rgba(1,33,50,1) 84%, rgba(1,33,50,1) 100%);
 }
 
 body {
@@ -31,8 +32,6 @@ main > header {
     padding-top: 100px;
     position: relative;
     z-index: 98;
-    -webkit-transform: scale(1);
-    transform: scale(1);
     opacity: 0;
 }
 
@@ -138,7 +137,7 @@ button.square {
     bottom: 10%;
     border: solid white 3px;
     border-radius: 35px;
-    background-color: #015b7b;
+    background-color: rgba(0, 26, 36, 0.9);
     z-index: 99;
 }
 
@@ -178,14 +177,14 @@ button.square {
 
 .container.show {
     opacity: 1;
-    -webkit-transition: opacity 0.5s;
-    transition: opacity 0.5s;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
 }
 
 .container.hide {
     opacity: 0;
-    -webkit-transition: opacity 0.5s;
-    transition: opacity 0.5s;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
 }
 
 .container.reverse {
@@ -473,4 +472,81 @@ button.square {
 
 .stats img:first-child {
     margin-left: 5px;
+}
+
+/* map */
+.mapGame {
+    border-spacing: 0px;
+    transform: scale(0.9);
+}
+
+.tbody {
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+}
+
+.baseMap {
+    transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
+    width: 60px;
+    height: 60px;
+    padding: 0;
+
+}
+
+.noSell {
+    padding: 0;
+    transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
+    width: 60px;
+    height: 60px;
+}
+
+.testPlayer {
+    background-image: url(../img/shiptest.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+}
+
+.gameGrid {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    margin: 0;
+}
+
+.cellImg {
+    position: absolute;
+    z-index: 98;
+    top: -15px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 170px;
+}
+
+.shipImg {
+    z-index: 99;
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.obstacleImg {
+    z-index: 99;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 160px;
+}
+
+.opacity02{
+    opacity: 0.25;
 }

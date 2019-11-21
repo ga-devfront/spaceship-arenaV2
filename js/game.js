@@ -1,4 +1,13 @@
+let gameRule = `
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<span></span>
+` /* a faire dans un autre fichier */
 import shipSettings from "./shipsettings.js";
+import Map from "./map.js"
 
 class Game {
 	constructor(container) {
@@ -380,12 +389,16 @@ class Game {
 			alt: "contrôle du son",
 			class: ["nostyle", "marg-lr10"],
 			onclick: () => {
+				let imgsound = (document.querySelector("#sound_volume>img"));
 				if (this.backgroundSound.volume === 0.5) {
 					this.backgroundSound.volume = 0.2;
+					imgsound.src = "img/middlesound.png";
 				} else if (this.backgroundSound.volume === 0.2) {
 					this.backgroundSound.volume = 0;
+					imgsound.src = "img/nosound.png";
 				} else {
 					this.backgroundSound.volume = 0.5;
+					imgsound.src = "img/sound.png";
 				}
 			}
 		});
@@ -487,14 +500,15 @@ class Game {
 
 	step3() {
 		this.fadeOut(this.main);
-		this.main.classList.add("margtopneg50");
-		this.main.classList.remove("margtop100");
-		this.header.classList.add("resizeSmall");
-		this.header.classList.remove("resizeBig");
 		setTimeout(() => {
 			this.supress(this.main);
+			this.header.classList.add("resizeSmall");
+			this.header.classList.remove("resizeBig");
 		}, 500);
 		setTimeout(() => {
+			this.main.classList.add("margtopneg50");
+			this.main.classList.remove("margtop100");
+
 			this.newHtmlElement({
 				element: "div",
 				parent: this.main,
@@ -607,9 +621,11 @@ class Game {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);
+			this.main.classList.add("margtopneg250");
+			this.main.classList.remove("margtopneg15");
 		}, 500);
 		setTimeout(() => {
-
+			let map = new Map(this.main);
 			this.fadeIn(this.main);
 		}, 501);
 
