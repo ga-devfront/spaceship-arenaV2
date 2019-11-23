@@ -3,7 +3,7 @@
     transform: scale(0.9);
 }
 
-.row {
+.tbody {
     transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg);
 }
 

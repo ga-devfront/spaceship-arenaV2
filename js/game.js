@@ -328,9 +328,23 @@ class Game {
 					this.newImg({parent: newDiv, src: this.mapImg, class:["cellImg", "opacity02"]})
 
 				if (this.mapGame.map[x][y] === "x") {
-					this.newImg({parent: newDiv, src: "img/obstacles/greenplanet.png", class:["obstacleImg"]})
+					let randomObstacle = obstacles.all[Math.floor(Math.random()*obstacles.all.length)];
+					let randImg = randomObstacle.sprite[Math.floor(Math.random()*randomObstacle.sprite.length)]
+					this.newImg({parent: newDiv, src: randImg, class:["obstacleImg"]})
 				}
 				if (this.mapGame.map[x][y] === "s0") {
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
+					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+				}
+				if (this.mapGame.map[x][y] === "s1") {
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
+					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+				}
+				if (this.mapGame.map[x][y] === "s2") {
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
+					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+				}
+				if (this.mapGame.map[x][y] === "s3") {
 					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
 					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
 				}

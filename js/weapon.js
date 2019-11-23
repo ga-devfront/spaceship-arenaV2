@@ -1,4 +1,6 @@
 export default {
+
+
     gunSettings: {
         name: "Gun",
         id: "s0",

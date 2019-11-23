@@ -1,18 +1,18 @@
 export default {
-	greenPlanet: {
+	all: [{name : "greenPlanet",
 		sprite: ["img/obstacles/greenplanet.png",
 			"img/obstacles/greenplanet2.png"]
 	},
-	meteor: {
+	{name : "meteor",
 		sprite: ["img/obstacles/meteor.png",
 			"img/obstacles/meteor2.png"]
 	},	
-	solarSpatial: {
+	{name : "solarSpatial",
 		sprite: ["img/obstacles/solar-spatial.png",
 			"img/obstacles/solar-spatial2.png"]
 	},	
-	superNova: {
+	{name : "superNova",
 		sprite: ["img/obstacles/supernova.png",
 			"img/obstacles/supernova2.png"]
-	},
+	}],
 };
