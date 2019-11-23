@@ -1,49 +1,18 @@
 export default {
-/*	GunSettings: {
-		name: "Gun",
-		speed: 0,
-		offensif: 1,
-        defensif: 0,
-        life: 0,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]
+	greenPlanet: {
+		sprite: ["img/obstacles/greenplanet.png",
+			"img/obstacles/greenplanet2.png"]
 	},
-	ReactorSettings: {
-		name: "Reactor",
-		speed: 1,
-		offensif: 0,
-        defensif: 0,
-        life: 0,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]
+	meteor: {
+		sprite: ["img/obstacles/meteor.png",
+			"img/obstacles/meteor2.png"]
+	},	
+	solarSpatial: {
+		sprite: ["img/obstacles/solar-spatial.png",
+			"img/obstacles/solar-spatial2.png"]
+	},	
+	superNova: {
+		sprite: ["img/obstacles/supernova.png",
+			"img/obstacles/supernova2.png"]
 	},
-	ShieldSettings: {
-		name: "Shield",
-		speed: 0,
-		offensif: 0,
-        defensif: 1,
-        life: 0,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]
-	},
-	HealthpackSettings: {
-		name: "Health Pack",
-		speed: 0,
-		offensif: 0,
-        defensif: 0,
-        life: 25,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]*/
 };
