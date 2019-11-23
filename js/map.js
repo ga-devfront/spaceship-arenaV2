@@ -3,8 +3,7 @@ class mapGame {
 	constructor() {
 		this.size = 15;
 		this.obstacles = 15;
-		this.player1pos = undefined;
-		this.player2pos = undefined;
+		this.playersPos = [];
 		this.map = this.newmapGameArray ();
 		this.addObstacle();
 		this.addStuff();
@@ -85,11 +84,8 @@ class mapGame {
 	}
 
 	getPlayerPos(player) {
-		for (let x = 0; x < this.map.length; x++) {
-			let y = this.map[x].indexOf(player.name);
-			if (y != undefined) {return this.map[x][y]}
-		}
-		return undefined;
+		if (this.playerPos[player.uuid] == undefined) {return undefined}
+		else {return this.playerPos[player.uuid]}
 	}
 
 	setPlayerPos(player) {
@@ -98,9 +94,11 @@ class mapGame {
 			let randomX = randomCoord[0];
 			let randomY = randomCoord[1];
 			for (let x = 0; x < 1; x++) {
-			if (this.map[randomX][randomY] == "x" || this.map[randomX][randomY] == "s"+"") {x--}
-			else {this.map[randomX][randomY] = player.name}}
-		} else {}
+			if (typeof this.map[randomX][randomY] == "string" && this.map[randomX][randomY].length < 0) {x--}
+			else {this.map[randomX][randomY] = player.name;
+				this.playerPos[player.uuid] = [randomX, randomY];
+			console.log(this.playerPos)} /*ajouter la joueur a ma variable*/
+		}} else {}
 	}
 
 		/*mouvement autorise*/

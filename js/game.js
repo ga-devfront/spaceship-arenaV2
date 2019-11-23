@@ -313,11 +313,10 @@ class Game {
 		const newTable = document.createElement("table");
 		newTable.classList.add("mapGame");
 		const newTableBody = document.createElement("tbody");
+		newTableBody.setAttribute("id", "myGameMap");
 		newTableBody.classList.add("tbody");
-		console.log(this.mapGame.map.length);
 		for (let x=0; x < this.mapGame.map.length; x++) {
 			var newLine = document.createElement("tr");
-			console.log(this.mapGame.map[x].length);
 			for (let y=0; y < this.mapGame.map[x].length; y++) {
 				var newColumn = document.createElement("td");
 				newLine.appendChild(newColumn);
@@ -356,8 +355,11 @@ class Game {
 	}
 
 	printPlayer(player) {
-		let posPlayer = this.mapGame.getPlayerPos(player);
-		
+		/*let playerPos = this.mapGame.getPlayerPos(player);
+		let line = playerPos[0];
+		let column = playerPos[1];
+		let playerPoss = document.getElementById("myGameMap")[line][column];
+		console.log(posPlayer);*/
 	}
 
 	creatRulesOverlay() {
@@ -751,8 +753,9 @@ class Game {
 			this.printMap ();
 			this.mapGame.setPlayerPos(this.player1);
 			this.mapGame.setPlayerPos(this.player2);
-			this.fadeIn(this.main);
 			console.log(this.mapGame.map);
+			this.printPlayer(this.player1);
+			this.fadeIn(this.main);
 		}, 501);
 	}
 
