@@ -76,12 +76,31 @@ class mapGame {
 	/*joueurs*/
 
 		/*position*/
+	getPlayerOrientation(player) {
+
+	}
+
 	setPlayerOrientation(player) {
 
 	}
 
+	getPlayerPos(player) {
+		for (let x = 0; x < this.map.length; x++) {
+			let y = this.map[x].indexOf(player.name);
+			if (y != undefined) {return this.map[x][y]}
+		}
+		return undefined;
+	}
+
 	setPlayerPos(player) {
-		
+		if (this.getPlayerPos(player) == undefined) {
+			let randomCoord = this.getRandomPos();
+			let randomX = randomCoord[0];
+			let randomY = randomCoord[1];
+			for (let x = 0; x < 1; x++) {
+			if (this.map[randomX][randomY] == "x" || this.map[randomX][randomY] == "s"+"") {x--}
+			else {this.map[randomX][randomY] = player.name}}
+		} else {}
 	}
 
 		/*mouvement autorise*/

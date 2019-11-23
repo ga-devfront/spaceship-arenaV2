@@ -355,6 +355,11 @@ class Game {
 		this.main.appendChild(newTable);
 	}
 
+	printPlayer(player) {
+		let posPlayer = this.mapGame.getPlayerPos(player);
+		
+	}
+
 	creatRulesOverlay() {
 		this.newHtmlElement({
 			element: "div",
@@ -740,11 +745,14 @@ class Game {
 		setTimeout(() => {
 			this.supress(this.main);
 			this.main.classList.add("margtopneg250");
-			this.main.classList.remove("margtopneg15");
+			this.main.classList.remove("margtopneg50");
 		}, 500);
 		setTimeout(() => {
 			this.printMap ();
+			this.mapGame.setPlayerPos(this.player1);
+			this.mapGame.setPlayerPos(this.player2);
 			this.fadeIn(this.main);
+			console.log(this.mapGame.map);
 		}, 501);
 	}
 
