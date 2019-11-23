@@ -309,6 +309,38 @@ class Game {
 		}
 	}
 
+	printMap () {
+		const newTable = document.createElement("table");
+		newTable.classList.add("mapGame");
+		const newTableBody = document.createElement("tbody");
+		newTableBody.classList.add("tbody");
+		console.log(this.mapGame.map.length);
+		for (let x=0; x < this.mapGame.map.length; x++) {
+			var newLine = document.createElement("tr");
+			console.log(this.mapGame.map[x].length);
+			for (let y=0; y < this.mapGame.map[x].length; y++) {
+				var newColumn = document.createElement("td");
+				newLine.appendChild(newColumn);
+				const newDiv = document.createElement("div");
+				newColumn.appendChild(newDiv);
+				newColumn.classList.add("gameGrid");
+					newDiv.classList.add("baseMap");
+					this.newImg({parent: newDiv, src: this.mapImg, class:["cellImg", "opacity02"]})
+
+				if (this.mapGame.map[x][y] === "x") {
+					this.newImg({parent: newDiv, src: "img/obstacles/greenplanet.png", class:["obstacleImg"]})
+				}
+				if (this.mapGame.map[x][y] === "s0") {
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
+					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+				}
+			}
+			newTableBody.appendChild(newLine);
+		}
+		newTable.appendChild(newTableBody);
+		this.main.appendChild(newTable);
+	}
+
 	creatRulesOverlay() {
 		this.newHtmlElement({
 			element: "div",
@@ -359,7 +391,7 @@ class Game {
 		if (this.currentPlayerId == 0) {
 			this.currentPlayerId = 1;
 		} else { this.currentPlayerId = 0}
-	};
+	}
 
 	step0() {
 		this.supressAll();
@@ -697,7 +729,7 @@ class Game {
 			this.main.classList.remove("margtopneg15");
 		}, 500);
 		setTimeout(() => {
-			console.table(this.mapGame.mapGame);
+			this.printMap ();
 			this.fadeIn(this.main);
 		}, 501);
 	}
@@ -921,7 +953,8 @@ class Game {
 			this.main.classList.remove("margtopneg15");
 		}, 500);
 		setTimeout(() => {
-			let map = new Map(this.main);
+			this.printMap();
+			/*this.mapGame*/
 			this.fadeIn(this.main);
 		}, 501);
 

@@ -5,7 +5,7 @@ class mapGame {
 		this.obstacles = 10;
 		this.player1pos = undefined;
 		this.player2pos = undefined;
-		this.mapGame = this.newmapGameArray ();
+		this.map = this.newmapGameArray ();
 		this.addObstacle();
 		this.addStuff();
 	}
@@ -33,8 +33,8 @@ class mapGame {
 			let randomCoord = this.getRandomPos();
 			let randomX = randomCoord[0];
 			let randomY = randomCoord[1];
-			if (this.mapGame[randomX][randomY] == "x") {x--}
-			else {this.mapGame[randomX][randomY] = "x"}
+			if (this.map[randomX][randomY] == "x") {x--}
+			else {this.map[randomX][randomY] = "x"}
 		}
 	}
 	/*equipement*/
@@ -43,11 +43,15 @@ class mapGame {
 			let randomCoord = this.getRandomPos();
 			let randomX = randomCoord[0];
 			let randomY = randomCoord[1];
-			if (this.mapGame[randomX][randomY] == "x" || this.mapGame[randomX][randomY] == "s"+"") {x--}
-			else {this.mapGame[randomX][randomY] = "s"+x}
+			if (this.map[randomX][randomY] == "x" || this.map[randomX][randomY] == "s"+"") {x--}
+			else {this.map[randomX][randomY] = "s"+x}
 		}
 	}
 	/*joueurs*/
+
+	setPlayerOrientation(player) {
+
+	}
 
 	setPlayerPos(player) {
 

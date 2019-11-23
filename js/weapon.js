@@ -1,49 +1,49 @@
 export default {
-/*	GunSettings: {
-		name: "Gun",
+    gunSettings: {
+        name: "Gun",
+        id: "s0",
 		speed: 0,
 		offensif: 1,
         defensif: 0,
         life: 0,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]
+        sprite: ["img/weapons/gun/gunN.png",
+            "img/weapons/gun/gunE.png",
+			"img/weapons/gun/gunS.png",
+			"img/weapons/gun/gunO.png"]
 	},
-	ReactorSettings: {
-		name: "Reactor",
+	reactorSettings: {
+        name: "Reactor",
+        id: "s1",
 		speed: 1,
 		offensif: 0,
         defensif: 0,
         life: 0,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]
+		sprite: ["weapons/gun/gunN.png",
+        "weapons/gun/gunE.png",
+        "weapons/gun/gunS.png",
+        "weapons/gun/gunO.png"]
 	},
-	ShieldSettings: {
-		name: "Shield",
+	shieldSettings: {
+        name: "Shield",
+        id: "s2",
 		speed: 0,
 		offensif: 0,
         defensif: 1,
         life: 0,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]
+		sprite: ["weapons/gun/gunN.png",
+        "weapons/gun/gunE.png",
+        "weapons/gun/gunS.png",
+        "weapons/gun/gunO.png"]
 	},
-	HealthpackSettings: {
-		name: "Health Pack",
+	healthpackSettings: {
+        name: "Health Pack",
+        id: "s3",
 		speed: 0,
 		offensif: 0,
         defensif: 0,
         life: 25,
-		sprite: [{
-			N: "weapons/gun/gunN.png",
-			E: "weapons/gun/gunE.png",
-			S: "weapons/gun/gunS.png",
-			O: "weapons/gun/gunO.png"}]*/
+		sprite: ["weapons/gun/gunN.png",
+        "weapons/gun/gunE.png",
+        "weapons/gun/gunS.png",
+        "weapons/gun/gunO.png"]},
 };

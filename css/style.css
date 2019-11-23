@@ -552,6 +552,14 @@ button.square {
     width: 160px;
 }
 
+.weaponImg {    z-index: 99;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 160px;}
+
 .opacity02{
     opacity: 0.25;
 }
