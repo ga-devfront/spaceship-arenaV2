@@ -1,31 +1,69 @@
-export {Map as default};
-class Map {
-	constructor(container) {
-		if ((typeof container == "undefined") || (container.length == 0)) throw new Error("Merci de préciser un container pour générer la carte");
+export {mapGame as default};
+class mapGame {
+	constructor() {
 		this.size = 15;
 		this.obstacles = 10;
-		this.obstaclesSprites = ["img/meteor.png", "img/meteor2.png", "img/supernova.png", "img/supernova2.png", "img/greenplanet.png", "img/greenplanet2.png", "img/solar-spatial.png", "img/solar-spatial2.png"];
-		this.container = container;
-		this.mapCoord = [];
-		this.mapImg = "img/mapv2.png";
-		this.newMapTable();
-		this.mapObstacle();
+		this.player1pos = undefined;
+		this.player2pos = undefined;
+		this.mapGame = this.newmapGameArray ();
+		this.addObstacle();
+		this.addStuff();
 	}
 
-	newImgMap(settings) {
-		const newEl = document.createElement("img");
-		settings.parent.appendChild(newEl);
-		newEl.setAttribute("src", settings.src);
-		for (let x = 0; settings.class.length > x; x++) {
-			newEl.classList.add(settings.class[x]);
-		};
+    newmapGameArray () {
+        let mapGame = new Array()
+        for (let x = 0; x < this.size; x++) {
+        mapGame[x] = new Array();
+            for (let y = 0; y < this.size; y++) {
+                mapGame[x][y] = "";
+            }
+        }
+    return mapGame
+	}
+	
+	getRandomPos() {
+		let randomLineNumber = Math.floor(Math.random()*this.size);
+		let randomCollumnNumber = Math.floor(Math.random()*this.size);
+		return [randomLineNumber, randomCollumnNumber];
 	}
 
-	newMapTable () {
+	/*obstacle*/
+	addObstacle() {
+		for (let x = 0; x < this.obstacles; x++) {
+			let randomCoord = this.getRandomPos();
+			let randomX = randomCoord[0];
+			let randomY = randomCoord[1];
+			if (this.mapGame[randomX][randomY] == "x") {x--}
+			else {this.mapGame[randomX][randomY] = "x"}
+		}
+	}
+	/*equipement*/
+	addStuff() {
+		for (let x = 0; x < 4; x++) {
+			let randomCoord = this.getRandomPos();
+			let randomX = randomCoord[0];
+			let randomY = randomCoord[1];
+			if (this.mapGame[randomX][randomY] == "x" || this.mapGame[randomX][randomY] == "s"+"") {x--}
+			else {this.mapGame[randomX][randomY] = "s"+x}
+		}
+	}
+	/*joueurs*/
+
+	setPlayerPos(player) {
+
+	}
+
+	checkmove(player) {}
+		/*position*/
+		/*mouvement autorise*/
+
+
+
+	newmapGameTable () {
 		const newTabl = document.createElement("table");
-		newTabl.classList.add("mapGame");
+		/*newTabl.classList.add("mapGameGame");*/
 		const newTablBody = document.createElement("tbody");
-		newTablBody.classList.add("tbody");
+		/*newTablBody.classList.add("tbody");*/
 		for (let x = 0; x < this.size; x++) {
 			var newLine = document.createElement("tr");
 			for (let y = 0; y < this.size; y++) {
@@ -34,38 +72,33 @@ class Map {
 				const newDiv = document.createElement("div");
 				newDiv.setAttribute("data-x", x);
 				newDiv.setAttribute("data-y", y);
-				/*
-					div#map>div[data-x="12"]>div[data-y="20"]{ } CSS
-					$("div#map>div[data-x="12"]>div[data-y="20"]"); jQuery
-					document.querySelector("div#map>div[data-x="12"]>div[data-y="20"]"); Vanilla
-				*/
 				newColumn.appendChild(newDiv);
-				newColumn.classList.add("gameGrid");
-				newDiv.classList.add("baseMap");
-				this.newImgMap({parent: newDiv,
-					src: this.mapImg,
+				/*newColumn.classList.add("gameGrid");
+				newDiv.classList.add("basemapGame");
+				this.newImgmapGame({parent: newDiv,
+					src: this.mapGameImg,
 					class: ["cellImg", "opacity02"]
-				});
+				});*/
 				var newId = {x:x , y:y, cel:newDiv};
-				this.mapCoord.push(newId);
+				this.mapGameCoord.push(newId);
 			};
 			newTablBody.appendChild(newLine);
 		};
 		newTabl.appendChild(newTablBody);
-		this.container.appendChild(newTabl);
+		return newTabl;
 	}
 	
 	testObstacl(allPlage) {
 		for (let w = 0; w < 25; w++) {
 			var currentPlage = allPlage[w];
-			const found = this.mapCoord.find(element => element.x === currentPlage.x && element.y === currentPlage.y);
+			const found = this.mapGameCoord.find(element => element.x === currentPlage.x && element.y === currentPlage.y);
 			if (found.cel.classList.contains("noSell")) {return false}
 		} return true;
 	}
 
-	mapObstacle() {
+	mapGameObstacle() {
 		for (let i = 0; i < this.obstacles; i++) {
-			let random = this.mapCoord[Math.floor(Math.random()*this.mapCoord.length)];
+			let random = this.mapGameCoord[Math.floor(Math.random()*this.mapGameCoord.length)];
 			let xPos2 = random.x + 2;
 			let yPos2 = random.y + 2;
 
@@ -100,13 +133,30 @@ class Map {
 					let Celrandom = random.cel;
 					Celrandom.classList.add("noSell");
 					let obstacleRandom = this.obstaclesSprites[Math.floor(Math.random() * this.obstaclesSprites.length)];
-					this.newImgMap ({
+					this.newImgmapGame ({
 						parent: Celrandom,
 						src: obstacleRandom,
 						class: ["obstacleImg"]
 					});
 				} else { i-- }
 			} else { i--}
+		}
+	}
+
+	mapGameWeapons () {
+		for (let x = 0; x < this.weapon.length; x++) {
+			let mapGameRandom = this.mapGameCoord[Math.floor(Math.random()*this.mapGameCoord.length)];
+			let item = this.weapon[x];
+			if (mapGameRandom.cel.classList.contains("noSell")) {
+				x--
+			} else {
+				let itemOrientation = item.sprite[Math.floor(Math.random()*item.sprite.length)];
+				this.newImgmapGame({
+					parent: mapGameRandom.cel,
+					src: itemOrientation,
+					class: [""]
+				})
+			}
 		}
 	}
 }

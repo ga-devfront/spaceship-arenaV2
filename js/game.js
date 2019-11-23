@@ -7,7 +7,10 @@ let gameRule = `
 	<span></span>
 ` /* a faire dans un autre fichier */
 import shipSettings from "./shipsettings.js";
-import Map from "./map.js"
+import mapGame from "./map.js";
+import Player from "./player.js";
+import weapon from "./weapon.js";
+import obstacles from "./obstacles.js";
 
 class Game {
 	constructor(container) {
@@ -17,8 +20,17 @@ class Game {
 		this.footer = container.getElementsByTagName("footer")[0];
 		this.container = container;
 		this.buttonSound = new Audio("audio/btn.mp3");
-		this.buttonSound.volume = 0.3;
+		this.buttonSound.volume = 0.1;
 		this.backgroundSound = new Audio("audio/pulsation.mp");
+		this.mapGame = new mapGame();
+		this.mapImg = "img/mapv2.png"
+		this.player1 = new Player();
+		this.player2 = new Player();
+		this.players = [this.player1, this.player2];
+		this.currentPlayerId = 0;
+		this.currentPlayer = () => {
+			return this.players[this.currentPlayerId];
+		};
 		this.state = 0;
 	}
 
@@ -49,29 +61,44 @@ class Game {
 			case 1:
 				this.step1();
 				break;
-			case 2:
-				this.step2();
+			case 101:
+				this.step101();
 				break;
-			case 3:
-				this.step3();
+			case 102:
+				this.step102(this.currentPlayer());
 				break;
-			case 4:
-				this.step4();
+			case 103:
+				this.step103();
 				break;
-			case 5:
-				this.step5();
+			case 201:
+				this.step201();
+				break;
+			case 202:
+				this.step202();
+				break;
+			case 203:
+				this.step203();
+				break;
+			case 204:
+				this.step204();
+				break;
+			case 205:
+				this.step205();
 				break;
 			default:
-				this.step0();
+				this.step200();
 		}
 	}
 
-	newImg(emplacement, source, alternative, myClass) {
+	newImg(settings) {
 		const newEl = document.createElement("img"); //creat img
-		newEl.setAttribute("src", source); //set src attribute
-		newEl.setAttribute("alt", alternative); //set alt attritube
-		newEl.classList.add(myClass); //add class
-		emplacement.appendChild(newEl); //push img in dom
+		newEl.setAttribute("src", settings.src); //set src attribute
+		if (typeof settings.alt != "undefined" && settings.alt.length > 0) {
+		newEl.setAttribute("alt", settings.alt);}; //set alt attritube
+		for (let x = 0; settings.class.length > x; x++) {
+			newEl.classList.add(settings.class[x]);
+		};
+		settings.parent.appendChild(newEl); //push img in dom
 	} //function for new image
 
 	newTxt(emplacement, myTxt) {
@@ -79,32 +106,35 @@ class Game {
 		emplacement.appendChild(newTxt);
 	}
 
-	newButton(buttonSettings) {
+	newButton(settings) {
 		const newEl = document.createElement("button"); //creat button
-		newEl.setAttribute("id", buttonSettings.id); //set the id
-		for (let x = 0; buttonSettings.class.length > x; x++) {
-			newEl.classList.add(buttonSettings.class[x]);
+		newEl.setAttribute("id", settings.id); //set the id
+		for (let x = 0; settings.class.length > x; x++) {
+			newEl.classList.add(settings.class[x]);
 		}
-		buttonSettings.parent.appendChild(newEl); //push button in dom
+		settings.parent.appendChild(newEl); //push button in dom
 
-		if (typeof buttonSettings.img != "undefined" && buttonSettings.img.length > 0) {
-			let img = buttonSettings.img;
-			let alt = buttonSettings.alt;
-			let classe = buttonSettings.imgclass;
-			this.newImg(newEl, img, alt, classe);
-			if (typeof buttonSettings.imghover != "undefined" && buttonSettings.imghover.length > 0) {
+		if (typeof settings.img != "undefined" && settings.img.length > 0) {
+			let img = settings.img;
+			let alt = settings.alt;
+			let classe = settings.imgclass;
+			this.newImg({parent: newEl,
+			src: img,
+			alt: alt,
+			class: [classe]});
+			if (typeof settings.imghover != "undefined" && settings.imghover.length > 0) {
 				let imgSelect = newEl.getElementsByTagName("img")[0];
 				newEl.addEventListener("mouseover", function () {
-					imgSelect.src = buttonSettings.imghover;
+					imgSelect.src = settings.imghover;
 				}) //change img in hover and play sound
 				newEl.addEventListener("mouseout", function () {
-					imgSelect.src = buttonSettings.img;
+					imgSelect.src = settings.img;
 				}) //change img in out
 			}
 		};
 
-		if (typeof buttonSettings.txt != "undefined" && buttonSettings.txt.length > 0) {
-			let txt = buttonSettings.txt;
+		if (typeof settings.txt != "undefined" && settings.txt.length > 0) {
+			let txt = settings.txt;
 			this.newTxt(newEl, txt);
 		};
 
@@ -113,20 +143,12 @@ class Game {
 			audio.play();
 		})
 
-		if (typeof buttonSettings.onclick != "undefined") {
+		if (typeof settings.onclick != "undefined") {
 			newEl.addEventListener("click", function () {
-				buttonSettings.onclick();
+				settings.onclick();
 			})
 		};
 	} //function for new button
-
-	newImgMap(emplacement, source, alternative, myClass, myClass2) {
-		const newEl = document.createElement("img"); //creat img
-		newEl.setAttribute("src", source); //set src attribute
-		newEl.setAttribute("alt", alternative); //set alt attritube
-		newEl.classList.add(myClass, myClass2); //add class
-		emplacement.appendChild(newEl); //push img in dom
-	} //function for new image
 
 	newTable(emplacement, numberofLine, numberofColumn, tableID) {
 		const newTable = document.createElement("table");
@@ -207,8 +229,14 @@ class Game {
 		let sprite = settings.ship.shipname + " " + "sprite";
 		let logoimg = settings.ship.logo;
 		let spriteimg = settings.ship.representation;
-		this.newImg(emplacement, logoimg, logo, "none");
-		this.newImg(emplacement, spriteimg, sprite, "shipSelectAnim");
+		this.newImg({parent: emplacement ,
+		src: logoimg ,
+		alt: logo ,
+		class: []});
+		this.newImg({parent: emplacement ,
+			src: spriteimg ,
+			alt: sprite,
+			class: ["shipSelectAnim"]});
 		let description = document.createTextNode(settings.ship.description);
 		emplacement.appendChild(description);
 
@@ -223,11 +251,15 @@ class Game {
 		let speed = document.createTextNode("Speed");
 		speedID.appendChild(speed);
 		for (let i = 0; i < settings.ship.speed; i++) {
-			this.newImg(speedID, "img/power1.png", "none", "none");
+			this.newImg({parent: speedID ,
+				src: "img/power1.png" ,
+				class: []});
 		}
 		let negspeed = 6 - settings.ship.speed;
 		for (let x = 0; x < negspeed; x++) {
-			this.newImg(speedID, "img/power0.png", "none", "none");
+			this.newImg({parent: speedID ,
+				src: "img/power0.png" ,
+				class: []});
 		}
 
 		let offship = settings.ship.abreviation + "off";
@@ -242,11 +274,15 @@ class Game {
 		let off = document.createTextNode("Offensif");
 		offID.appendChild(off);
 		for (let y = 0; y < settings.ship.offensif; y++) {
-			this.newImg(offID, "img/power1.png", "none", "none");
+			this.newImg({parent: offID ,
+				src: "img/power1.png" ,
+				class: []});
 		}
 		let negoff = 6 - settings.ship.offensif;
 		for (let s = 0; s < negoff; s++) {
-			this.newImg(offID, "img/power0.png", "none", "none");
+			this.newImg({parent: offID ,
+				src: "img/power0.png" ,
+				class: []});
 		}
 
 		let defship = settings.ship.abreviation + "def";
@@ -261,16 +297,16 @@ class Game {
 		let def = document.createTextNode("Defensif");
 		defID.appendChild(def);
 		for (let y = 0; y < settings.ship.defensif; y++) {
-			this.newImg(defID, "img/power1.png", "none", "none");
+			this.newImg({parent: defID ,
+				src: "img/power1.png" ,
+				class: []});
 		}
 		let negdef = 6 - settings.ship.defensif;
 		for (let s = 0; s < negdef; s++) {
-			this.newImg(defID, "img/power0.png", "none", "none");
+			this.newImg({parent: defID ,
+				src: "img/power0.png" ,
+				class: []});
 		}
-
-		emplacement.addEventListener("click", () => {
-			this.state = 5;
-		});
 	}
 
 	creatRulesOverlay() {
@@ -319,6 +355,12 @@ class Game {
 		main.appendChild(newTxt);
 	}
 
+	changeCurrentPlayer() {
+		if (this.currentPlayerId == 0) {
+			this.currentPlayerId = 1;
+		} else { this.currentPlayerId = 0}
+	};
+
 	step0() {
 		this.supressAll();
 		this.fadeOutAll();
@@ -330,7 +372,10 @@ class Game {
 			this.backgroundSound.loop = true,
 			this.backgroundSound.volume = 0.5,
 			this.creatRulesOverlay();
-		this.newImg(this.header, "img/logo.png", "logo SpaceShip Arena", "none");
+		this.newImg({parent: this.header,
+		src: "img/logo.png",
+		alt: "logo SpaceShip Arena",
+		class:[]});
 		this.newButton({
 			parent: this.main,
 			id: "start",
@@ -415,13 +460,264 @@ class Game {
 			this.newButton({
 				parent: this.main,
 				id: "creat",
+				img: "img/local.png",
+				imghover: "img/local_hover.png",
+				txt: "Play local",
+				alt: "Play local",
+				class: ["marg-lr10", "square", "big-font"],
+				onclick: () => {
+					this.state = 101;
+				}
+			});
+
+			this.newButton({
+				parent: this.main,
+				id: "join",
+				img: "img/online.png",
+				imghover: "img/online_hover.png",
+				txt: "Play online",
+				alt: "Play online",
+				class: ["marg-lr10", "square", "big-font"],
+				onclick: () => {
+					this.state = 201;
+				}
+			});
+			this.fadeIn(this.main);
+		}, 501);
+
+	}
+
+	step101() {
+		this.fadeOut(this.main);
+		setTimeout(() => {
+			this.supress(this.main);
+		}, 500);
+		setTimeout(() => {
+			this.newHtmlElement({
+				element: "div",
+				parent: this.main,
+				id: "playersName",
+				class: ["container", "centerwrap", "flexColumn"]
+			});
+
+			this.newHtmlElement({
+				element: "div",
+				parent: playersName,
+				id: "titleName",
+				class: ["container", "centerwrap", "big-font"]
+			});
+			this.newTxt(titleName, "Enter players name :");
+			this.newHtmlElement({
+				element: "div",
+				parent: playersName,
+				id: "inputName",
+				class: ["container", "spacearound", "margtop15"]
+			});
+			let player1Input = document.createElement("input");
+			let player2Input = document.createElement("input");
+			player1Input.type = "text";
+			player1Input.id = "inputP1Name";
+			player1Input.name = "Player 1 Name";
+			player1Input.required = true;
+			player1Input.minlength = 4;
+			player1Input.maxlength = 20;
+			player1Input.value = "Player 1";
+			player1Input.classList.add("small", "name", "marg-lr10");
+
+			player2Input.type = "text";
+			player2Input.id = "inputP2Name";
+			player2Input.name = "Player 2 Name";
+			player2Input.required = true;
+			player2Input.minlength = 4;
+			player2Input.maxlength = 20;
+			player2Input.value = "Player 2";
+			player2Input.classList.add("small", "name", "marg-lr10");
+
+			inputName.appendChild(player1Input);
+			inputName.appendChild(player2Input);
+			
+			this.newHtmlElement({
+				element: "div",
+				parent: playersName,
+				id: "submitName",
+				class: ["container", "centerwrap", "margtop15"]
+			});
+
+			this.newButton({
+				parent: submitName,
+				txt: "next",
+				class: ["large"],
+			onclick: () => {
+				let nameP1 = document.getElementById("inputP1Name").value;
+				let nameP2 = document.getElementById("inputP2Name").value;
+				this.player1.name = nameP1;
+				this.player2.name = nameP2;
+				this.state = 102;
+			}
+			});
+
+
+			this.fadeIn(this.main);
+	}, 501);
+	}
+
+	step102 (player) {
+		this.fadeOut(this.main);
+		setTimeout(() => {
+			this.supress(this.main);
+		}, 500);
+		setTimeout(() => {
+			this.main.classList.add("margtopneg50");
+			this.main.classList.remove("margtop100");
+
+			this.header.classList.add("resizeSmall");
+			this.header.classList.remove("resizeBig");
+
+			this.newHtmlElement({
+				element: "div",
+				parent: this.main,
+				id: "shipChoice",
+				class: ["container", "centerwrap", "flexColumn", "width80"]
+			});
+
+			this.newHtmlElement({
+				element: "div",
+				parent: shipChoice,
+				id: "titleShipChoice",
+				class: ["container", "centerwrap", "big-font"]
+			});
+
+			this.newTxt(titleShipChoice, (player.name + " " + "choose your ship"))
+
+
+			this.newHtmlElement({
+				element: "div",
+				parent: shipChoice,
+				id: "tableOfShip",
+				class: ["container", "spacearound", "margtop15"]
+			});
+
+			this.newHtmlElement({
+				element: "div",
+				parent: tableOfShip,
+				id: "shipbb",
+				class: ["container", "spacearound", "selectShip"]
+			});
+
+			this.shipPresentation({
+				parent: shipbb,
+				ship: shipSettings.blackBirdSettings,
+			});
+
+			shipbb.onclick = () => {
+				player.ship = shipSettings.blackBirdSettings;
+				player.speed = shipSettings.blackBirdSettings.speed;
+				player.offensif = shipSettings.blackBirdSettings.offensif;
+				player.defensif = shipSettings.blackBirdSettings.defensif;
+				this.changeCurrentPlayer ();
+				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
+					this.step102(this.currentPlayer())};
+			};
+
+			this.newHtmlElement({
+				element: "div",
+				parent: tableOfShip,
+				id: "shipfc",
+				class: ["container", "spacearound", "selectShip"]
+			});
+
+			this.shipPresentation({
+				parent: shipfc,
+				ship: shipSettings.federalCruserSettings,
+			});
+
+			shipfc.onclick = () => {
+				player.ship = shipSettings.federalCruserSettings;
+				player.speed = shipSettings.federalCruserSettings.speed;
+				player.offensif = shipSettings.federalCruserSettings.offensif;
+				player.defensif = shipSettings.federalCruserSettings.defensif;
+				this.changeCurrentPlayer ();
+				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
+					this.step102(this.currentPlayer())};
+			};
+
+			this.newHtmlElement({
+				element: "div",
+				parent: tableOfShip,
+				id: "shipsf",
+				class: ["container", "spacearound", "selectShip"]
+			});
+
+			this.shipPresentation({
+				parent: shipsf,
+				ship: shipSettings.speedFireSettings,
+			});
+
+			shipsf.onclick = () => {
+				player.ship = shipSettings.speedFireSettings;
+				player.speed = shipSettings.speedFireSettings.speed;
+				player.offensif = shipSettings.speedFireSettings.offensif;
+				player.defensif = shipSettings.speedFireSettings.defensif;
+				this.changeCurrentPlayer ();
+				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
+					this.step102(this.currentPlayer())};
+			};
+
+			this.newHtmlElement({
+				element: "div",
+				parent: tableOfShip,
+				id: "shipst",
+				class: ["container", "spacearound", "selectShip"]
+			});
+
+			this.shipPresentation({
+				parent: shipst,
+				ship: shipSettings.spaceThunderSettings,
+			});
+
+			shipst.onclick = () => {
+				player.ship = shipSettings.spaceThunderSettings;
+				player.speed = shipSettings.spaceThunderSettings.speed;
+				player.offensif = shipSettings.spaceThunderSettings.offensif;
+				player.defensif = shipSettings.spaceThunderSettings.defensif;
+				this.changeCurrentPlayer ();
+				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
+					this.step102(this.currentPlayer())};
+			};
+
+			this.fadeIn(this.main);
+	}, 501);
+	}
+
+	step103 () {
+		this.fadeOut(this.main);
+		setTimeout(() => {
+			this.supress(this.main);
+			this.main.classList.add("margtopneg250");
+			this.main.classList.remove("margtopneg15");
+		}, 500);
+		setTimeout(() => {
+			console.table(this.mapGame.mapGame);
+			this.fadeIn(this.main);
+		}, 501);
+	}
+
+	step201() {
+		this.fadeOut(this.main);
+		setTimeout(() => {
+			this.supress(this.main);
+		}, 500);
+		setTimeout(() => {
+			this.newButton({
+				parent: this.main,
+				id: "creat",
 				img: "img/creatserv.png",
 				imghover: "img/creatserv_hover.png",
 				txt: "Create new Game",
 				alt: "Create new game",
 				class: ["marg-lr10", "square", "big-font"],
 				onclick: () => {
-					this.state = 2;
+					this.state = 202;
 				}
 			});
 
@@ -434,7 +730,7 @@ class Game {
 				alt: "Join game",
 				class: ["marg-lr10", "square", "big-font"],
 				onclick: () => {
-					this.state = 3;
+					this.state = 203;
 				}
 			});
 			this.fadeIn(this.main);
@@ -442,7 +738,7 @@ class Game {
 
 	}
 
-	step2() {
+	step202() {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);
@@ -498,7 +794,7 @@ class Game {
 		}, 501);
 	}
 
-	step3() {
+	step203() {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);
@@ -538,7 +834,7 @@ class Game {
 				let game = document.createTextNode("game number" + i);
 				line.appendChild(game);
 				line.addEventListener("click", () => {
-					this.state = 4;
+					this.state = 204;
 				})
 			};
 
@@ -546,7 +842,7 @@ class Game {
 		}, 501);
 	}
 
-	step4() {
+	step204() {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);
@@ -617,7 +913,7 @@ class Game {
 		}, 501);
 	}
 
-	step5() {
+	step205() {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);

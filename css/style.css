@@ -63,6 +63,13 @@ input {
     color: white;
 }
 
+input.name {
+    border-width: 3px 3px 3px 3px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 35px 35px 35px 35px;
+}
+
 input.inputTxt {
     border-width: 3px 0px 3px 3px;
     border-style: solid;
@@ -224,8 +231,6 @@ button.square {
     right: 205px;
     -webkit-animation: vaisseaux1 1s ease-in-out infinite alternate;
     animation: vaisseaux1 1s ease-in-out infinite alternate;
-    -webkit-filter: drop-shadow(0px 10px 20px black);
-    filter: drop-shadow(0px 10px 20px black);
 }
 
 
