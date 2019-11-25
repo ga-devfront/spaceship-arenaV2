@@ -355,7 +355,7 @@ class Game {
 	}
 
 	printPlayer(player) {
-		let playerPos = this.mapGame.getPlayerPos(player);
+		/*let playerPos = this.mapGame.getPlayerPos(player);
 		let line = playerPos[0];
 		let column = playerPos[1];
 		let map = document.getElementById("myGameMap");
@@ -365,7 +365,7 @@ class Game {
 		console.log("printPpos:", playerPos);
 		console.log("printPpos1:", playerPos[0]);
 		console.log("printPpos2:", playerPos[1]);
-		console.log("cellMap:", cellMap);
+		console.log("cellMap:", cellMap);*/
 	}
 
 	creatRulesOverlay() {
@@ -760,8 +760,8 @@ class Game {
 			for (let x = 0; x < this.players.length; x++) {
 				this.mapGame.setPlayerPos(this.players[x]);
 			};
-			console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player1)));
-			console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player2)));
+			/*console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player1)));
+			console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player2)));*/
 			console.log(this.mapGame.map);
 			this.printPlayer(this.player1);
 			this.fadeIn(this.main);

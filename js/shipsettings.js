@@ -10,16 +10,16 @@ export default {
 		defensif: 3,
 		sprite: [
 		{
-			N: "N1.png",
-			E: "E1.png",
-			S: "S1.png",
-			O: "O1.png",
+			N: "img/ships/sprite/bb/nord1.png",
+			E: "img/ships/sprite/bb/est1.png",
+			S: "img/ships/sprite/bb/sud1.png",
+			W: "img/ships/sprite/bb/west1.png",
 		},
 		{
-			N: "N2.png",
-			E: "E2.png",
-			S: "S2.png",
-			O: "O2.png",
+			N: "img/ships/sprite/bb/nord2.png",
+			E: "img/ships/sprite/bb/est2.png",
+			S: "img/ships/sprite/bb/sud2.png",
+			W: "img/ships/sprite/bb/west2.png",
 		}]
 	},
 	federalCruserSettings: {
@@ -33,22 +33,22 @@ export default {
 		defensif: 5,
 		sprite: [
 			{
-				N: "N1.png",
-				E: "E1.png",
-				S: "S1.png",
-				O: "O1.png",
+				N: "img/ships/sprite/fc/nord1.png",
+				E: "img/ships/sprite/fc/est1.png",
+				S: "img/ships/sprite/fc/sud1.png",
+				W: "img/ships/sprite/fc/west1.png",
 			},
 			{
-				N: "N2.png",
-				E: "E2.png",
-				S: "S2.png",
-				O: "O2.png",
+				N: "img/ships/sprite/fc/nord2.png",
+				E: "img/ships/sprite/fc/est2.png",
+				S: "img/ships/sprite/fc/sud2.png",
+				W: "img/ships/sprite/fc/west2.png",
 			},
 			{
-				N: "N3.png",
-				E: "E3.png",
-				S: "S3.png",
-				O: "O3.png",
+				N: "img/ships/sprite/fc/nord3.png",
+				E: "img/ships/sprite/fc/est3.png",
+				S: "img/ships/sprite/fc/sud3.png",
+				W: "img/ships/sprite/fc/west3.png",
 			}]
 	},
 	speedFireSettings: {
@@ -62,16 +62,16 @@ export default {
 		defensif: 1,
 		sprite: [
 			{
-				N: "N1.png",
-				E: "E1.png",
-				S: "S1.png",
-				O: "O1.png",
+				N: "img/ships/sprite/sf/nord1.png",
+				E: "img/ships/sprite/sf/est1.png",
+				S: "img/ships/sprite/sf/sud1.png",
+				W: "img/ships/sprite/sf/west1.png",
 			},
 			{
-				N: "N2.png",
-				E: "E2.png",
-				S: "S2.png",
-				O: "O2.png",
+				N: "img/ships/sprite/sf/nord2.png",
+				E: "img/ships/sprite/sf/est2.png",
+				S: "img/ships/sprite/sf/sud2.png",
+				W: "img/ships/sprite/sf/west2.png",
 			}]
 	},
 	spaceThunderSettings: {
@@ -85,10 +85,10 @@ export default {
 		defensif: 3,
 		sprite: [
 			{
-				N: "N1.png",
-				E: "E1.png",
-				S: "S1.png",
-				O: "O1.png",
+				N: "img/ships/sprite/st/nord.png",
+				E: "img/ships/sprite/st/est.png",
+				S: "img/ships/sprite/st/sud.png",
+                W: "img/ships/sprite/st/west.png",
 			}]
 	}
 };

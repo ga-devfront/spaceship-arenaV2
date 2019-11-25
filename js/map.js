@@ -4,6 +4,7 @@ class mapGame {
 		this.size = 15;
 		this.obstacles = 15;
 		this.playersPos = [];
+		this.playerPosSquare = [];
 		this.orientation = ["N", "E", "S", "W"];
 		this.playerOrientation = [];
 		this.map = this.newmapGameArray ();
@@ -90,7 +91,7 @@ class mapGame {
 
 	setPlayerOrientation(player) {
 		if (this.getPlayerOrientation(player) == undefined) {
-			let randomOrientation = getRandomOrientation();
+			let randomOrientation = this.getRandomOrientation();
 			this.playerOrientation[player.uuid] = randomOrientation;
 		}
 
@@ -105,20 +106,42 @@ class mapGame {
 	getPlayerSquare (player) {
 		let orientation = this.getPlayerOrientation(player);
 		let length = this.getPlayerLength(player);
+		let square = [];
 		switch(orientation) {
 			case "N" :
-				expression;
+				for (let u = 0; u < length; u++) {
+					let x = 0;
+					let y = 0;
+					y = y - u;
+					square.push([x, y]);
+				}
 				break;
 			case "E" :
-				expresison;
+				for (let u = 0; u < length; u++) {
+					let x = 0;
+					let y = 0;
+					x = x - u;
+					square.push([x, y]);
+				}
 				break;
 			case "S" :
-				expression;
+				for (let u = 0; u < length; u++) {
+					let x = 0;
+					let y = 0;
+					y = y + u;
+					square.push([x, y]);
+				}
 				break;
 			case "W" :
-				expression;
+				for (let u = 0; u < length; u++) {
+					let x = 0;
+					let y = 0;
+					x = x + u;
+					square.push([x, y]);
+				}
 				break;
 		}
+		return square;
 	}
 
 	getPlayerPos(player) {
@@ -126,18 +149,43 @@ class mapGame {
 		 return undefined
 	}
 
+	getPlayerSquarePos(player) {
+
+	}
+
 	setPlayerPos(player) {
 		if (this.getPlayerPos(player) == undefined) {
-			let randomCoord = this.getRandomPos();
-			let randomX = randomCoord[0];
-			let randomY = randomCoord[1];
 			for (let x = 0; x < 1; x++) {
-			if (typeof this.map[randomX][randomY] == "string" && this.map[randomX][randomY].length > 0) {x--}
-			else {this.map[randomX][randomY] = player.name;
-				this.playersPos[player.uuid] = [randomX, randomY];
+				let randomCoord = this.getRandomPos();
+				let randomX = randomCoord[0];
+				let randomY = randomCoord[1];
+				this.setPlayerOrientation(player);
+				console.log(this.playerOrientation);
+				let square = this.getPlayerSquare(player);
+				console.log("square:", square);
+				let squarePosition = [];
+				let verification = 0;
+				for (let s = 0; s < square.length; s++) {
+					let x = randomX + square[s][0];
+					let y = randomY + square[s][1];
+					squarePosition.push([x, y]);
+				}
+				console.log("squareposition:", squarePosition);
+				for (let z = 0; z < squarePosition.length; z++) {
+					if (typeof this.map[squarePosition[z][0]][squarePosition[z][1]] == "string" && this.map[squarePosition[z][0]][squarePosition[z][1]] < 0 )
+					{} if (typeof this.map[squarePosition[z][0]][squarePosition[z][1]] == "string") {verification = verification +1}
+				}
+				if (verification == squarePosition.length) {
+					for (let y = 0; y < squarePosition.length; y++) {
+						this.map[squarePosition[y][0]][squarePosition[y][1]] = player.name;
+					}
+					this.playersPos[player.uuid] = [randomX, randomY];
+				} else {x--}
+
+			/*	else {this.map[randomX][randomY] = player.name;
+					this.playersPos[player.uuid] = [randomX, randomY];*/
 			} /*ajouter la joueur a ma variable*/
-		}} else {}
-	}
+		}}
 
 		/*mouvement autorise*/
 	checkmove(player) {}
