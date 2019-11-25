@@ -8,6 +8,7 @@ class Player  {
 		this.speed = undefined;
 		this.offensif = undefined;
         this.defensif = undefined;
+        this.orientation = undefined;
         this.pv = 100;
         this.weapon = undefined;
     }
