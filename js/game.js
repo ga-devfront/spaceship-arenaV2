@@ -355,17 +355,42 @@ class Game {
 	}
 
 	printPlayer(player) {
-		/*let playerPos = this.mapGame.getPlayerPos(player);
-		let line = playerPos[0];
-		let column = playerPos[1];
+		let length = this.mapGame.getPlayerLength(player);
+		let square = this.mapGame.getPlayerSquarePos(player);
 		let map = document.getElementById("myGameMap");
-		let lineMap = map.getElementsByTagName("tr")[line];
+		for (let x = 0; x < length; x++) {
+			let line = square[x][0];
+			let column = square[x][1];
+			let lineMap = map.getElementsByTagName("tr")[line];
+			let columnMap = lineMap.getElementsByTagName("td")[column];
+			let cellMap = columnMap.getElementsByTagName("div")[0];
+			this.newImg({parent: cellMap,
+			src: player.ship.sprite[x][this.mapGame.getPlayerOrientation(player)],
+			class: ["playerImg"]});
+
+		}
+		/*let lineMap = map.getElementsByTagName("tr")[line];
 		let columnMap = lineMap.getElementsByTagName("td")[column];
-		let cellMap = columnMap.getElementsByTagName("div")[0];
-		console.log("printPpos:", playerPos);
+		let cellMap = columnMap.getElementsByTagName("div")[0];*/
+		/*console.log("printPpos:", playerPos);
 		console.log("printPpos1:", playerPos[0]);
 		console.log("printPpos2:", playerPos[1]);
 		console.log("cellMap:", cellMap);*/
+	}
+
+	testMove(player) {
+		let positions = this.mapGame.checkmove(player);
+		console.log('positions: ', positions);
+		let map = document.getElementById("myGameMap");
+		for (let x = 0; x < positions.length; x++) {
+			let line = positions[x][0];
+			let column = positions[x][1];
+			let lineMap = map.getElementsByTagName("tr")[line];
+			if (lineMap == undefined) {} else {
+			let columnMap = lineMap.getElementsByTagName("td")[column];
+			if (columnMap == undefined) {} else {
+			columnMap.classList.add("moove");}}
+		}
 	}
 
 	creatRulesOverlay() {
@@ -764,6 +789,8 @@ class Game {
 			console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player2)));*/
 			console.log(this.mapGame.map);
 			this.printPlayer(this.player1);
+			this.printPlayer(this.player2);
+			this.testMove(this.player1);
 			this.fadeIn(this.main);
 		}, 501);
 	}
