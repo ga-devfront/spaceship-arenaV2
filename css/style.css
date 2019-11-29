@@ -478,3 +478,16 @@ button.square {
 .stats img:first-child {
     margin-left: 5px;
 }
+
+.overlay {
+        position: fixed;
+        width: 1000px;
+        height: 300px;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 99;
+        border: solid white 3px;
+        border-radius: 35px;
+        background-color: rgba(0, 26, 36, 0.9);
+}

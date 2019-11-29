@@ -94,7 +94,8 @@ class Game {
 		const newEl = document.createElement("img"); //creat img
 		newEl.setAttribute("src", settings.src); //set src attribute
 		if (typeof settings.alt != "undefined" && settings.alt.length > 0) {
-		newEl.setAttribute("alt", settings.alt);}; //set alt attritube
+			newEl.setAttribute("alt", settings.alt);
+		}; //set alt attritube
 		for (let x = 0; settings.class.length > x; x++) {
 			newEl.classList.add(settings.class[x]);
 		};
@@ -118,10 +119,12 @@ class Game {
 			let img = settings.img;
 			let alt = settings.alt;
 			let classe = settings.imgclass;
-			this.newImg({parent: newEl,
-			src: img,
-			alt: alt,
-			class: [classe]});
+			this.newImg({
+				parent: newEl,
+				src: img,
+				alt: alt,
+				class: [classe]
+			});
 			if (typeof settings.imghover != "undefined" && settings.imghover.length > 0) {
 				let imgSelect = newEl.getElementsByTagName("img")[0];
 				newEl.addEventListener("mouseover", function () {
@@ -229,14 +232,18 @@ class Game {
 		let sprite = settings.ship.shipname + " " + "sprite";
 		let logoimg = settings.ship.logo;
 		let spriteimg = settings.ship.representation;
-		this.newImg({parent: emplacement ,
-		src: logoimg ,
-		alt: logo ,
-		class: []});
-		this.newImg({parent: emplacement ,
-			src: spriteimg ,
+		this.newImg({
+			parent: emplacement,
+			src: logoimg,
+			alt: logo,
+			class: []
+		});
+		this.newImg({
+			parent: emplacement,
+			src: spriteimg,
 			alt: sprite,
-			class: ["shipSelectAnim"]});
+			class: ["shipSelectAnim"]
+		});
 		let description = document.createTextNode(settings.ship.description);
 		emplacement.appendChild(description);
 
@@ -251,15 +258,19 @@ class Game {
 		let speed = document.createTextNode("Speed");
 		speedID.appendChild(speed);
 		for (let i = 0; i < settings.ship.speed; i++) {
-			this.newImg({parent: speedID ,
-				src: "img/power1.png" ,
-				class: []});
+			this.newImg({
+				parent: speedID,
+				src: "img/power1.png",
+				class: []
+			});
 		}
 		let negspeed = 6 - settings.ship.speed;
 		for (let x = 0; x < negspeed; x++) {
-			this.newImg({parent: speedID ,
-				src: "img/power0.png" ,
-				class: []});
+			this.newImg({
+				parent: speedID,
+				src: "img/power0.png",
+				class: []
+			});
 		}
 
 		let offship = settings.ship.abreviation + "off";
@@ -274,15 +285,19 @@ class Game {
 		let off = document.createTextNode("Offensif");
 		offID.appendChild(off);
 		for (let y = 0; y < settings.ship.offensif; y++) {
-			this.newImg({parent: offID ,
-				src: "img/power1.png" ,
-				class: []});
+			this.newImg({
+				parent: offID,
+				src: "img/power1.png",
+				class: []
+			});
 		}
 		let negoff = 6 - settings.ship.offensif;
 		for (let s = 0; s < negoff; s++) {
-			this.newImg({parent: offID ,
-				src: "img/power0.png" ,
-				class: []});
+			this.newImg({
+				parent: offID,
+				src: "img/power0.png",
+				class: []
+			});
 		}
 
 		let defship = settings.ship.abreviation + "def";
@@ -297,55 +312,83 @@ class Game {
 		let def = document.createTextNode("Defensif");
 		defID.appendChild(def);
 		for (let y = 0; y < settings.ship.defensif; y++) {
-			this.newImg({parent: defID ,
-				src: "img/power1.png" ,
-				class: []});
+			this.newImg({
+				parent: defID,
+				src: "img/power1.png",
+				class: []
+			});
 		}
 		let negdef = 6 - settings.ship.defensif;
 		for (let s = 0; s < negdef; s++) {
-			this.newImg({parent: defID ,
-				src: "img/power0.png" ,
-				class: []});
+			this.newImg({
+				parent: defID,
+				src: "img/power0.png",
+				class: []
+			});
 		}
 	}
 
-	printMap () {
+	printMap() {
 		const newTable = document.createElement("table");
 		newTable.classList.add("mapGame");
 		const newTableBody = document.createElement("tbody");
 		newTableBody.setAttribute("id", "myGameMap");
 		newTableBody.classList.add("tbody");
-		for (let x=0; x < this.mapGame.map.length; x++) {
+		for (let x = 0; x < this.mapGame.map.length; x++) {
 			var newLine = document.createElement("tr");
-			for (let y=0; y < this.mapGame.map[x].length; y++) {
+			for (let y = 0; y < this.mapGame.map[x].length; y++) {
 				var newColumn = document.createElement("td");
 				newLine.appendChild(newColumn);
 				const newDiv = document.createElement("div");
 				newColumn.appendChild(newDiv);
 				newColumn.classList.add("gameGrid");
-					newDiv.classList.add("baseMap");
-					this.newImg({parent: newDiv, src: this.mapImg, class:["cellImg", "opacity02"]})
+				newDiv.classList.add("baseMap");
+				this.newImg({
+					parent: newDiv,
+					src: this.mapImg,
+					class: ["cellImg", "opacity02"]
+				})
 
 				if (this.mapGame.map[x][y] === "x") {
-					let randomObstacle = obstacles.all[Math.floor(Math.random()*obstacles.all.length)];
-					let randImg = randomObstacle.sprite[Math.floor(Math.random()*randomObstacle.sprite.length)]
-					this.newImg({parent: newDiv, src: randImg, class:["obstacleImg"]})
+					let randomObstacle = obstacles.all[Math.floor(Math.random() * obstacles.all.length)];
+					let randImg = randomObstacle.sprite[Math.floor(Math.random() * randomObstacle.sprite.length)]
+					this.newImg({
+						parent: newDiv,
+						src: randImg,
+						class: ["obstacleImg"]
+					})
 				}
 				if (this.mapGame.map[x][y] === "s0") {
-					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
-					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)]
+					this.newImg({
+						parent: newDiv,
+						src: randomImg,
+						class: ["weaponImg"]
+					})
 				}
 				if (this.mapGame.map[x][y] === "s1") {
-					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
-					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)]
+					this.newImg({
+						parent: newDiv,
+						src: randomImg,
+						class: ["weaponImg"]
+					})
 				}
 				if (this.mapGame.map[x][y] === "s2") {
-					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
-					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)]
+					this.newImg({
+						parent: newDiv,
+						src: randomImg,
+						class: ["weaponImg"]
+					})
 				}
 				if (this.mapGame.map[x][y] === "s3") {
-					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random()*weapon.gunSettings.sprite.length)]
-					this.newImg({parent: newDiv, src: randomImg, class:["weaponImg"]})
+					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)]
+					this.newImg({
+						parent: newDiv,
+						src: randomImg,
+						class: ["weaponImg"]
+					})
 				}
 			}
 			newTableBody.appendChild(newLine);
@@ -357,41 +400,220 @@ class Game {
 	printPlayer(player) {
 		let length = this.mapGame.getPlayerLength(player);
 		let square = this.mapGame.getPlayerSquarePos(player);
+		console.log(square);
 		let map = document.getElementById("myGameMap");
+
 		for (let x = 0; x < length; x++) {
 			let line = square[x][0];
 			let column = square[x][1];
 			let lineMap = map.getElementsByTagName("tr")[line];
 			let columnMap = lineMap.getElementsByTagName("td")[column];
 			let cellMap = columnMap.getElementsByTagName("div")[0];
-			this.newImg({parent: cellMap,
-			src: player.ship.sprite[x][this.mapGame.getPlayerOrientation(player)],
-			class: ["playerImg"]});
+			this.newImg({
+				parent: cellMap,
+				src: player.ship.sprite[x][this.mapGame.getPlayerOrientation(player)],
+				class: ["playerImg"]
+			});
 
 		}
-		/*let lineMap = map.getElementsByTagName("tr")[line];
-		let columnMap = lineMap.getElementsByTagName("td")[column];
-		let cellMap = columnMap.getElementsByTagName("div")[0];*/
-		/*console.log("printPpos:", playerPos);
-		console.log("printPpos1:", playerPos[0]);
-		console.log("printPpos2:", playerPos[1]);
-		console.log("cellMap:", cellMap);*/
 	}
 
-	testMove(player) {
-		let positions = this.mapGame.checkmove(player);
-		console.log('positions: ', positions);
+	supressPlayer(player) {
+		let length = this.mapGame.getPlayerLength(player);
+		let square = this.mapGame.getPlayerSquarePos(player);
 		let map = document.getElementById("myGameMap");
-		for (let x = 0; x < positions.length; x++) {
-			let line = positions[x][0];
-			let column = positions[x][1];
+
+		for (let x = 0; x < length; x++) {
+			let line = square[x][0];
+			let column = square[x][1];
 			let lineMap = map.getElementsByTagName("tr")[line];
-			if (lineMap == undefined) {} else {
 			let columnMap = lineMap.getElementsByTagName("td")[column];
-			if (columnMap == undefined) {} else {
-			columnMap.classList.add("moove");}}
+			let cellMap = columnMap.getElementsByTagName("div")[0];
+			let playerImg = cellMap.getElementsByClassName("playerImg")[0];
+			playerImg.remove();
 		}
 	}
+
+	supressPlayerMooves() {
+		let map = document.getElementById("myGameMap");
+		for (let x = 0; x < this.mapGame.map.length; x++) {
+			for (let y = 0; y < this.mapGame.map[x].length; y++) {
+				let lineMap = map.getElementsByTagName("tr")[x];
+				let columnMap = lineMap.getElementsByTagName("td")[y];
+				if (columnMap.classList.contains("moove")) {
+					columnMap.classList.remove("moove");
+					columnMap.onclick = () => {void(0);};
+				}
+			}
+		}
+	}
+
+	playeTurn(player) {
+		let mapTest = this.mapGame.testmove(player);
+		let map = document.getElementById("myGameMap");
+		let mooveOrientation = undefined;
+		let moovePosition = [];
+		for (let x = 0; x < mapTest.length; x++) {
+			for (let y = 0; y < mapTest[x].length; y++) {
+				if (mapTest[x][y].N === true || mapTest[x][y].S === true || mapTest[x][y].E === true || mapTest[x][y].W === true) {
+					let lineMap = map.getElementsByTagName("tr")[x];
+					let columnMap = lineMap.getElementsByTagName("td")[y];
+					columnMap.classList.add("moove");
+					columnMap.onclick = () => {
+						this.newHtmlElement({
+							parent: this.container,
+							element: "div",
+							id: "orientationChoose",
+							class: ["overlay", "container", "flexColumn"]
+						});
+						this.newHtmlElement({
+							parent: orientationChoose,
+							element: "div",
+							id: "titleOrientation",
+							class: ["container", "centerwrap", "big-font", "margtop15"]
+						});
+						this.newTxt(titleOrientation, "Choose your orientation");
+						this.newHtmlElement({
+							parent: orientationChoose,
+							element: "div",
+							id: "buttonOrientation",
+							class: ["container", "spacearound", "margtop15"]
+						});
+						if (mapTest[x][y].N === true) {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "N",
+								img: "img/arrowN.png",
+								class: ["square"]
+							});
+							N.onclick = () => {
+								mooveOrientation = "N";
+								moovePosition = [x, y];
+								this.supress(orientationChoose);
+								orientationChoose.remove();
+								this.supressPlayer(player);
+								this.supressPlayerMooves();
+								this.mapGame.setPlayerPos({
+									player: player,
+									newPos: moovePosition,
+									newOrientation: mooveOrientation
+								});
+								this.printPlayer(player);
+								this.changeCurrentPlayer();
+								this.playeTurn(this.currentPlayer());
+							};
+						} else {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "N",
+								img: "img/arrowN.png",
+								class: ["square", "opacity02"]
+							});
+						}
+
+						if (mapTest[x][y].S === true) {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "S",
+								img: "img/arrowS.png",
+								class: ["square"]
+							});
+							S.onclick = () => {
+								mooveOrientation = "S";
+								moovePosition = [x, y];
+								this.supress(orientationChoose);
+								orientationChoose.remove();
+								this.supressPlayer(player);
+								this.supressPlayerMooves();
+								this.mapGame.setPlayerPos({
+									player: player,
+									newPos: moovePosition,
+									newOrientation: mooveOrientation
+								});
+								this.printPlayer(player);
+								this.changeCurrentPlayer();
+								this.playeTurn(this.currentPlayer());
+							};
+						} else {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "S",
+								img: "img/arrowS.png",
+								class: ["square", "opacity02"]
+							});
+						}
+
+						if (mapTest[x][y].E === true) {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "E",
+								img: "img/arrowE.png",
+								class: ["square"]
+							});
+							E.onclick = () => {
+								mooveOrientation = "E";
+								moovePosition = [x, y];
+								this.supress(orientationChoose);
+								orientationChoose.remove();
+								this.supressPlayer(player);
+								this.supressPlayerMooves();
+								this.mapGame.setPlayerPos({
+									player: player,
+									newPos: moovePosition,
+									newOrientation: mooveOrientation
+								});
+								this.printPlayer(player);
+								this.changeCurrentPlayer();
+								this.playeTurn(this.currentPlayer());
+							};
+						} else {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "E",
+								img: "img/arrowE.png",
+								class: ["square", "opacity02"]
+							});
+						}
+
+						if (mapTest[x][y].W === true) {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "W",
+								img: "img/arrowW.png",
+								class: ["square"]
+							});
+							W.onclick = () => {
+								mooveOrientation = "W";
+								moovePosition = [x, y];
+								this.supress(orientationChoose);
+								orientationChoose.remove();
+								this.supressPlayer(player);
+								this.supressPlayerMooves();
+								this.mapGame.setPlayerPos({
+									player: player,
+									newPos: moovePosition,
+									newOrientation: mooveOrientation
+								});
+								this.printPlayer(player);
+								this.changeCurrentPlayer();
+								this.playeTurn(this.currentPlayer());
+							};
+						} else {
+							this.newButton({
+								parent: buttonOrientation,
+								id: "W",
+								img: "img/arrowW.png",
+								class: ["square", "opacity02"]
+							});
+						}
+					};
+
+
+				}
+			}
+		}
+	}
+
 
 	creatRulesOverlay() {
 		this.newHtmlElement({
@@ -442,7 +664,9 @@ class Game {
 	changeCurrentPlayer() {
 		if (this.currentPlayerId == 0) {
 			this.currentPlayerId = 1;
-		} else { this.currentPlayerId = 0}
+		} else {
+			this.currentPlayerId = 0
+		}
 	}
 
 	step0() {
@@ -456,10 +680,12 @@ class Game {
 			this.backgroundSound.loop = true,
 			this.backgroundSound.volume = 0.5,
 			this.creatRulesOverlay();
-		this.newImg({parent: this.header,
-		src: "img/logo.png",
-		alt: "logo SpaceShip Arena",
-		class:[]});
+		this.newImg({
+			parent: this.header,
+			src: "img/logo.png",
+			alt: "logo SpaceShip Arena",
+			class: []
+		});
 		this.newButton({
 			parent: this.main,
 			id: "start",
@@ -619,7 +845,7 @@ class Game {
 
 			inputName.appendChild(player1Input);
 			inputName.appendChild(player2Input);
-			
+
 			this.newHtmlElement({
 				element: "div",
 				parent: playersName,
@@ -631,21 +857,21 @@ class Game {
 				parent: submitName,
 				txt: "next",
 				class: ["large"],
-			onclick: () => {
-				let nameP1 = document.getElementById("inputP1Name").value;
-				let nameP2 = document.getElementById("inputP2Name").value;
-				this.player1.name = nameP1;
-				this.player2.name = nameP2;
-				this.state = 102;
-			}
+				onclick: () => {
+					let nameP1 = document.getElementById("inputP1Name").value;
+					let nameP2 = document.getElementById("inputP2Name").value;
+					this.player1.name = nameP1;
+					this.player2.name = nameP2;
+					this.state = 102;
+				}
 			});
 
 
 			this.fadeIn(this.main);
-	}, 501);
+		}, 501);
 	}
 
-	step102 (player) {
+	step102(player) {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);
@@ -698,9 +924,12 @@ class Game {
 				player.speed = shipSettings.blackBirdSettings.speed;
 				player.offensif = shipSettings.blackBirdSettings.offensif;
 				player.defensif = shipSettings.blackBirdSettings.defensif;
-				this.changeCurrentPlayer ();
-				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
-					this.step102(this.currentPlayer())};
+				this.changeCurrentPlayer();
+				if (this.currentPlayer().ship != undefined) {
+					this.state = 103
+				} else {
+					this.step102(this.currentPlayer())
+				};
 			};
 
 			this.newHtmlElement({
@@ -720,9 +949,12 @@ class Game {
 				player.speed = shipSettings.federalCruserSettings.speed;
 				player.offensif = shipSettings.federalCruserSettings.offensif;
 				player.defensif = shipSettings.federalCruserSettings.defensif;
-				this.changeCurrentPlayer ();
-				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
-					this.step102(this.currentPlayer())};
+				this.changeCurrentPlayer();
+				if (this.currentPlayer().ship != undefined) {
+					this.state = 103
+				} else {
+					this.step102(this.currentPlayer())
+				};
 			};
 
 			this.newHtmlElement({
@@ -742,9 +974,12 @@ class Game {
 				player.speed = shipSettings.speedFireSettings.speed;
 				player.offensif = shipSettings.speedFireSettings.offensif;
 				player.defensif = shipSettings.speedFireSettings.defensif;
-				this.changeCurrentPlayer ();
-				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
-					this.step102(this.currentPlayer())};
+				this.changeCurrentPlayer();
+				if (this.currentPlayer().ship != undefined) {
+					this.state = 103
+				} else {
+					this.step102(this.currentPlayer())
+				};
 			};
 
 			this.newHtmlElement({
@@ -764,16 +999,19 @@ class Game {
 				player.speed = shipSettings.spaceThunderSettings.speed;
 				player.offensif = shipSettings.spaceThunderSettings.offensif;
 				player.defensif = shipSettings.spaceThunderSettings.defensif;
-				this.changeCurrentPlayer ();
-				if (this.currentPlayer().ship != undefined) {this.state = 103} else {
-					this.step102(this.currentPlayer())};
+				this.changeCurrentPlayer();
+				if (this.currentPlayer().ship != undefined) {
+					this.state = 103
+				} else {
+					this.step102(this.currentPlayer())
+				};
 			};
 
 			this.fadeIn(this.main);
-	}, 501);
+		}, 501);
 	}
 
-	step103 () {
+	step103() {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);
@@ -781,16 +1019,22 @@ class Game {
 			this.main.classList.remove("margtopneg50");
 		}, 500);
 		setTimeout(() => {
-			this.printMap ();
-			for (let x = 0; x < this.players.length; x++) {
-				this.mapGame.setPlayerPos(this.players[x]);
+			console.log("test103");
+			this.printMap();
+			for (let u = 0; u < this.players.length; u++) {
+				console.log("test");
+				this.mapGame.setPlayerPos({
+					player: this.players[u],
+					newPos: undefined,
+					newOrientation: undefined
+				});
 			};
 			/*console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player1)));
 			console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player2)));*/
 			console.log(this.mapGame.map);
 			this.printPlayer(this.player1);
 			this.printPlayer(this.player2);
-			this.testMove(this.player1);
+			this.playeTurn(this.currentPlayer());
 			this.fadeIn(this.main);
 		}, 501);
 	}
