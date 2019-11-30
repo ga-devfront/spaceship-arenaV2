@@ -28,7 +28,7 @@
     position: absolute;
     top: -55px;
     right: -100%;
-    z-index: 99;
+    z-index: 3;
     width: 170px;
     height: 128px;
     padding: 0;
@@ -58,7 +58,7 @@
 
 .cellImg {
     position: absolute;
-    z-index: 98;
+    z-index: 2;
     top: -15px;
     left: 50%;
     -webkit-transform: translateX(-50%);
@@ -67,7 +67,7 @@
 }
 
 .shipImg {
-    z-index: 99;
+    z-index: 3;
     position: absolute;
     top: -45px;
     left: 50%;
@@ -76,7 +76,7 @@
 }
 
 .obstacleImg {
-    z-index: 99;
+    z-index: 3;
     position: absolute;
     top: -30px;
     left: 50%;
@@ -90,11 +90,11 @@
 }
 
 .shipPos {
-    z-index:99;
+    z-index:2;
 }
 
 .weaponImg {
-    z-index: 99;
+    z-index: 3;
     position: absolute;
     top: -15px;
     left: 50%;
@@ -103,7 +103,7 @@
 }
 
 .moove {
-    z-index: 96;
+    z-index: 2;
     backdrop-filter: contrast(150%);
 }
 

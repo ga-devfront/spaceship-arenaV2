@@ -20,10 +20,8 @@ export default {
 		offensif: 0,
         defensif: 0,
         life: 0,
-		sprite: ["weapons/gun/gunN.png",
-        "weapons/gun/gunE.png",
-        "weapons/gun/gunS.png",
-        "weapons/gun/gunO.png"]
+		sprite: ["img/weapons/speed/speedW.png",
+        "img/weapons/speed/speedW.png"]
 	},
 	shieldSettings: {
         name: "Shield",
@@ -32,10 +30,8 @@ export default {
 		offensif: 0,
         defensif: 1,
         life: 0,
-		sprite: ["weapons/gun/gunN.png",
-        "weapons/gun/gunE.png",
-        "weapons/gun/gunS.png",
-        "weapons/gun/gunO.png"]
+		sprite: ["img/weapons/shield/shieldW.png",
+        "img/weapons/shield/shieldN.png"]
 	},
 	healthpackSettings: {
         name: "Health Pack",
@@ -44,8 +40,5 @@ export default {
 		offensif: 0,
         defensif: 0,
         life: 25,
-		sprite: ["weapons/gun/gunN.png",
-        "weapons/gun/gunE.png",
-        "weapons/gun/gunS.png",
-        "weapons/gun/gunO.png"]},
+		sprite: ["img/weapons/healthpack/healthpack.png"]},
 };

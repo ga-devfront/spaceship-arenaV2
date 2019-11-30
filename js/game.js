@@ -367,7 +367,7 @@ class Game {
 					})
 				}
 				if (this.mapGame.map[x][y] === "s1") {
-					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)]
+					let randomImg = weapon.reactorSettings.sprite[Math.floor(Math.random() * weapon.reactorSettings.sprite.length)]
 					this.newImg({
 						parent: newDiv,
 						src: randomImg,
@@ -375,7 +375,7 @@ class Game {
 					})
 				}
 				if (this.mapGame.map[x][y] === "s2") {
-					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)]
+					let randomImg = weapon.shieldSettings.sprite[Math.floor(Math.random() * weapon.shieldSettings.sprite.length)]
 					this.newImg({
 						parent: newDiv,
 						src: randomImg,
@@ -383,7 +383,7 @@ class Game {
 					})
 				}
 				if (this.mapGame.map[x][y] === "s3") {
-					let randomImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)]
+					let randomImg = weapon.healthpackSettings.sprite[Math.floor(Math.random() * weapon.healthpackSettings.sprite.length)]
 					this.newImg({
 						parent: newDiv,
 						src: randomImg,
@@ -460,6 +460,11 @@ class Game {
 					let columnMap = lineMap.getElementsByTagName("td")[y];
 					columnMap.classList.add("moove");
 					columnMap.onclick = () => {
+						if (document.getElementById("orientationChoose")) {
+							let window = document.getElementById("orientationChoose");
+							this.supress(window);
+							window.remove();
+						}
 						this.newHtmlElement({
 							parent: this.container,
 							element: "div",

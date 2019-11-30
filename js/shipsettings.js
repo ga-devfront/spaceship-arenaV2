@@ -28,8 +28,8 @@ export default {
 		logo: "img/ships/logo/federalcruser-logo.png",
 		description: "Vaisseau federal destine a la defense des forteresses de l’empire galactique, c’est un vaisseau tres peut mobile mais dote d'une grande capacite defensive",
 		representation: "img/ships/repr/repfc.png",
-		speed: 1,
-		offensif: 3,
+		speed: 2,
+		offensif: 2,
 		defensif: 5,
 		sprite: [
 			{
