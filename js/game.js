@@ -6,6 +6,7 @@ let gameRule = `
 	</ul>
 	<span></span>
 ` /* a faire dans un autre fichier */
+import gameRules from "./gameRules.js";
 import shipSettings from "./shipsettings.js";
 import mapGame from "./map.js";
 import Player from "./player.js";
@@ -21,7 +22,7 @@ class Game {
 		this.container = container;
 		this.buttonSound = new Audio("audio/btn.mp3");
 		this.buttonSound.volume = 0.1;
-		this.backgroundSound = new Audio("audio/pulsation.mp");
+		this.backgroundSound = new Audio("audio/pulsation.mp3");
 		this.mapGame = new mapGame();
 		this.mapImg = "img/mapv2.png"
 		this.player1 = new Player();
@@ -32,10 +33,10 @@ class Game {
 			return this.players[this.currentPlayerId];
 		};
 		this.state = 0;
+		this.previousState = 0;
 	}
 
 	set state(state) {
-		if (this.state === state) return;
 		this.previousState = this.state;
 		this._state = state;
 		this.computeState();
@@ -70,6 +71,9 @@ class Game {
 			case 103:
 				this.step103();
 				break;
+			case 104:
+				this.step104();
+				break;
 			case 201:
 				this.step201();
 				break;
@@ -96,6 +100,9 @@ class Game {
 		if (typeof settings.alt != "undefined" && settings.alt.length > 0) {
 			newEl.setAttribute("alt", settings.alt);
 		}; //set alt attritube
+		if (typeof settings.id != "undefined" && settings.id.length > 0) {
+			newEl.setAttribute("id", settings.id);
+		}; //set id attritube
 		for (let x = 0; settings.class.length > x; x++) {
 			newEl.classList.add(settings.class[x]);
 		};
@@ -329,17 +336,20 @@ class Game {
 	}
 
 	printMap() {
-		const newTable = document.createElement("table");
-		newTable.classList.add("mapGame");
-		const newTableBody = document.createElement("tbody");
-		newTableBody.setAttribute("id", "myGameMap");
-		newTableBody.classList.add("tbody");
+		this.newHtmlElement({
+			element: "div",
+			parent: this.main,
+			id: "myGameMap",
+			class: ["mapGame", "mapMoove", "rotate"]
+		});
 		for (let x = 0; x < this.mapGame.map.length; x++) {
-			var newLine = document.createElement("tr");
+			var newLine = document.createElement("div");
 			for (let y = 0; y < this.mapGame.map[x].length; y++) {
-				var newColumn = document.createElement("td");
+				var newColumn = document.createElement("div");
 				newLine.appendChild(newColumn);
 				const newDiv = document.createElement("div");
+				newColumn.setAttribute("data-x", x);
+				newColumn.setAttribute("data-y", y);
 				newColumn.appendChild(newDiv);
 				newColumn.classList.add("gameGrid");
 				newDiv.classList.add("baseMap");
@@ -363,6 +373,7 @@ class Game {
 					this.newImg({
 						parent: newDiv,
 						src: randomImg,
+						id: "s0",
 						class: ["weaponImg"]
 					})
 				}
@@ -371,6 +382,7 @@ class Game {
 					this.newImg({
 						parent: newDiv,
 						src: randomImg,
+						id: "s1",
 						class: ["weaponImg"]
 					})
 				}
@@ -379,6 +391,7 @@ class Game {
 					this.newImg({
 						parent: newDiv,
 						src: randomImg,
+						id: "s2",
 						class: ["weaponImg"]
 					})
 				}
@@ -387,28 +400,26 @@ class Game {
 					this.newImg({
 						parent: newDiv,
 						src: randomImg,
+						id: "s3",
 						class: ["weaponImg"]
 					})
 				}
 			}
-			newTableBody.appendChild(newLine);
+			myGameMap.appendChild(newLine);
 		}
-		newTable.appendChild(newTableBody);
-		this.main.appendChild(newTable);
+		this.main.appendChild(myGameMap);
 	}
 
 	printPlayer(player) {
 		let length = this.mapGame.getPlayerLength(player);
 		let square = this.mapGame.getPlayerSquarePos(player);
-		console.log(square);
-		let map = document.getElementById("myGameMap");
 
 		for (let x = 0; x < length; x++) {
 			let line = square[x][0];
 			let column = square[x][1];
-			let lineMap = map.getElementsByTagName("tr")[line];
-			let columnMap = lineMap.getElementsByTagName("td")[column];
-			let cellMap = columnMap.getElementsByTagName("div")[0];
+			let cellMap = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]>div`);
+			let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+			divCell.classList.add("cellPlayer");
 			this.newImg({
 				parent: cellMap,
 				src: player.ship.sprite[x][this.mapGame.getPlayerOrientation(player)],
@@ -421,14 +432,12 @@ class Game {
 	supressPlayer(player) {
 		let length = this.mapGame.getPlayerLength(player);
 		let square = this.mapGame.getPlayerSquarePos(player);
-		let map = document.getElementById("myGameMap");
-
 		for (let x = 0; x < length; x++) {
 			let line = square[x][0];
 			let column = square[x][1];
-			let lineMap = map.getElementsByTagName("tr")[line];
-			let columnMap = lineMap.getElementsByTagName("td")[column];
-			let cellMap = columnMap.getElementsByTagName("div")[0];
+			let cellMap = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]>div`);
+			let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+			divCell.classList.remove("cellPlayer");
 			let playerImg = cellMap.getElementsByClassName("playerImg")[0];
 			playerImg.remove();
 		}
@@ -438,194 +447,674 @@ class Game {
 		let map = document.getElementById("myGameMap");
 		for (let x = 0; x < this.mapGame.map.length; x++) {
 			for (let y = 0; y < this.mapGame.map[x].length; y++) {
-				let lineMap = map.getElementsByTagName("tr")[x];
-				let columnMap = lineMap.getElementsByTagName("td")[y];
+				let columnMap = document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
 				if (columnMap.classList.contains("moove")) {
 					columnMap.classList.remove("moove");
-					columnMap.onclick = () => {void(0);};
+					columnMap.onclick = () => {
+						void(0);
+					};
 				}
 			}
 		}
 	}
 
+	creatMoveChoice(settings) {
+		let mapTest = this.mapGame.testmove(settings.player);
+		let x = settings.x;
+		let y = settings.y;
+		if (document.getElementById("orientationChoose")) {
+			let window = document.getElementById("orientationChoose");
+			this.supress(window);
+			window.remove();
+		}
+		this.newHtmlElement({
+			parent: this.container,
+			element: "div",
+			id: "orientationChoose",
+			class: ["overlay", "container", "flexColumn", "moveChoose"]
+		});
+		this.newHtmlElement({
+			parent: orientationChoose,
+			element: "div",
+			id: "titleOrientation",
+			class: ["container", "centerwrap", "big-font", "margtop15"]
+		});
+		this.newTxt(titleOrientation, "Choose your orientation");
+		this.newHtmlElement({
+			parent: orientationChoose,
+			element: "div",
+			id: "buttonOrientation",
+			class: ["container", "spacearound", "margtop15"]
+		});
+		if (mapTest[x][y].N === true) {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "N",
+				img: "img/arrowN.png",
+				class: ["square2"]
+			});
+			N.onclick = () => {
+				this.moveAction({
+					player: settings.player,
+					x: x,
+					y: y,
+					orientation: "N"
+				})
+			};
+		} else {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "N",
+				img: "img/arrowN.png",
+				class: ["square2", "opacity02"]
+			});
+		}
+
+		if (mapTest[x][y].S === true) {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "S",
+				img: "img/arrowS.png",
+				class: ["square2"]
+			});
+			S.onclick = () => {
+				this.moveAction({
+					player: settings.player,
+					x: x,
+					y: y,
+					orientation: "S"
+				})
+			};
+		} else {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "S",
+				img: "img/arrowS.png",
+				class: ["square2", "opacity02"]
+			});
+		}
+
+		if (mapTest[x][y].E === true) {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "E",
+				img: "img/arrowE.png",
+				class: ["square2"]
+			});
+			E.onclick = () => {
+				this.moveAction({
+					player: settings.player,
+					x: x,
+					y: y,
+					orientation: "E"
+				})
+			};
+		} else {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "E",
+				img: "img/arrowE.png",
+				class: ["square2", "opacity02"]
+			});
+		}
+
+		if (mapTest[x][y].W === true) {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "W",
+				img: "img/arrowW.png",
+				class: ["square2"]
+			});
+			W.onclick = () => {
+				this.moveAction({
+					player: settings.player,
+					x: x,
+					y: y,
+					orientation: "W"
+				})
+			};
+		} else {
+			this.newButton({
+				parent: buttonOrientation,
+				id: "W",
+				img: "img/arrowW.png",
+				class: ["square2", "opacity02"]
+			});
+		}
+
+	}
+
+	moveAction(settings) {
+		document.getElementById("skipMove").remove();
+		let x = settings.x;
+		let y = settings.y;
+		let mooveOrientation = "";
+		switch (settings.orientation) {
+			case "N":
+				mooveOrientation = "N";
+				break;
+			case "S":
+				mooveOrientation = "S";
+				break;
+			case "E":
+				mooveOrientation = "E";
+				break;
+			case "W":
+				mooveOrientation = "W";
+				break;
+		};
+
+		let moovePosition = [x, y];
+		this.supress(document.getElementById("orientationChoose"));
+		document.getElementById("orientationChoose").remove();
+		this.supressPlayer(settings.player);
+		this.supressPlayerMooves();
+		this.mapGame.setPlayerPos({
+			player: settings.player,
+			newPos: moovePosition,
+			newOrientation: mooveOrientation
+		});
+		this.refreshMap();
+		this.printPlayer(settings.player);
+		this.refreshPlayerOverlay();
+		if (this.mapGame.testAttack({player: settings.player, ennemy: this.getOpponent(settings.player)})) {
+		this.attackPossibl(settings.player);}
+		else {
+		this.changeCurrentPlayer();
+		this.state = 103;}
+	};
+
 	playeTurn(player) {
+		this.refreshPlayerOverlay();
 		let mapTest = this.mapGame.testmove(player);
-		let map = document.getElementById("myGameMap");
-		let mooveOrientation = undefined;
-		let moovePosition = [];
 		for (let x = 0; x < mapTest.length; x++) {
 			for (let y = 0; y < mapTest[x].length; y++) {
 				if (mapTest[x][y].N === true || mapTest[x][y].S === true || mapTest[x][y].E === true || mapTest[x][y].W === true) {
-					let lineMap = map.getElementsByTagName("tr")[x];
-					let columnMap = lineMap.getElementsByTagName("td")[y];
+					let columnMap = document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
 					columnMap.classList.add("moove");
 					columnMap.onclick = () => {
-						if (document.getElementById("orientationChoose")) {
-							let window = document.getElementById("orientationChoose");
-							this.supress(window);
-							window.remove();
-						}
-						this.newHtmlElement({
-							parent: this.container,
-							element: "div",
-							id: "orientationChoose",
-							class: ["overlay", "container", "flexColumn"]
+						this.creatMoveChoice({
+							player: player,
+							x: x,
+							y: y
 						});
-						this.newHtmlElement({
-							parent: orientationChoose,
-							element: "div",
-							id: "titleOrientation",
-							class: ["container", "centerwrap", "big-font", "margtop15"]
-						});
-						this.newTxt(titleOrientation, "Choose your orientation");
-						this.newHtmlElement({
-							parent: orientationChoose,
-							element: "div",
-							id: "buttonOrientation",
-							class: ["container", "spacearound", "margtop15"]
-						});
-						if (mapTest[x][y].N === true) {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "N",
-								img: "img/arrowN.png",
-								class: ["square"]
-							});
-							N.onclick = () => {
-								mooveOrientation = "N";
-								moovePosition = [x, y];
-								this.supress(orientationChoose);
-								orientationChoose.remove();
-								this.supressPlayer(player);
-								this.supressPlayerMooves();
-								this.mapGame.setPlayerPos({
-									player: player,
-									newPos: moovePosition,
-									newOrientation: mooveOrientation
-								});
-								this.printPlayer(player);
-								this.changeCurrentPlayer();
-								this.playeTurn(this.currentPlayer());
-							};
-						} else {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "N",
-								img: "img/arrowN.png",
-								class: ["square", "opacity02"]
+					}
+				}
+			}
+		}
+		this.newButton({
+			parent: this.main,
+			id: "skipMove",
+			txt: "Skip Move >>",
+			class: ["large", "marg-lr10", "overlay", "skip"],
+			onclick: () => {
+				this.supressPlayerMooves();
+				skipMove.remove();
+				if (this.mapGame.testAttack({player: player, ennemy: this.getOpponent(player)})) {
+					this.attackPossibl(player);}
+					else {
+					this.changeCurrentPlayer();
+					this.state = 103;}
+			}
+		});
+	}
+
+	attackPossibl(player) {
+		let opponent = this.getOpponent(player);
+		if (this.mapGame.testAttack({
+				player: player,
+				ennemy: opponent
+			})) {
+			let length = this.mapGame.getPlayerLength(opponent);
+			let square = this.mapGame.getPlayerSquarePos(opponent);
+
+			for (let x = 0; x < length; x++) {
+				let line = square[x][0];
+				let column = square[x][1];
+				let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+				divCell.classList.add("attack");
+				divCell.onclick = () => {
+					document.getElementById("skipAttack").remove();
+					this.attack(player)}
+			}
+			this.newButton({
+				parent: this.main,
+				id: "skipAttack",
+				txt: "Skip Attack >>",
+				class: ["large", "marg-lr10", "overlay", "skip"],
+				onclick: () => {
+					this.supressAttackPossibl(player);
+					skipAttack.remove();
+					this.changeCurrentPlayer();
+					this.state = 103;
+				}
+			});
+		
+		}
+	}
+
+	supressAttackPossibl(player) {
+		let opponent = this.getOpponent(player);
+		if (this.mapGame.testAttack({
+				player: player,
+				ennemy: opponent
+			})) {
+			let length = this.mapGame.getPlayerLength(opponent);
+			let square = this.mapGame.getPlayerSquarePos(opponent);
+
+			for (let x = 0; x < length; x++) {
+				let line = square[x][0];
+				let column = square[x][1];
+				let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+				divCell.classList.remove("attack");
+				divCell.onclick = () => {
+					void(0);
+				};
+			}
+		}
+	}
+
+	attack(player) {
+		let opponent = this.getOpponent(player);
+		this.mapGame.attack({player: player, ennemi: opponent});
+		this.supressAttackPossibl(player);
+		this.refreshPlayerOverlay();
+		this.changeCurrentPlayer();
+		this.state = 103;
+	}
+
+	refreshMap() {
+		for (let x = 0; x < this.mapGame.map.length; x++) {
+			for (let y = 0; y < this.mapGame.map[x].length; y++) {
+				for (let z = 0; z < 4; z++) {
+					let weaponTest = document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div>#s${z}`);
+					if (weaponTest != null) {
+						if (this.mapGame.map[x][y] === "s" + z) {} else {
+							weaponTest.remove()
+						}
+					} else {
+						if (this.mapGame.map[x][y] === "s" + z) {
+							let weaponImg = undefined;
+							switch ("s" + z) {
+								case "s0":
+									weaponImg = weapon.gunSettings.sprite[Math.floor(Math.random() * weapon.gunSettings.sprite.length)];
+									break;
+								case "s1":
+									weaponImg = weapon.reactorSettings.sprite[Math.floor(Math.random() * weapon.reactorSettings.sprite.length)];
+									break;
+								case "s2":
+									weaponImg = weapon.shieldSettings.sprite[Math.floor(Math.random() * weapon.shieldSettings.sprite.length)];
+									break;
+							}
+							this.newImg({
+								parent: document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div`),
+								src: weaponImg,
+								id: "s" + z,
+								class: ["weaponImg"]
 							});
 						}
-
-						if (mapTest[x][y].S === true) {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "S",
-								img: "img/arrowS.png",
-								class: ["square"]
-							});
-							S.onclick = () => {
-								mooveOrientation = "S";
-								moovePosition = [x, y];
-								this.supress(orientationChoose);
-								orientationChoose.remove();
-								this.supressPlayer(player);
-								this.supressPlayerMooves();
-								this.mapGame.setPlayerPos({
-									player: player,
-									newPos: moovePosition,
-									newOrientation: mooveOrientation
-								});
-								this.printPlayer(player);
-								this.changeCurrentPlayer();
-								this.playeTurn(this.currentPlayer());
-							};
-						} else {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "S",
-								img: "img/arrowS.png",
-								class: ["square", "opacity02"]
-							});
-						}
-
-						if (mapTest[x][y].E === true) {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "E",
-								img: "img/arrowE.png",
-								class: ["square"]
-							});
-							E.onclick = () => {
-								mooveOrientation = "E";
-								moovePosition = [x, y];
-								this.supress(orientationChoose);
-								orientationChoose.remove();
-								this.supressPlayer(player);
-								this.supressPlayerMooves();
-								this.mapGame.setPlayerPos({
-									player: player,
-									newPos: moovePosition,
-									newOrientation: mooveOrientation
-								});
-								this.printPlayer(player);
-								this.changeCurrentPlayer();
-								this.playeTurn(this.currentPlayer());
-							};
-						} else {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "E",
-								img: "img/arrowE.png",
-								class: ["square", "opacity02"]
-							});
-						}
-
-						if (mapTest[x][y].W === true) {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "W",
-								img: "img/arrowW.png",
-								class: ["square"]
-							});
-							W.onclick = () => {
-								mooveOrientation = "W";
-								moovePosition = [x, y];
-								this.supress(orientationChoose);
-								orientationChoose.remove();
-								this.supressPlayer(player);
-								this.supressPlayerMooves();
-								this.mapGame.setPlayerPos({
-									player: player,
-									newPos: moovePosition,
-									newOrientation: mooveOrientation
-								});
-								this.printPlayer(player);
-								this.changeCurrentPlayer();
-								this.playeTurn(this.currentPlayer());
-							};
-						} else {
-							this.newButton({
-								parent: buttonOrientation,
-								id: "W",
-								img: "img/arrowW.png",
-								class: ["square", "opacity02"]
-							});
-						}
-					};
-
-
+					}
 				}
 			}
 		}
 	}
 
+	getOpponent(player) {
+		if (player == this.players[0]) {
+			return this.players[1]
+		}
+		return this.players[0]
+	}
+
+	creatPlayersOverlay() {
+		for (let x = 0; x < this.players.length; x++) {
+			let player = this.players[x];
+			let direction = "";
+			if (x === 0) {
+				direction = "left";
+			} else {
+				direction = "right"
+			}
+			this.newHtmlElement({
+				parent: this.container,
+				element: "div",
+				id: player.uuid,
+				class: ["overlay", "player", direction, "container", "flexColumn", "spaceEvenly"]
+			})
+			let div = document.getElementById(player.uuid);
+			if (player == this.currentPlayer()) {
+				div.classList.add("activ")
+			} else {
+				div.classList.add("inactiv")
+			}
+			let name = player.uuid + "name";
+			this.newHtmlElement({
+				parent: div,
+				element: "div",
+				id: name,
+				class: ["container", "centerwrap", "big-font"]
+			});
+			let divName = document.getElementById(name);
+			this.newTxt(divName, player.name);
+			let logo = player.ship.shipname + " " + "logo";
+			let sprite = player.ship.shipname + " " + "sprite";
+			let logoimg = player.ship.logo;
+			let spriteimg = player.ship.representation;
+			this.newImg({
+				parent: div,
+				src: logoimg,
+				alt: logo,
+				class: []
+			});
+			this.newImg({
+				parent: div,
+				src: spriteimg,
+				alt: sprite,
+				class: ["shipSelectAnim"]
+			});
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "life" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+			let lifeID = document.getElementById("life" + player.uuid);
+			let life = document.createTextNode("PV");
+			lifeID.appendChild(life);
+			this.newHtmlElement({
+				element: "div",
+				parent: lifeID,
+				id: "pv" + player.uuid,
+				class: ["container", "centerwrap", "life"]
+			});
+			let actualLifeID = document.getElementById("pv" + player.uuid);
+			let actualLife = document.createTextNode(player.pv + " / 100");
+			actualLifeID.appendChild(actualLife);
+			actualLifeID.style.background = "linear-gradient(to right, rgba(189,0,0,1) 0%, rgba(189,0,0,1) " + player.pv + "%, rgba(52,52,52,1) " + player.pv + "%, rgba(52,52,52,1) 100%)";
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "speed" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+			let speedID = document.getElementById("speed" + player.uuid);
+			let speed = document.createTextNode("Speed");
+			speedID.appendChild(speed);
+			for (let i = 0; i < player.speed; i++) {
+				this.newImg({
+					parent: speedID,
+					src: "img/power1.png",
+					class: []
+				});
+			}
+			let negspeed = 6 - player.speed;
+			for (let x = 0; x < negspeed; x++) {
+				this.newImg({
+					parent: speedID,
+					src: "img/power0.png",
+					class: []
+				});
+			}
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "off" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+
+			let offID = document.getElementById("off" + player.uuid);
+			let off = document.createTextNode("Offensif");
+			offID.appendChild(off);
+			for (let y = 0; y < player.offensif; y++) {
+				this.newImg({
+					parent: offID,
+					src: "img/power1.png",
+					class: []
+				});
+			}
+			let negoff = 6 - player.offensif;
+			for (let s = 0; s < negoff; s++) {
+				this.newImg({
+					parent: offID,
+					src: "img/power0.png",
+					class: []
+				});
+			}
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "def" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+
+			let defID = document.getElementById("def" + player.uuid);
+			let def = document.createTextNode("Defensif");
+			defID.appendChild(def);
+			for (let y = 0; y < player.defensif; y++) {
+				this.newImg({
+					parent: defID,
+					src: "img/power1.png",
+					class: []
+				});
+			}
+			let negdef = 6 - player.defensif;
+			for (let s = 0; s < negdef; s++) {
+				this.newImg({
+					parent: defID,
+					src: "img/power0.png",
+					class: []
+				});
+			}
+
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "stuff" + player.uuid,
+				class: ["container", "centerwrap", "flexColumn", "stuff"]
+			})
+			let stuffID = document.getElementById("stuff" + player.uuid);
+			let stuff = document.createTextNode("weapon");
+			stuffID.appendChild(stuff);
+			this.newHtmlElement({
+				element: "div",
+				parent: stuffID,
+				id: "actualStuff" + player.uuid,
+				class: ["container", "centerwrap", "actualStuff", "margtop15"]
+			})
+			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
+			this.newImg({
+				parent: actulStuffID,
+				src: "img/weapons/none.png",
+				class: []
+			});
+		}
+	}
+
+	refreshPlayerOverlay() {
+		for (let x = 0; x < this.players.length; x++) {
+			let player = this.players[x];
+			let div = document.getElementById(player.uuid);
+			let lifeID = document.getElementById("life" + player.uuid);
+			this.supress(lifeID);
+			lifeID.remove();
+			let speedID = document.getElementById("speed" + player.uuid);
+			this.supress(speedID);
+			speedID.remove();
+			let offID = document.getElementById("off" + player.uuid);
+			this.supress(offID);
+			offID.remove();
+			let defID = document.getElementById("def" + player.uuid);
+			this.supress(defID);
+			defID.remove();
+			let stuffID = document.getElementById("stuff" + player.uuid);
+			this.supress(stuffID);
+			stuffID.remove();
+
+			if (player == this.currentPlayer()) {
+				div.classList.remove("inactiv");
+				div.classList.add("activ");
+			} else {
+				div.classList.remove("activ");
+				div.classList.add("inactiv");
+			}
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "life" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+			let life = document.createTextNode("PV");
+			lifeID = document.getElementById("life" + player.uuid);
+			lifeID.appendChild(life);
+			this.newHtmlElement({
+				element: "div",
+				parent: lifeID,
+				id: "pv" + player.uuid,
+				class: ["container", "centerwrap", "life"]
+			});
+			let actualLifeID = document.getElementById("pv" + player.uuid);
+			let actualLife = document.createTextNode(player.pv + " / 100");
+			actualLifeID.appendChild(actualLife);
+			actualLifeID.style.background = "linear-gradient(to right, rgba(189,0,0,1) 0%, rgba(189,0,0,1) " + player.pv + "%, rgba(52,52,52,1) " + player.pv + "%, rgba(52,52,52,1) 100%)";
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "speed" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+			let speed = document.createTextNode("Speed");
+			speedID = document.getElementById("speed" + player.uuid);
+			speedID.appendChild(speed);
+			for (let i = 0; i < player.speed; i++) {
+				this.newImg({
+					parent: speedID,
+					src: "img/power1.png",
+					class: []
+				});
+			}
+			let negspeed = 6 - player.speed;
+			for (let x = 0; x < negspeed; x++) {
+				this.newImg({
+					parent: speedID,
+					src: "img/power0.png",
+					class: []
+				});
+			}
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "off" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+
+			let off = document.createTextNode("Offensif");
+			offID = document.getElementById("off" + player.uuid);
+			offID.appendChild(off);
+			for (let y = 0; y < player.offensif; y++) {
+				this.newImg({
+					parent: offID,
+					src: "img/power1.png",
+					class: []
+				});
+			}
+			let negoff = 6 - player.offensif;
+			for (let s = 0; s < negoff; s++) {
+				this.newImg({
+					parent: offID,
+					src: "img/power0.png",
+					class: []
+				});
+			}
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "def" + player.uuid,
+				class: ["container", "centerwrap", "stats"]
+			});
+
+			let def = document.createTextNode("Defensif");
+			defID = document.getElementById("def" + player.uuid);
+			defID.appendChild(def);
+			for (let y = 0; y < player.defensif; y++) {
+				this.newImg({
+					parent: defID,
+					src: "img/power1.png",
+					class: []
+				});
+			}
+			let negdef = 6 - player.defensif;
+			for (let s = 0; s < negdef; s++) {
+				this.newImg({
+					parent: defID,
+					src: "img/power0.png",
+					class: []
+				});
+			}
+
+
+			this.newHtmlElement({
+				element: "div",
+				parent: div,
+				id: "stuff" + player.uuid,
+				class: ["container", "centerwrap", "flexColumn", "stuff"]
+			})
+			let stuff = document.createTextNode("weapon");
+			stuffID = document.getElementById("stuff" + player.uuid);
+			stuffID.appendChild(stuff);
+			this.newHtmlElement({
+				element: "div",
+				parent: stuffID,
+				id: "actualStuff" + player.uuid,
+				class: ["container", "centerwrap", "actualStuff", "margtop15"]
+			})
+			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
+			switch (player.weapon) {
+				case "s0":
+					this.newImg({
+						parent: actulStuffID,
+						src: "img/weapons/gun/gun.png",
+						class: []
+					});
+					break;
+				case "s1":
+					this.newImg({
+						parent: actulStuffID,
+						src: "img/weapons/speed/speed.png",
+						class: []
+					});
+					break;
+				case "s2":
+					this.newImg({
+						parent: actulStuffID,
+						src: "img/weapons/shield/shield.png",
+						class: []
+					});
+					break;
+				default:
+					this.newImg({
+						parent: actulStuffID,
+						src: "img/weapons/none.png",
+						class: []
+					});
+			}
+		}
+	}
 
 	creatRulesOverlay() {
 		this.newHtmlElement({
 			element: "div",
 			parent: this.container,
 			id: "rulesoverlay",
-			class: []
+			class: ["overlay", "rules"]
 		});
 		this.newHtmlElement({
 			element: "header",
@@ -674,6 +1163,27 @@ class Game {
 		}
 	}
 
+	checkEnd(player) {
+		let opponent = this.getOpponent(player);
+		if (player.pv <= 0 || opponent.pv <= 0) {
+			this.state = 104;
+		}
+	}
+
+	resetPlayer() {
+		for (let x = 0; x < this.players.length; x++) {
+			this.players[x].pv = 100;
+			this.players[x].ship = undefined;
+			this.players[x].orientation = undefined;
+			this.players[x].weapon = undefined;
+		}
+
+		this.mapGame.oldWeapon = [];
+		this.mapGame.playersPos = [];
+		this.mapGame.playerPosSquare = [];
+		this.mapGame.playerOrientation = [];
+	}
+
 	step0() {
 		this.supressAll();
 		this.fadeOutAll();
@@ -708,7 +1218,7 @@ class Game {
 			alt: "partager sur twitter",
 			class: ["small", "marg-lr10"],
 			onclick: function () {
-				window.open("https://twitter.com/AgDevfront");
+				window.open("https://twitter.com/AgDevfront/");
 			}
 		});
 		this.newButton({
@@ -719,7 +1229,7 @@ class Game {
 			alt: "partager sur facebook",
 			class: ["small", "marg-lr10"],
 			onclick: function () {
-				window.open("https://twitter.com/AgDevfront");
+				window.open("https://www.facebook.com/agdevfront/");
 			}
 		});
 		this.newButton({
@@ -730,7 +1240,7 @@ class Game {
 			alt: "partager sur insta",
 			class: ["small", "marg-lr10"],
 			onclick: function () {
-				window.open("https://twitter.com/AgDevfront");
+				window.open("https://www.instagram.com/agdevfront/");
 			}
 		});
 		this.newButton({
@@ -769,6 +1279,14 @@ class Game {
 	step1() {
 		this.fadeOut(this.main);
 		setTimeout(() => {
+			if (this.header.classList.contains("resizeSmall")) {
+				this.header.classList.remove("resizeSmall");
+				this.header.classList.add("resizeBig");
+			};
+			if (this.main.classList.contains("margtopneg50")) {
+				this.main.classList.remove("margtopneg50");
+				this.main.classList.add("margtop100");
+			};
 			this.supress(this.main);
 		}, 500);
 		setTimeout(() => {
@@ -805,6 +1323,14 @@ class Game {
 	step101() {
 		this.fadeOut(this.main);
 		setTimeout(() => {
+			if (this.header.classList.contains("resizeSmall")) {
+				this.header.classList.remove("resizeSmall");
+				this.header.classList.add("resizeBig");
+			};
+			if (this.main.classList.contains("margtopneg50")) {
+				this.main.classList.remove("margtopneg50");
+				this.main.classList.add("margtop100");
+			};
 			this.supress(this.main);
 		}, 500);
 		setTimeout(() => {
@@ -1017,29 +1543,108 @@ class Game {
 	}
 
 	step103() {
+		if (this.state != this.previousState) {
+			this.fadeOut(this.main);
+			setTimeout(() => {
+				this.supress(this.main);
+				this.main.classList.add("margtopneg250");
+				this.main.classList.remove("margtopneg50");
+			}, 500);
+			setTimeout(() => {
+				this.creatPlayersOverlay();
+				this.printMap();
+				for (let u = 0; u < this.players.length; u++) {
+					this.mapGame.setPlayerPos({
+						player: this.players[u],
+						newPos: undefined,
+						newOrientation: undefined
+					});
+				};
+				this.printPlayer(this.player1);
+				this.printPlayer(this.player2);
+				this.playeTurn(this.currentPlayer());
+				this.fadeIn(this.main);
+			}, 501);
+		}
+		if (this.state == this.previousState) {
+			this.checkEnd(this.currentPlayer());
+			this.playeTurn(this.currentPlayer());
+		}
+
+	}
+
+	step104() {
+		let overlay1 = document.getElementById(this.currentPlayer().uuid);
+		let overlay2 = document.getElementById(this.getOpponent(this.currentPlayer()).uuid);
 		this.fadeOut(this.main);
+		this.fadeOut(overlay1);
+		this.fadeOut(overlay2);
 		setTimeout(() => {
 			this.supress(this.main);
-			this.main.classList.add("margtopneg250");
-			this.main.classList.remove("margtopneg50");
+			this.main.classList.add("margtopneg50");
+			this.main.classList.remove("margtopneg250");
+			this.supress(overlay1);
+			overlay1.remove();
+			this.supress(overlay2);
+			overlay2.remove();
 		}, 500);
 		setTimeout(() => {
-			console.log("test103");
-			this.printMap();
-			for (let u = 0; u < this.players.length; u++) {
-				console.log("test");
-				this.mapGame.setPlayerPos({
-					player: this.players[u],
-					newPos: undefined,
-					newOrientation: undefined
-				});
-			};
-			/*console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player1)));
-			console.log('this.playersPos[player.uuid] client: ', this.mapGame.getPlayerPos((this.player2)));*/
-			console.log(this.mapGame.map);
-			this.printPlayer(this.player1);
-			this.printPlayer(this.player2);
-			this.playeTurn(this.currentPlayer());
+			this.newHtmlElement({
+				element: "div",
+				parent: this.main,
+				id: "endGameChoice",
+				class: ["container", "centerwrap", "flexColumn"]
+			});
+
+			this.newHtmlElement({
+				element: "div",
+				parent: endGameChoice,
+				id: "endGameWiner",
+				class: ["container", "centerwrap", "big-font"]
+			});
+			this.newHtmlElement({
+				element: "div",
+				parent: endGameChoice,
+				id: "endGameButon",
+				class: ["container", "spacearound", "margtop15"]
+			});
+
+			if (this.currentPlayer().pv > 0) {
+				let winerTxT = this.currentPlayer().name + " win !";
+				this.newTxt(endGameWiner, winerTxT);
+			} else {
+				let winerTxT = this.getOpponent(this.currentPlayer()).name + " win !";
+				this.newTxt(endGameWiner, winerTxT);
+			}
+
+			this.newButton({
+				parent: endGameButon,
+				id: "gameMenu",
+				img: "img/local.png",
+				imghover: "img/local_hover.png",
+				txt: "Game menu",
+				alt: "Game menu",
+				class: ["marg-lr10", "square", "big-font"],
+				onclick: () => {
+					this.mapGame.generateMapGame();
+					this.resetPlayer();
+					this.state = 1;
+				}
+			});
+			this.newButton({
+				parent: endGameButon,
+				id: "replay",
+				img: "img/replay.png",
+				imghover: "img/replay_hover.png",
+				txt: "Replay",
+				alt: "Replay",
+				class: ["marg-lr10", "square", "big-font"],
+				onclick: () => {
+					this.mapGame.generateMapGame();
+					this.resetPlayer();
+					this.state = 101;
+				}
+			});
 			this.fadeIn(this.main);
 		}, 501);
 	}

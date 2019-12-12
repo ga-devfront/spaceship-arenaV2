@@ -28,8 +28,8 @@ export default {
 		logo: "img/ships/logo/federalcruser-logo.png",
 		description: "Vaisseau federal destine a la defense des forteresses de l’empire galactique, c’est un vaisseau tres peut mobile mais dote d'une grande capacite defensive",
 		representation: "img/ships/repr/repfc.png",
-		speed: 2,
-		offensif: 2,
+		speed: 3,
+		offensif: 1,
 		defensif: 5,
 		sprite: [
 			{
@@ -80,7 +80,7 @@ export default {
 		logo: "img/ships/logo/spacethunder-logo.png",
 		description: "Vaisseau concu pour la destruction, ce chasseur lourd possede une puissance de frappe inegale au detriment de sa vitesse bien qu’il conserve une legere defense.",
 		representation: "img/ships/repr/repst.png",
-		speed: 1,
+		speed: 2,
 		offensif: 5,
 		defensif: 3,
 		sprite: [

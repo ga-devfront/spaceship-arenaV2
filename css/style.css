@@ -9,7 +9,7 @@
 
 /* html element */
 html {
-    cursor: url("../img/pointeur.png"), default;
+    /*cursor: url("../img/pointeur.png"), default;*/
     height: 100%;
     background-image: url("../img/background.png"),
     radial-gradient(ellipse at 50% 90%, rgba(1,33,50,1) 0%, rgba(116, 179, 180,1) 0%, rgba(1,130,173,1) 40%, rgba(1,33,50,1) 84%, rgba(1,33,50,1) 100%);
@@ -129,25 +129,12 @@ button.square {
     width: 200px;
 }
 
-/* id */
-
-#rulesoverlay {
-    align-items: center;
-    position: fixed;
-    display: none;
-    flex-direction: column;
-    width: 60%;
-    height: 80%;
-    top: 10%;
-    left: 20%;
-    right: 20%;
-    bottom: 10%;
-    border: solid white 3px;
-    border-radius: 35px;
-    background-color: rgba(0, 26, 36, 0.9);
-    z-index: 5;
+button.square2 {
+    height: 100px;
+    width: 100px;
 }
 
+/* id */
 #shipbb {
     background: linear-gradient(45deg, rgba(7,28,10,1) 0%, rgba(1,6,2,1) 100%);
 }
@@ -180,6 +167,10 @@ button.square {
 .container.spacearound {
     -ms-flex-pack: distribute;
     justify-content: space-around;
+}
+
+.container.spaceEvenly {
+    justify-content: space-evenly;
 }
 
 .container.show {
@@ -479,15 +470,96 @@ button.square {
     margin-left: 5px;
 }
 
+/* OVERLAYS */
+
 .overlay {
         position: fixed;
-        width: 1000px;
-        height: 300px;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 4;
-        border: solid white 3px;
-        border-radius: 35px;
-        background-color: rgba(0, 26, 36, 0.9);
+}
+
+.overlay.rules {
+    align-items: center;
+    display: none;
+    flex-direction: column;
+    width: 60%;
+    height: 80%;
+    top: 10%;
+    left: 20%;
+    right: 20%;
+    bottom: 10%;
+    border: solid white 3px;
+    border-radius: 35px;
+    background-color: rgba(0, 26, 36, 0.9);
+    z-index: 5;
+}
+
+.overlay.moveChoose {
+    z-index: 4;
+    width: 1000px;
+    height: 200px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: solid white 3px;
+    border-radius: 35px;
+    background-color: rgba(0, 26, 36, 0.9);
+}
+
+.overlay.player {
+    z-index: 3;
+    top: 10%;
+    height: 70% ;
+    width: 300px;
+    border: solid white 3px;
+    border-radius: 35px;
+    align-items: center;
+    text-align: center;
+}
+
+.overlay.skip {
+    z-index: 3;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.overlay.player.inactiv {
+    background-color: rgba(0, 26, 36, 0.2);
+}
+
+.overlay.player.activ {
+    background-color: rgba(0, 26, 36, 0.8);
+}
+
+.overlay.player.left {
+    left : 3%;
+}
+
+.overlay.player.right {
+    right: 3%;
+}
+
+.attack {
+    cursor: url(../img/attack.png) 15 15, pointer;
+}
+
+.life {
+    font-size: 0.7em;
+    height: 12px;
+    width: 200px;
+    border: solid white 2px;
+    border-radius: 35px;
+    margin-top: 4px;
+    margin-left: 10px;
+}
+
+.stuff {
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+.actualStuff {
+    height: 100px;
+    width: 100px;
+    border: 3px ridge #ffffff;
+    align-items: center;
 }

@@ -10,6 +10,12 @@ class mapGame {
 		this.playerPosSquare = [];
 		this.orientation = ["N", "E", "S", "W"];
 		this.playerOrientation = [];
+		this.map = undefined;
+		this.generateMapGame();
+		this.oldWeapon = [];
+	}
+
+	generateMapGame() {
 		this.map = this.newmapGameArray();
 		this.addObstacle();
 		this.addStuff();
@@ -101,6 +107,7 @@ class mapGame {
 			if (this.map[randomX][randomY] == "x" || this.map[randomX][randomY] == "s" + "") {
 				x--
 			} else {
+				/*ajouter test stuff*/
 				this.map[randomX][randomY] = "s" + x
 			}
 		}
@@ -186,8 +193,46 @@ class mapGame {
 		return undefined
 	}
 
+	updatePlayerStat(settings) {
+		let player = settings.player;
+		let weapon = settings.weapon;
+		let oldWeapon = settings.oldWeapon;
+		switch (oldWeapon) {
+			case "s0":
+				player.offensif = player.offensif - 1;
+				break;
+			case "s1":
+				player.speed = player.speed - 1;
+				break;
+			case "s2":
+				player.defensif = player.defensif - 1;
+				break;
+			default:
+				;
+		}
+		switch (weapon) {
+			case "s0":
+				player.offensif = player.offensif + 1;
+				break;
+			case "s1":
+				player.speed = player.speed + 1;
+				break;
+			case "s2":
+				player.defensif = player.defensif + 1;
+				break;
+			case "s3":
+				player.pv = player.pv + 25;
+				if (player.pv > 100) {
+					player.pv = 100
+				}
+				break;
+			default:
+				;
+		}
+	}
+
 	setPlayerPos(settings) {
-		
+
 		if (this.getPlayerPos(settings.player) == undefined) {
 			for (let x = 0; x < 1; x++) {
 				let randomCoord = this.getRandomPos();
@@ -229,19 +274,21 @@ class mapGame {
 				}
 			}
 		} else {
-			let oldPos = this.playerOrientation[settings.player.uuid];
 			let newPos = settings.newPos;
 			let newOrientation = settings.newOrientation;
-			console.log('OldOrientation: ', oldPos);
 			let oldSquare = this.getPlayerSquarePos(settings.player);
 			for (let x = 0; x < oldSquare.length; x++) {
-				this.map[oldSquare[x][0]][oldSquare[x][1]] = "";
+				if (this.oldWeapon[settings.player.uuid] === undefined || this.oldWeapon[settings.player.uuid] === "s4") {
+					this.map[oldSquare[x][0]][oldSquare[x][1]] = "";
+				} else {
+					this.map[oldSquare[0][0]][oldSquare[0][1]] = this.oldWeapon[settings.player.uuid];
+					this.oldWeapon[settings.player.uuid] = undefined
+				}
 			}
 			this.setPlayerOrientation({
 				player: settings.player,
 				orientation: newOrientation
 			});
-			console.log('newOrientation: ', newOrientation);
 			this.playersPos[settings.player.uuid] = newPos;
 			let newX = newPos[0];
 			let newY = newPos[1];
@@ -255,16 +302,105 @@ class mapGame {
 			}
 			let squareFinal = [];
 			for (let y = 0; y < squarePosition.length; y++) {
+				if (this.map[squarePosition[y][0]][squarePosition[y][1]] != "") {
+					if (settings.player.weapon === undefined) {
+						settings.player.weapon = this.map[squarePosition[y][0]][squarePosition[y][1]];
+						this.updatePlayerStat({
+							player: settings.player,
+							weapon: this.map[squarePosition[y][0]][squarePosition[y][1]]
+						});
+					} else {
+						this.oldWeapon[settings.player.uuid] = settings.player.weapon;
+						settings.player.weapon = this.map[squarePosition[y][0]][squarePosition[y][1]];
+						this.updatePlayerStat({
+							player: settings.player,
+							weapon: this.map[squarePosition[y][0]][squarePosition[y][1]],
+							oldWeapon: this.oldWeapon[settings.player.uuid]
+						});
+					}
+				}
 				this.map[squarePosition[y][0]][squarePosition[y][1]] = settings.player.uuid; /*ajoute l'uuid' du joueur sur la carte*/
 				var pos = [squarePosition[y][0], squarePosition[y][1]]; /*créer la position du joueur total dans une variable*/
 				squareFinal.push(pos);
 			}
 			this.playerPosSquare[settings.player.uuid] = squareFinal;
-			console.log(this.map)
 		}
+	}
+	/*attaque*/
+
+	attack(settings) {
+		let player = settings.player;
+		let ennemi = settings.ennemi;
+		ennemi.pv = ennemi.pv - (player.offensif * 5) - (ennemi.defensif);
+	}
+
+	testAttack(settings) {
+		let pos = this.getPlayerPos(settings.player);
+		let direction = this.getPlayerOrientation(settings.player);
+		let lineX = pos[0];
+		let columnY = pos[1];
+		if (direction == "N") {
+			let line = lineX - 1;
+			if (line < 0) {
+				line = 0
+			};
+			if (line > 14) {
+				line = 14
+			}
+			if (this.map[line][columnY] === settings.ennemy.uuid) {
+				return true
+			}
+		}
+		if (direction == "S") {
+			let line = lineX + 1;
+			if (line < 0) {
+				line = 0
+			};
+			if (line > 14) {
+				line = 14
+			}
+			if (this.map[line][columnY] === settings.ennemy.uuid) {
+				return true
+			}
+		}
+		if (direction == "E") {
+			let column = columnY + 1;
+			if (column < 0) {
+				column = 0
+			};
+			if (column > 14) {
+				column = 14
+			}
+			if (this.map[lineX][column] === settings.ennemy.uuid) {
+				return true
+			}
+		}
+		if (direction == "W") {
+			let column = columnY - 1;
+			if (column < 0) {
+				column = 0
+			};
+			if (column > 14) {
+				column = 14
+			}
+			if (this.map[lineX][column] === settings.ennemy.uuid) {
+				return true
+			}
+		}
+		return false
 	}
 
 	/*mouvement autorise*/
+
+	searchOnArray(searchElement, array) {
+		let toFind = JSON.stringify(searchElement);
+		let source = JSON.stringify(array);
+		let result = source.indexOf(toFind);
+		if (result != -1) {
+			return true
+		}
+		return false
+	}
 
 	testmove(player) {
 		let pos = this.getPlayerSquarePos(player);
@@ -272,6 +408,7 @@ class mapGame {
 		let playerlength = this.getPlayerLength(player);
 		let mapTest = this.newmapGameArray();
 		let testPos = [];
+
 
 		for (let k = 0; k < mapTest.length; k++) {
 			/* on passe chaque ligne de mapTest en test*/
@@ -285,130 +422,116 @@ class mapGame {
 			}
 		}
 		for (let z = 0; z < pos.length; z++) {
-			mapTest[pos[z][0]][pos[z][1]].N = true;
-			mapTest[pos[z][0]][pos[z][1]].S = true;
-			mapTest[pos[z][0]][pos[z][1]].E = true;
-			mapTest[pos[z][0]][pos[z][1]].W = true;
-		}
-
-		for (let x = 0; x < speed; x++) {
-			/*on effectue la recherche pour le nombre de cases de déplacement possible */
-
-			for (let k = 0; k < mapTest.length; k++) {
-				/* on passe chaque ligne de mapTest en test*/
-				for (let w = 0; w < mapTest[k].length; w++) {
-					/*on passe chaque colonne de mapTest en test*/
-					if (mapTest[k][w].N === true || mapTest[k][w].S === true || mapTest[k][w].E === true || mapTest[k][w].W === true) {
-						testPos.push([k, w])
-					};
-					/* si la case est une possibilité on l'ajoute alors au test à effectuer*/
+			let line = pos[z][0];
+			let column = pos[z][1];
+			let lineMax = line + speed;
+			let columnMax = column + speed;
+			for (let x = 0; x < (speed * 2 + 1); x++) {
+				for (let y = 0; y < (speed * 2 + 1); y++) {
+					if (y < (speed - x) || (x + y) > ((speed + (x) * 2)) || x > (speed + y) || (x + y) > (speed * 3)) {} else {
+						let posSearchX = lineMax - x;
+						let posSearchY = columnMax - y;
+						if (posSearchX < 0) {
+							posSearchX = 0
+						};
+						if (posSearchX > 14) {
+							posSearchX = 14
+						};
+						if (posSearchY < 0) {
+							posSearchY = 0
+						};
+						if (posSearchY > 14) {
+							posSearchY = 14
+						};
+						if (this.map[posSearchX][posSearchY] === "" || this.map[posSearchX][posSearchY] === "s0" || this.map[posSearchX][posSearchY] === "s1" || this.map[posSearchX][posSearchY] === "s2" || this.map[posSearchX][posSearchY] === "s3" || this.map[posSearchX][posSearchY] === player.uuid) {
+							testPos.push([posSearchX, posSearchY]);
+						}
+					}
 				}
 			}
-			for (let x = 0; x < testPos.length; x++) {
-				let test = testPos[x];
-
-				let testNord = 0;
-				for (let n = 0; n < playerlength; n++) {
-					let lineX = test[0] - 1 + n;
-					let liX = test[0] - 1;
-					if (liX < 0) {
-						liX = 0
-					}
-					if (liX > 14) {
-						liX = 14
-					}
-					let columnY = test[1];
-					if (lineX < 0) {
-						lineX = 0
-					}
-					if (lineX > 14) {
-						lineX = 14
-					}
-					if (this.map[lineX][columnY] === "" || this.map[lineX][columnY] === "s0" || this.map[lineX][columnY] === "s1" || this.map[lineX][columnY] === "s2" || this.map[lineX][columnY] === "s3" || this.map[lineX][columnY] === player.uuid) {
-						testNord = testNord + 1;
-					}
-					if (testNord == playerlength) {
-						mapTest[liX][columnY].N = true
-					}
-				} /*test de la case nord en prenan compte du square du vaisseau */
-
-				let testSud = 0;
-				for (let s = 0; s < playerlength; s++) {
-					let lineX = test[0] + 1 - s;
-					let liX = test[0] + 1;
-					if (liX < 0) {
-						liX = 0
-					}
-					if (liX > 14) {
-						liX = 14
-					}
-					let columnY = test[1];
-					if (lineX < 0) {
-						lineX = 0
-					}
-					if (lineX > 14) {
-						lineX = 14
-					}
-					if (this.map[lineX][columnY] === "" || this.map[lineX][columnY] === "s0" || this.map[lineX][columnY] === "s1" || this.map[lineX][columnY] === "s2" || this.map[lineX][columnY] === "s3" || this.map[lineX][columnY] === player.uuid) {
-						testSud = testSud + 1;
-					}
-					if (testSud == playerlength) {
-						mapTest[liX][columnY].S = true
-					}
-				} /*test de la case sud en prenan compte du square du vaisseau */
-
-				let testEst = 0;
-				for (let e = 0; e < playerlength; e++) {
-					let lineX = test[0];
-					let columnY = test[1] + 1 - e;
-					let colY = test[1] + 1;
-					if (colY < 0) {
-						colY = 0
-					}
-					if (colY > 14) {
-						colY = 14
-					}
-					if (lineX < 0) {
-						lineX = 0
-					}
-					if (lineX > 14) {
-						lineX = 14
-					}
-					if (this.map[lineX][columnY] === "" || this.map[lineX][columnY] === "s0" || this.map[lineX][columnY] === "s1" || this.map[lineX][columnY] === "s2" || this.map[lineX][columnY] === "s3" || this.map[lineX][columnY] === player.uuid) {
-						testEst = testEst + 1;
-					}
-					if (testEst == playerlength) {
-						mapTest[lineX][colY].E = true
-					}
-				} /*test de la case est en prenan compte du square du vaisseau */
-
-				let testOuest = 0;
-				for (let o = 0; o < playerlength; o++) {
-					let lineX = test[0];
-					let columnY = test[1] - 1 + o;
-					let colY = test[1] - 1;
-					if (colY < 0) {
-						colY = 0
-					}
-					if (colY > 14) {
-						colY = 14
-					}
-					if (lineX < 0) {
-						lineX = 0
-					}
-					if (lineX > 14) {
-						lineX = 14
-					}
-					if (this.map[lineX][columnY] === "" || this.map[lineX][columnY] === "s0" || this.map[lineX][columnY] === "s1" || this.map[lineX][columnY] === "s2" || this.map[lineX][columnY] === "s3" || this.map[lineX][columnY] === player.uuid) {
-						testOuest = testOuest + 1;
-					}
-					if (testOuest == playerlength) {
-						mapTest[lineX][colY].W = true
-					}
-				} /*test de la case ouest en prenan compte du square du vaisseau */
-			}
-
 		}
+		for (let x = 0; x < testPos.length; x++) {
+			let test = testPos[x];
+
+			let testNord = 0;
+			for (let n = 0; n < playerlength; n++) {
+				let lineX = test[0] + n;
+				let liX = test[0];
+				let columnY = test[1];
+				if (lineX < 0) {
+					break;
+				}
+				if (lineX > 14) {
+					break;
+				}
+				/* si il correspond a une des testPos */
+				if (this.searchOnArray([lineX, columnY], testPos)) {
+					testNord = testNord + 1;
+				}
+				if (testNord == playerlength) {
+					mapTest[liX][columnY].N = true
+				}
+			} /*test de la case nord en prenan compte du square du vaisseau */
+
+			let testSud = 0;
+			for (let s = 0; s < playerlength; s++) {
+				let lineX = test[0] - s;
+				let liX = test[0];
+				let columnY = test[1];
+				if (lineX < 0) {
+					break;
+				}
+				if (lineX > 14) {
+					break;
+				}
+				if (this.searchOnArray([lineX, columnY], testPos)) {
+					testSud = testSud + 1;
+				}
+				if (testSud == playerlength) {
+					mapTest[liX][columnY].S = true
+				}
+			} /*test de la case sud en prenan compte du square du vaisseau */
+
+			let testEst = 0;
+			for (let e = 0; e < playerlength; e++) {
+				let lineX = test[0];
+				let columnY = test[1] - e;
+				let colY = test[1];
+				if (columnY < 0) {
+					break;
+				}
+				if (columnY > 14) {
+					break;
+				}
+				if (this.searchOnArray([lineX, columnY], testPos)) {
+					testEst = testEst + 1;
+				}
+				if (testEst == playerlength) {
+					mapTest[lineX][colY].E = true
+				}
+			} /*test de la case est en prenan compte du square du vaisseau */
+
+			let testOuest = 0;
+			for (let o = 0; o < playerlength; o++) {
+				let lineX = test[0];
+				let columnY = test[1] + o;
+				let colY = test[1];
+				if (columnY < 0) {
+					break;
+				}
+				if (columnY > 14) {
+					break;
+				}
+				if (this.searchOnArray([lineX, columnY], testPos)) {
+					testOuest = testOuest + 1;
+				}
+				if (testOuest == playerlength) {
+					mapTest[lineX][colY].W = true
+				}
+			} /*test de la case ouest en prenan compte du square du vaisseau */
+		}
+
+
 
 		for (let z = 0; z < pos.length; z++) {
 			mapTest[pos[z][0]][pos[z][1]].N = "x";
@@ -416,12 +539,7 @@ class mapGame {
 			mapTest[pos[z][0]][pos[z][1]].E = "x";
 			mapTest[pos[z][0]][pos[z][1]].W = "x";
 		}
-		console.log(mapTest);
 		return (mapTest);
 	}
 
 }
-
-/* deplacement 
-plateau[4][4] = plateau[6][4];
-plateau[6][4] = ' '; */
