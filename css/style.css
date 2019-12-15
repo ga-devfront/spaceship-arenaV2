@@ -97,7 +97,7 @@ button:hover {
     color: #015b7b;
 }
 
-button.nostyle {
+button.noStyle {
     border: none;
     border-radius: none;
     background-image: none;
@@ -158,13 +158,13 @@ button.square2 {
     display: flex;
 }
 
-.container.centerwrap {
+.container.centerWrap {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
 }
 
-.container.spacearound {
+.container.spaceAround {
     -ms-flex-pack: distribute;
     justify-content: space-around;
 }
@@ -290,19 +290,19 @@ button.square2 {
 
 /* txt */
 
-.big-font {
+.bigFont {
     font-size: 1.8em;
     text-transform: uppercase;
 }
 
-.title-font {
+.titleFont {
     font-size: 2em;
     text-transform: uppercase;
 }
 
 /* margin padding */
 
-.margtop100 {
+.margTop100 {
     margin-top: 100px;
     -webkit-transition: margin-top 10s;
     transition: margin-top 10s;

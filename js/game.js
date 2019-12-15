@@ -106,6 +106,9 @@ class Game {
 		for (let x = 0; settings.class.length > x; x++) {
 			newEl.classList.add(settings.class[x]);
 		};
+		if (typeof settings.title != "undefined" && settings.title.length > 0) {
+			newEl.setAttribute("title", settings.title);
+		}; //set id attritube
 		settings.parent.appendChild(newEl); //push img in dom
 	} //function for new image
 
@@ -259,7 +262,7 @@ class Game {
 			element: "div",
 			parent: emplacement,
 			id: speedship,
-			class: ["container", "centerwrap", "stats"]
+			class: ["container", "centerWrap", "stats"]
 		});
 		let speedID = document.getElementById(speedship);
 		let speed = document.createTextNode("Speed");
@@ -285,7 +288,7 @@ class Game {
 			element: "div",
 			parent: emplacement,
 			id: offship,
-			class: ["container", "centerwrap", "stats"]
+			class: ["container", "centerWrap", "stats"]
 		});
 
 		let offID = document.getElementById(offship);
@@ -312,7 +315,7 @@ class Game {
 			element: "div",
 			parent: emplacement,
 			id: defship,
-			class: ["container", "centerwrap", "stats"]
+			class: ["container", "centerWrap", "stats"]
 		});
 
 		let defID = document.getElementById(defship);
@@ -477,14 +480,14 @@ class Game {
 			parent: orientationChoose,
 			element: "div",
 			id: "titleOrientation",
-			class: ["container", "centerwrap", "big-font", "margtop15"]
+			class: ["container", "centerWrap", "bigFont", "margtop15"]
 		});
 		this.newTxt(titleOrientation, "Choose your orientation");
 		this.newHtmlElement({
 			parent: orientationChoose,
 			element: "div",
 			id: "buttonOrientation",
-			class: ["container", "spacearound", "margtop15"]
+			class: ["container", "spaceAround", "margtop15"]
 		});
 		if (mapTest[x][y].N === true) {
 			this.newButton({
@@ -792,7 +795,7 @@ class Game {
 				parent: div,
 				element: "div",
 				id: name,
-				class: ["container", "centerwrap", "big-font"]
+				class: ["container", "centerWrap", "bigFont"]
 			});
 			let divName = document.getElementById(name);
 			this.newTxt(divName, player.name);
@@ -817,7 +820,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "life" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 			let lifeID = document.getElementById("life" + player.uuid);
 			let life = document.createTextNode("PV");
@@ -826,7 +829,7 @@ class Game {
 				element: "div",
 				parent: lifeID,
 				id: "pv" + player.uuid,
-				class: ["container", "centerwrap", "life"]
+				class: ["container", "centerWrap", "life"]
 			});
 			let actualLifeID = document.getElementById("pv" + player.uuid);
 			let actualLife = document.createTextNode(player.pv + " / 100");
@@ -837,7 +840,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "speed" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 			let speedID = document.getElementById("speed" + player.uuid);
 			let speed = document.createTextNode("Speed");
@@ -862,7 +865,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "off" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 
 			let offID = document.getElementById("off" + player.uuid);
@@ -888,7 +891,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "def" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 
 			let defID = document.getElementById("def" + player.uuid);
@@ -915,7 +918,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "stuff" + player.uuid,
-				class: ["container", "centerwrap", "flexColumn", "stuff"]
+				class: ["container", "centerWrap", "flexColumn", "stuff"]
 			})
 			let stuffID = document.getElementById("stuff" + player.uuid);
 			let stuff = document.createTextNode("weapon");
@@ -924,13 +927,14 @@ class Game {
 				element: "div",
 				parent: stuffID,
 				id: "actualStuff" + player.uuid,
-				class: ["container", "centerwrap", "actualStuff", "margtop15"]
+				class: ["container", "centerWrap", "actualStuff", "margtop15"]
 			})
 			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
 			this.newImg({
 				parent: actulStuffID,
 				src: "img/weapons/none.png",
-				class: []
+				class: [],
+				title: "no equipment"
 			});
 		}
 	}
@@ -967,7 +971,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "life" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 			let life = document.createTextNode("PV");
 			lifeID = document.getElementById("life" + player.uuid);
@@ -976,7 +980,7 @@ class Game {
 				element: "div",
 				parent: lifeID,
 				id: "pv" + player.uuid,
-				class: ["container", "centerwrap", "life"]
+				class: ["container", "centerWrap", "life"]
 			});
 			let actualLifeID = document.getElementById("pv" + player.uuid);
 			let actualLife = document.createTextNode(player.pv + " / 100");
@@ -987,7 +991,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "speed" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 			let speed = document.createTextNode("Speed");
 			speedID = document.getElementById("speed" + player.uuid);
@@ -1012,7 +1016,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "off" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 
 			let off = document.createTextNode("Offensif");
@@ -1038,7 +1042,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "def" + player.uuid,
-				class: ["container", "centerwrap", "stats"]
+				class: ["container", "centerWrap", "stats"]
 			});
 
 			let def = document.createTextNode("Defensif");
@@ -1065,7 +1069,7 @@ class Game {
 				element: "div",
 				parent: div,
 				id: "stuff" + player.uuid,
-				class: ["container", "centerwrap", "flexColumn", "stuff"]
+				class: ["container", "centerWrap", "flexColumn", "stuff"]
 			})
 			let stuff = document.createTextNode("weapon");
 			stuffID = document.getElementById("stuff" + player.uuid);
@@ -1074,7 +1078,7 @@ class Game {
 				element: "div",
 				parent: stuffID,
 				id: "actualStuff" + player.uuid,
-				class: ["container", "centerwrap", "actualStuff", "margtop15"]
+				class: ["container", "centerWrap", "actualStuff", "margtop15"]
 			})
 			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
 			switch (player.weapon) {
@@ -1082,28 +1086,32 @@ class Game {
 					this.newImg({
 						parent: actulStuffID,
 						src: "img/weapons/gun/gun.png",
-						class: []
+						class: [],
+						title: "+1 attack"
 					});
 					break;
 				case "s1":
 					this.newImg({
 						parent: actulStuffID,
 						src: "img/weapons/speed/speed.png",
-						class: []
+						class: [],
+						title: "+1 speed"
 					});
 					break;
 				case "s2":
 					this.newImg({
 						parent: actulStuffID,
 						src: "img/weapons/shield/shield.png",
-						class: []
+						class: [],
+						title: "+1 defense"
 					});
 					break;
 				default:
 					this.newImg({
 						parent: actulStuffID,
 						src: "img/weapons/none.png",
-						class: []
+						class: [],
+						title: "no equipment"
 					});
 			}
 		}
@@ -1132,13 +1140,13 @@ class Game {
 			element: "div",
 			parent: header,
 			id: "rulesheader3",
-			class: ["title-font", "centerwrap", "container"]
+			class: ["titleFont", "centerWrap", "container"]
 		});
 		this.newButton({
 			parent: rulesheader2,
 			id: "closeRules",
 			img: "img/cross.png",
-			class: ["nostyle", "margtop15", "marg-lr10"],
+			class: ["noStyle", "margtop15", "marg-lr10"],
 			onclick: () => {
 				rulesoverlay.style.display = "none";
 			}
@@ -1151,8 +1159,7 @@ class Game {
 			class: ["overflowAuto", "margtop15", "marg-lr10", "rulesSize"]
 		});
 		let main = document.querySelector("#rulesoverlay main");
-		const newTxt = document.createTextNode("Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.Cum autem commodis intervallata temporibus convivia longa et noxia coeperint apparari vel distributio sollemnium sportularum, anxia deliberatione tractatur an exceptis his quibus vicissitudo debetur, peregrinum invitari conveniet, et si digesto plene consilio id placuerit fieri, is adhibetur qui pro domibus excubat aurigarum aut artem tesserariam profitetur aut secretiora quaedam se nosse confingit.Nec vox accusatoris ulla licet subditicii in his malorum quaerebatur acervis ut saltem specie tenus crimina praescriptis legum committerentur, quod aliquotiens fecere principes saevi: sed quicquid Caesaris implacabilitati sedisset, id velut fas iusque perpensum confestim urgebatur impleri.Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.Cum autem commodis intervallata temporibus convivia longa et noxia coeperint apparari vel distributio sollemnium sportularum, anxia deliberatione tractatur an exceptis his quibus vicissitudo debetur, peregrinum invitari conveniet, et si digesto plene consilio id placuerit fieri, is adhibetur qui pro domibus excubat aurigarum aut artem tesserariam profitetur aut secretiora quaedam se nosse confingit.Nec vox accusatoris ulla licet subditicii in his malorum quaerebatur acervis ut saltem specie tenus crimina praescriptis legum committerentur, quod aliquotiens fecere principes saevi: sed quicquid Caesaris implacabilitati sedisset, id velut fas iusque perpensum confestim urgebatur impleri.Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.Cum autem commodis intervallata temporibus convivia longa et noxia coeperint apparari vel distributio sollemnium sportularum, anxia deliberatione tractatur an exceptis his quibus vicissitudo debetur, peregrinum invitari conveniet, et si digesto plene consilio id placuerit fieri, is adhibetur qui pro domibus excubat aurigarum aut artem tesserariam profitetur aut secretiora quaedam se nosse confingit.Nec vox accusatoris ulla licet subditicii in his malorum quaerebatur acervis ut saltem specie tenus crimina praescriptis legum committerentur, quod aliquotiens fecere principes saevi: sed quicquid Caesaris implacabilitati sedisset, id velut fas iusque perpensum confestim urgebatur impleri.Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.Cum autem commodis intervallata temporibus convivia longa et noxia coeperint apparari vel distributio sollemnium sportularum, anxia deliberatione tractatur an exceptis his quibus vicissitudo debetur, peregrinum invitari conveniet, et si digesto plene consilio id placuerit fieri, is adhibetur qui pro domibus excubat aurigarum aut artem tesserariam profitetur aut secretiora quaedam se nosse confingit.Nec vox accusatoris ulla licet subditicii in his malorum quaerebatur acervis ut saltem specie tenus crimina praescriptis legum committerentur, quod aliquotiens fecere principes saevi: sed quicquid Caesaris implacabilitati sedisset, id velut fas iusque perpensum confestim urgebatur impleri.Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.Cum autem commodis intervallata temporibus convivia longa et noxia coeperint apparari vel distributio sollemnium sportularum, anxia deliberatione tractatur an exceptis his quibus vicissitudo debetur, peregrinum invitari conveniet, et si digesto plene consilio id placuerit fieri, is adhibetur qui pro domibus excubat aurigarum aut artem tesserariam profitetur aut secretiora quaedam se nosse confingit.Nec vox accusatoris ulla licet subditicii in his malorum quaerebatur acervis ut saltem specie tenus crimina praescriptis legum committerentur, quod aliquotiens fecere principes saevi: sed quicquid Caesaris implacabilitati sedisset, id velut fas iusque perpensum confestim urgebatur impleri.");
-		main.appendChild(newTxt);
+		main.insertAdjacentHTML("afterbegin", gameRules());
 	}
 
 	changeCurrentPlayer() {
@@ -1205,7 +1212,7 @@ class Game {
 			parent: this.main,
 			id: "start",
 			txt: "Start",
-			class: ["large", "big-font"],
+			class: ["large", "bigFont"],
 			onclick: () => {
 				this.state = 1;
 			}
@@ -1257,7 +1264,7 @@ class Game {
 			id: "sound_volume",
 			img: "img/sound.png",
 			alt: "contrôle du son",
-			class: ["nostyle", "marg-lr10"],
+			class: ["noStyle", "marg-lr10"],
 			onclick: () => {
 				let imgsound = (document.querySelector("#sound_volume>img"));
 				if (this.backgroundSound.volume === 0.5) {
@@ -1285,7 +1292,7 @@ class Game {
 			};
 			if (this.main.classList.contains("margtopneg50")) {
 				this.main.classList.remove("margtopneg50");
-				this.main.classList.add("margtop100");
+				this.main.classList.add("margTop100");
 			};
 			this.supress(this.main);
 		}, 500);
@@ -1297,7 +1304,7 @@ class Game {
 				imghover: "img/local_hover.png",
 				txt: "Play local",
 				alt: "Play local",
-				class: ["marg-lr10", "square", "big-font"],
+				class: ["marg-lr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 101;
 				}
@@ -1310,7 +1317,7 @@ class Game {
 				imghover: "img/online_hover.png",
 				txt: "Play online",
 				alt: "Play online",
-				class: ["marg-lr10", "square", "big-font"],
+				class: ["marg-lr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 201;
 				}
@@ -1329,7 +1336,7 @@ class Game {
 			};
 			if (this.main.classList.contains("margtopneg50")) {
 				this.main.classList.remove("margtopneg50");
-				this.main.classList.add("margtop100");
+				this.main.classList.add("margTop100");
 			};
 			this.supress(this.main);
 		}, 500);
@@ -1338,21 +1345,21 @@ class Game {
 				element: "div",
 				parent: this.main,
 				id: "playersName",
-				class: ["container", "centerwrap", "flexColumn"]
+				class: ["container", "centerWrap", "flexColumn"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
 				parent: playersName,
 				id: "titleName",
-				class: ["container", "centerwrap", "big-font"]
+				class: ["container", "centerWrap", "bigFont"]
 			});
 			this.newTxt(titleName, "Enter players name :");
 			this.newHtmlElement({
 				element: "div",
 				parent: playersName,
 				id: "inputName",
-				class: ["container", "spacearound", "margtop15"]
+				class: ["container", "spaceAround", "margtop15"]
 			});
 			let player1Input = document.createElement("input");
 			let player2Input = document.createElement("input");
@@ -1381,7 +1388,7 @@ class Game {
 				element: "div",
 				parent: playersName,
 				id: "submitName",
-				class: ["container", "centerwrap", "margtop15"]
+				class: ["container", "centerWrap", "margtop15"]
 			});
 
 			this.newButton({
@@ -1409,7 +1416,7 @@ class Game {
 		}, 500);
 		setTimeout(() => {
 			this.main.classList.add("margtopneg50");
-			this.main.classList.remove("margtop100");
+			this.main.classList.remove("margTop100");
 
 			this.header.classList.add("resizeSmall");
 			this.header.classList.remove("resizeBig");
@@ -1418,14 +1425,14 @@ class Game {
 				element: "div",
 				parent: this.main,
 				id: "shipChoice",
-				class: ["container", "centerwrap", "flexColumn", "width80"]
+				class: ["container", "centerWrap", "flexColumn", "width80"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
 				parent: shipChoice,
 				id: "titleShipChoice",
-				class: ["container", "centerwrap", "big-font"]
+				class: ["container", "centerWrap", "bigFont"]
 			});
 
 			this.newTxt(titleShipChoice, (player.name + " " + "choose your ship"))
@@ -1435,14 +1442,14 @@ class Game {
 				element: "div",
 				parent: shipChoice,
 				id: "tableOfShip",
-				class: ["container", "spacearound", "margtop15"]
+				class: ["container", "spaceAround", "margtop15"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
 				parent: tableOfShip,
 				id: "shipbb",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
@@ -1467,7 +1474,7 @@ class Game {
 				element: "div",
 				parent: tableOfShip,
 				id: "shipfc",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
@@ -1492,7 +1499,7 @@ class Game {
 				element: "div",
 				parent: tableOfShip,
 				id: "shipsf",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
@@ -1517,7 +1524,7 @@ class Game {
 				element: "div",
 				parent: tableOfShip,
 				id: "shipst",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
@@ -1593,20 +1600,20 @@ class Game {
 				element: "div",
 				parent: this.main,
 				id: "endGameChoice",
-				class: ["container", "centerwrap", "flexColumn"]
+				class: ["container", "centerWrap", "flexColumn"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
 				parent: endGameChoice,
 				id: "endGameWiner",
-				class: ["container", "centerwrap", "big-font"]
+				class: ["container", "centerWrap", "bigFont"]
 			});
 			this.newHtmlElement({
 				element: "div",
 				parent: endGameChoice,
 				id: "endGameButon",
-				class: ["container", "spacearound", "margtop15"]
+				class: ["container", "spaceAround", "margtop15"]
 			});
 
 			if (this.currentPlayer().pv > 0) {
@@ -1624,7 +1631,7 @@ class Game {
 				imghover: "img/local_hover.png",
 				txt: "Game menu",
 				alt: "Game menu",
-				class: ["marg-lr10", "square", "big-font"],
+				class: ["marg-lr10", "square", "bigFont"],
 				onclick: () => {
 					this.mapGame.generateMapGame();
 					this.resetPlayer();
@@ -1638,7 +1645,7 @@ class Game {
 				imghover: "img/replay_hover.png",
 				txt: "Replay",
 				alt: "Replay",
-				class: ["marg-lr10", "square", "big-font"],
+				class: ["marg-lr10", "square", "bigFont"],
 				onclick: () => {
 					this.mapGame.generateMapGame();
 					this.resetPlayer();
@@ -1662,7 +1669,7 @@ class Game {
 				imghover: "img/creatserv_hover.png",
 				txt: "Create new Game",
 				alt: "Create new game",
-				class: ["marg-lr10", "square", "big-font"],
+				class: ["marg-lr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 202;
 				}
@@ -1675,7 +1682,7 @@ class Game {
 				imghover: "img/joinserv_hover.png",
 				txt: "Join Game",
 				alt: "Join game",
-				class: ["marg-lr10", "square", "big-font"],
+				class: ["marg-lr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 203;
 				}
@@ -1707,19 +1714,19 @@ class Game {
 				element: "div",
 				parent: this.main,
 				id: "containerCreatGame",
-				class: ["container", "centerwrap", "flexColumn"]
+				class: ["container", "centerWrap", "flexColumn"]
 			});
 			this.newHtmlElement({
 				element: "div",
 				parent: containerCreatGame,
 				id: "titleCreat",
-				class: ["container", "big-font", "large"]
+				class: ["container", "bigFont", "large"]
 			});
 			this.newHtmlElement({
 				element: "div",
 				parent: containerCreatGame,
 				id: "inputCreat",
-				class: ["container", "centerwrap", "margtop15", "tableCell"]
+				class: ["container", "centerWrap", "margtop15", "tableCell"]
 			});
 
 			const newGameLabel = document.createElement("label");
@@ -1750,27 +1757,27 @@ class Game {
 		}, 500);
 		setTimeout(() => {
 			this.main.classList.add("margtopneg50");
-			this.main.classList.remove("margtop100");
+			this.main.classList.remove("margTop100");
 
 			this.newHtmlElement({
 				element: "div",
 				parent: this.main,
 				id: "tableOfGames",
-				class: ["container", "centerwrap", "listTable"]
+				class: ["container", "centerWrap", "listTable"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
 				parent: tableOfGames,
 				id: "titleChoice",
-				class: ["container", "big-font", "large"]
+				class: ["container", "bigFont", "large"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
 				parent: tableOfGames,
 				id: "listChoice",
-				class: ["container", "centerwrap", "overflowAuto", "tableCell"]
+				class: ["container", "centerWrap", "overflowAuto", "tableCell"]
 			});
 
 			this.newTxt(titleChoice, "Choose your game");
@@ -1795,9 +1802,9 @@ class Game {
 			this.supress(this.main);
 		}, 500);
 		setTimeout(() => {
-			if (this.main.classList.contains("margtop100") == true) {
+			if (this.main.classList.contains("margTop100") == true) {
 				this.main.classList.add("margtopneg15");
-				this.main.classList.remove("margtop100");
+				this.main.classList.remove("margTop100");
 			};
 
 			if (this.header.classList.contains("resizeBig") == true) {
@@ -1809,14 +1816,14 @@ class Game {
 				element: "div",
 				parent: this.main,
 				id: "tableOfShip",
-				class: ["container", "spacearound", "width80"]
+				class: ["container", "spaceAround", "width80"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
 				parent: tableOfShip,
 				id: "shipbb",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 			this.shipPresentation({
 				parent: shipbb,
@@ -1827,7 +1834,7 @@ class Game {
 				element: "div",
 				parent: tableOfShip,
 				id: "shipfc",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 			this.shipPresentation({
 				parent: shipfc,
@@ -1838,7 +1845,7 @@ class Game {
 				element: "div",
 				parent: tableOfShip,
 				id: "shipsf",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 			this.shipPresentation({
 				parent: shipsf,
@@ -1849,7 +1856,7 @@ class Game {
 				element: "div",
 				parent: tableOfShip,
 				id: "shipst",
-				class: ["container", "spacearound", "selectShip"]
+				class: ["container", "spaceAround", "selectShip"]
 			});
 			this.shipPresentation({
 				parent: shipst,
