@@ -308,34 +308,28 @@ button.square2 {
     transition: margin-top 10s;
 }
 
-.margtop15 {
+.margTop15 {
     margin-top: 15px;
     -webkit-transition: margin-top 10s;
     transition: margin-top 10s;
 }
 
-.margtopneg50 {
+.margTopNeg50 {
     margin-top: -50px;
     -webkit-transition: margin-top 10s;
     transition: margin-top 10s;
 }
 
-.margtopneg250 {
+.margTopNeg250 {
     margin-top: -250px;
     -webkit-transition: margin-top 10s;
     transition: margin-top 10s;
 }
 
-.marg-lr10 {
+.margLr10 {
     margin-left: 10px;
     margin-right: 10px;
 }
-
-.marg-bot15 {
-    margin-bottom: 15px;
-}
-
-
 
 .listTable {
     -webkit-box-orient: vertical;
@@ -377,16 +371,6 @@ button.square2 {
     overflow: auto;
 }
 
-.tableCell {
-    max-height: 350px;
-    margin-bottom: 10px;
-}
-
-.rulesSize {
-    height: 80%;
-    width: 90%;
-}
-
 .overflowAuto::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -403,6 +387,16 @@ button.square2 {
 .overflowAuto::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #ffffff;
+}
+
+.tableCell {
+    max-height: 350px;
+    margin-bottom: 10px;
+}
+
+.rulesSize {
+    height: 80%;
+    width: 90%;
 }
 
 .hoverTableCell {
@@ -470,10 +464,37 @@ button.square2 {
     margin-left: 5px;
 }
 
+
+.life {
+    font-size: 0.7em;
+    height: 12px;
+    width: 200px;
+    border: solid white 2px;
+    border-radius: 35px;
+    margin-top: 4px;
+    margin-left: 10px;
+}
+
+.stuff {
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+.actualStuff {
+    height: 100px;
+    width: 100px;
+    border: 3px ridge #ffffff;
+    align-items: center;
+}
+
 /* OVERLAYS */
 
 .overlay {
         position: fixed;
+}
+
+.attack {
+    cursor: url(../img/attack.png) 15 15, pointer;
 }
 
 .overlay.rules {
@@ -536,30 +557,4 @@ button.square2 {
 
 .overlay.player.right {
     right: 3%;
-}
-
-.attack {
-    cursor: url(../img/attack.png) 15 15, pointer;
-}
-
-.life {
-    font-size: 0.7em;
-    height: 12px;
-    width: 200px;
-    border: solid white 2px;
-    border-radius: 35px;
-    margin-top: 4px;
-    margin-left: 10px;
-}
-
-.stuff {
-    font-size: 1em;
-    text-transform: uppercase;
-}
-
-.actualStuff {
-    height: 100px;
-    width: 100px;
-    border: 3px ridge #ffffff;
-    align-items: center;
 }

@@ -480,14 +480,14 @@ class Game {
 			parent: orientationChoose,
 			element: "div",
 			id: "titleOrientation",
-			class: ["container", "centerWrap", "bigFont", "margtop15"]
+			class: ["container", "centerWrap", "bigFont", "margTop15"]
 		});
 		this.newTxt(titleOrientation, "Choose your orientation");
 		this.newHtmlElement({
 			parent: orientationChoose,
 			element: "div",
 			id: "buttonOrientation",
-			class: ["container", "spaceAround", "margtop15"]
+			class: ["container", "spaceAround", "margTop15"]
 		});
 		if (mapTest[x][y].N === true) {
 			this.newButton({
@@ -649,7 +649,7 @@ class Game {
 			parent: this.main,
 			id: "skipMove",
 			txt: "Skip Move >>",
-			class: ["large", "marg-lr10", "overlay", "skip"],
+			class: ["large", "margLr10", "overlay", "skip"],
 			onclick: () => {
 				this.supressPlayerMooves();
 				skipMove.remove();
@@ -684,7 +684,7 @@ class Game {
 				parent: this.main,
 				id: "skipAttack",
 				txt: "Skip Attack >>",
-				class: ["large", "marg-lr10", "overlay", "skip"],
+				class: ["large", "margLr10", "overlay", "skip"],
 				onclick: () => {
 					this.supressAttackPossibl(player);
 					skipAttack.remove();
@@ -927,7 +927,7 @@ class Game {
 				element: "div",
 				parent: stuffID,
 				id: "actualStuff" + player.uuid,
-				class: ["container", "centerWrap", "actualStuff", "margtop15"]
+				class: ["container", "centerWrap", "actualStuff", "margTop15"]
 			})
 			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
 			this.newImg({
@@ -1078,7 +1078,7 @@ class Game {
 				element: "div",
 				parent: stuffID,
 				id: "actualStuff" + player.uuid,
-				class: ["container", "centerWrap", "actualStuff", "margtop15"]
+				class: ["container", "centerWrap", "actualStuff", "margTop15"]
 			})
 			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
 			switch (player.weapon) {
@@ -1134,7 +1134,7 @@ class Game {
 			element: "div",
 			parent: header,
 			id: "rulesheader2",
-			class: ["container", "marg-lr10", "reverse"]
+			class: ["container", "margLr10", "reverse"]
 		});
 		this.newHtmlElement({
 			element: "div",
@@ -1146,7 +1146,7 @@ class Game {
 			parent: rulesheader2,
 			id: "closeRules",
 			img: "img/cross.png",
-			class: ["noStyle", "margtop15", "marg-lr10"],
+			class: ["noStyle", "margTop15", "margLr10"],
 			onclick: () => {
 				rulesoverlay.style.display = "none";
 			}
@@ -1156,7 +1156,7 @@ class Game {
 		this.newHtmlElement({
 			element: "main",
 			parent: rulesoverlay,
-			class: ["overflowAuto", "margtop15", "marg-lr10", "rulesSize"]
+			class: ["overflowAuto", "margTop15", "margLr10", "rulesSize"]
 		});
 		let main = document.querySelector("#rulesoverlay main");
 		main.insertAdjacentHTML("afterbegin", gameRules());
@@ -1223,7 +1223,7 @@ class Game {
 			img: "img/social/twitter.png",
 			imghover: "img/social/twitter_hover.png",
 			alt: "partager sur twitter",
-			class: ["small", "marg-lr10"],
+			class: ["small", "margLr10"],
 			onclick: function () {
 				window.open("https://twitter.com/AgDevfront/");
 			}
@@ -1234,7 +1234,7 @@ class Game {
 			img: "img/social/fb.png",
 			imghover: "img/social/fb_hover.png",
 			alt: "partager sur facebook",
-			class: ["small", "marg-lr10"],
+			class: ["small", "margLr10"],
 			onclick: function () {
 				window.open("https://www.facebook.com/agdevfront/");
 			}
@@ -1245,7 +1245,7 @@ class Game {
 			img: "img/social/insta.png",
 			imghover: "img/social/insta_hover.png",
 			alt: "partager sur insta",
-			class: ["small", "marg-lr10"],
+			class: ["small", "margLr10"],
 			onclick: function () {
 				window.open("https://www.instagram.com/agdevfront/");
 			}
@@ -1254,7 +1254,7 @@ class Game {
 			parent: this.footer,
 			id: "rules",
 			txt: "Game rules",
-			class: ["large", "marg-lr10"],
+			class: ["large", "margLr10"],
 			onclick: () => {
 				document.getElementById("rulesoverlay").style.display = "flex";
 			}
@@ -1264,7 +1264,7 @@ class Game {
 			id: "sound_volume",
 			img: "img/sound.png",
 			alt: "contrôle du son",
-			class: ["noStyle", "marg-lr10"],
+			class: ["noStyle", "margLr10"],
 			onclick: () => {
 				let imgsound = (document.querySelector("#sound_volume>img"));
 				if (this.backgroundSound.volume === 0.5) {
@@ -1290,8 +1290,8 @@ class Game {
 				this.header.classList.remove("resizeSmall");
 				this.header.classList.add("resizeBig");
 			};
-			if (this.main.classList.contains("margtopneg50")) {
-				this.main.classList.remove("margtopneg50");
+			if (this.main.classList.contains("margTopNeg50")) {
+				this.main.classList.remove("margTopNeg50");
 				this.main.classList.add("margTop100");
 			};
 			this.supress(this.main);
@@ -1304,7 +1304,7 @@ class Game {
 				imghover: "img/local_hover.png",
 				txt: "Play local",
 				alt: "Play local",
-				class: ["marg-lr10", "square", "bigFont"],
+				class: ["margLr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 101;
 				}
@@ -1317,7 +1317,7 @@ class Game {
 				imghover: "img/online_hover.png",
 				txt: "Play online",
 				alt: "Play online",
-				class: ["marg-lr10", "square", "bigFont"],
+				class: ["margLr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 201;
 				}
@@ -1334,8 +1334,8 @@ class Game {
 				this.header.classList.remove("resizeSmall");
 				this.header.classList.add("resizeBig");
 			};
-			if (this.main.classList.contains("margtopneg50")) {
-				this.main.classList.remove("margtopneg50");
+			if (this.main.classList.contains("margTopNeg50")) {
+				this.main.classList.remove("margTopNeg50");
 				this.main.classList.add("margTop100");
 			};
 			this.supress(this.main);
@@ -1359,7 +1359,7 @@ class Game {
 				element: "div",
 				parent: playersName,
 				id: "inputName",
-				class: ["container", "spaceAround", "margtop15"]
+				class: ["container", "spaceAround", "margTop15"]
 			});
 			let player1Input = document.createElement("input");
 			let player2Input = document.createElement("input");
@@ -1370,7 +1370,7 @@ class Game {
 			player1Input.minlength = 4;
 			player1Input.maxlength = 20;
 			player1Input.value = "Player 1";
-			player1Input.classList.add("small", "name", "marg-lr10");
+			player1Input.classList.add("small", "name", "margLr10");
 
 			player2Input.type = "text";
 			player2Input.id = "inputP2Name";
@@ -1379,7 +1379,7 @@ class Game {
 			player2Input.minlength = 4;
 			player2Input.maxlength = 20;
 			player2Input.value = "Player 2";
-			player2Input.classList.add("small", "name", "marg-lr10");
+			player2Input.classList.add("small", "name", "margLr10");
 
 			inputName.appendChild(player1Input);
 			inputName.appendChild(player2Input);
@@ -1388,7 +1388,7 @@ class Game {
 				element: "div",
 				parent: playersName,
 				id: "submitName",
-				class: ["container", "centerWrap", "margtop15"]
+				class: ["container", "centerWrap", "margTop15"]
 			});
 
 			this.newButton({
@@ -1415,7 +1415,7 @@ class Game {
 			this.supress(this.main);
 		}, 500);
 		setTimeout(() => {
-			this.main.classList.add("margtopneg50");
+			this.main.classList.add("margTopNeg50");
 			this.main.classList.remove("margTop100");
 
 			this.header.classList.add("resizeSmall");
@@ -1442,7 +1442,7 @@ class Game {
 				element: "div",
 				parent: shipChoice,
 				id: "tableOfShip",
-				class: ["container", "spaceAround", "margtop15"]
+				class: ["container", "spaceAround", "margTop15"]
 			});
 
 			this.newHtmlElement({
@@ -1554,8 +1554,8 @@ class Game {
 			this.fadeOut(this.main);
 			setTimeout(() => {
 				this.supress(this.main);
-				this.main.classList.add("margtopneg250");
-				this.main.classList.remove("margtopneg50");
+				this.main.classList.add("margTopNeg250");
+				this.main.classList.remove("margTopNeg50");
 			}, 500);
 			setTimeout(() => {
 				this.creatPlayersOverlay();
@@ -1588,8 +1588,8 @@ class Game {
 		this.fadeOut(overlay2);
 		setTimeout(() => {
 			this.supress(this.main);
-			this.main.classList.add("margtopneg50");
-			this.main.classList.remove("margtopneg250");
+			this.main.classList.add("margTopNeg50");
+			this.main.classList.remove("margTopNeg250");
 			this.supress(overlay1);
 			overlay1.remove();
 			this.supress(overlay2);
@@ -1613,7 +1613,7 @@ class Game {
 				element: "div",
 				parent: endGameChoice,
 				id: "endGameButon",
-				class: ["container", "spaceAround", "margtop15"]
+				class: ["container", "spaceAround", "margTop15"]
 			});
 
 			if (this.currentPlayer().pv > 0) {
@@ -1631,7 +1631,7 @@ class Game {
 				imghover: "img/local_hover.png",
 				txt: "Game menu",
 				alt: "Game menu",
-				class: ["marg-lr10", "square", "bigFont"],
+				class: ["margLr10", "square", "bigFont"],
 				onclick: () => {
 					this.mapGame.generateMapGame();
 					this.resetPlayer();
@@ -1645,7 +1645,7 @@ class Game {
 				imghover: "img/replay_hover.png",
 				txt: "Replay",
 				alt: "Replay",
-				class: ["marg-lr10", "square", "bigFont"],
+				class: ["margLr10", "square", "bigFont"],
 				onclick: () => {
 					this.mapGame.generateMapGame();
 					this.resetPlayer();
@@ -1669,7 +1669,7 @@ class Game {
 				imghover: "img/creatserv_hover.png",
 				txt: "Create new Game",
 				alt: "Create new game",
-				class: ["marg-lr10", "square", "bigFont"],
+				class: ["margLr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 202;
 				}
@@ -1682,7 +1682,7 @@ class Game {
 				imghover: "img/joinserv_hover.png",
 				txt: "Join Game",
 				alt: "Join game",
-				class: ["marg-lr10", "square", "bigFont"],
+				class: ["margLr10", "square", "bigFont"],
 				onclick: () => {
 					this.state = 203;
 				}
@@ -1726,7 +1726,7 @@ class Game {
 				element: "div",
 				parent: containerCreatGame,
 				id: "inputCreat",
-				class: ["container", "centerWrap", "margtop15", "tableCell"]
+				class: ["container", "centerWrap", "margTop15", "tableCell"]
 			});
 
 			const newGameLabel = document.createElement("label");
@@ -1756,7 +1756,7 @@ class Game {
 			this.header.classList.remove("resizeBig");
 		}, 500);
 		setTimeout(() => {
-			this.main.classList.add("margtopneg50");
+			this.main.classList.add("margTopNeg50");
 			this.main.classList.remove("margTop100");
 
 			this.newHtmlElement({
@@ -1871,7 +1871,7 @@ class Game {
 		this.fadeOut(this.main);
 		setTimeout(() => {
 			this.supress(this.main);
-			this.main.classList.add("margtopneg250");
+			this.main.classList.add("margTopNeg250");
 			this.main.classList.remove("margtopneg15");
 		}, 500);
 		setTimeout(() => {
