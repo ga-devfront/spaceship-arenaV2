@@ -16,9 +16,9 @@ import obstacles from "./obstacles.js";
 class Game {
 	constructor(container) {
 		if ((typeof container == "undefined") || (container.length == 0)) throw new Error("Merci de préciser un container pour initialiser l'instance de jeu");
-		this.header = container.getElementsByTagName("header")[0];
-		this.main = container.getElementsByTagName("main")[0];
-		this.footer = container.getElementsByTagName("footer")[0];
+		this.header = $(container + ' header')[0];
+		this.main = $(container + ' main')[0];
+		this.footer = $(container + ' footer')[0];
 		this.container = container;
 		this.buttonSound = new Audio("audio/btn.mp3");
 		this.buttonSound.volume = 0.1;
@@ -195,7 +195,7 @@ class Game {
 		for (let x = 0; settings.class.length > x; x++) {
 			newEl.classList.add(settings.class[x]);
 		}
-		settings.parent.appendChild(newEl);
+		$(settings.parent).append(newEl);
 	} //function for new div
 
 	supress(selection) {
@@ -779,7 +779,7 @@ class Game {
 				direction = "right"
 			}
 			this.newHtmlElement({
-				parent: this.container,
+				parent: this.main,
 				element: "div",
 				id: player.uuid,
 				class: ["overlay", "player", direction, "container", "flexColumn", "spaceEvenly"]
@@ -1883,8 +1883,7 @@ class Game {
 	}
 }
 
-let main = document.getElementById("game1");
-let game = new Game(main);
+let game = new Game("#game1");
 
 /*let main2 = document.getElementById("game2");
 let game2 = new Game(main2);*/
