@@ -32,13 +32,13 @@ main > header {
     padding-top: 100px;
     position: relative;
     z-index: 1;
-    opacity: 0;
+    opacity: 1;
 }
 
 main > main {
     position: relative;
     z-index: 1;
-    opacity: 0;
+    opacity: 1;
 }
 
 main > footer {
@@ -46,7 +46,7 @@ main > footer {
     bottom: 10px;
     right: 10px;
     z-index: 1;
-    opacity: 0;
+    opacity: 1;
 }
 
 /* input & button */
@@ -173,18 +173,6 @@ button.square2 {
     justify-content: space-evenly;
 }
 
-.container.show {
-    opacity: 1;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-}
-
-.container.hide {
-    opacity: 0;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-}
-
 .container.reverse {
     flex-direction: row-reverse;
 }
@@ -304,26 +292,26 @@ button.square2 {
 
 .margTop100 {
     margin-top: 100px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
 .margTop15 {
     margin-top: 15px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
 .margTopNeg50 {
     margin-top: -50px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
 .margTopNeg250 {
     margin-top: -250px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
 .margLr10 {

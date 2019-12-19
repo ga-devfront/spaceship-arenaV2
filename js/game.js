@@ -95,35 +95,34 @@ class Game {
 	}
 
 	newImg(settings) {
-		const newEl = document.createElement("img"); //creat img
-		newEl.setAttribute("src", settings.src); //set src attribute
+		const newEl = $("<img>"); //creat img
+		$(newEl).attr("src", settings.src); //set src attribute
 		if (typeof settings.alt != "undefined" && settings.alt.length > 0) {
-			newEl.setAttribute("alt", settings.alt);
+			$(newEl).attr("alt", settings.alt);
 		}; //set alt attritube
 		if (typeof settings.id != "undefined" && settings.id.length > 0) {
-			newEl.setAttribute("id", settings.id);
+			$(newEl).attr("id", settings.id);
 		}; //set id attritube
 		for (let x = 0; settings.class.length > x; x++) {
-			newEl.classList.add(settings.class[x]);
+			$(newEl).addClass(settings.class[x]);
 		};
 		if (typeof settings.title != "undefined" && settings.title.length > 0) {
-			newEl.setAttribute("title", settings.title);
+			$(newEl).attr("title", settings.title);
 		}; //set id attritube
-		settings.parent.appendChild(newEl); //push img in dom
+		$(settings.parent).append(newEl); //push img in dom
 	} //function for new image
 
 	newTxt(emplacement, myTxt) {
-		const newTxt = document.createTextNode(myTxt);
-		emplacement.appendChild(newTxt);
+		$(emplacement).append(document.createTextNode(myTxt));
 	}
 
 	newButton(settings) {
-		const newEl = document.createElement("button"); //creat button
-		newEl.setAttribute("id", settings.id); //set the id
+		const newEl = $("<button>"); //creat button
+		$(newEl).attr("id", settings.id); //set the id
 		for (let x = 0; settings.class.length > x; x++) {
-			newEl.classList.add(settings.class[x]);
+			$(newEl).addClass(settings.class[x]);
 		}
-		settings.parent.appendChild(newEl); //push button in dom
+		$(settings.parent).append(newEl); //push button in dom
 
 		if (typeof settings.img != "undefined" && settings.img.length > 0) {
 			let img = settings.img;
@@ -136,100 +135,82 @@ class Game {
 				class: [classe]
 			});
 			if (typeof settings.imghover != "undefined" && settings.imghover.length > 0) {
-				let imgSelect = newEl.getElementsByTagName("img")[0];
-				newEl.addEventListener("mouseover", function () {
+				let imgSelect = $('#' + settings.id + ' img')[0];
+				$(newEl).hover(
+					function () {
 					imgSelect.src = settings.imghover;
-				}) //change img in hover and play sound
-				newEl.addEventListener("mouseout", function () {
-					imgSelect.src = settings.img;
-				}) //change img in out
-			}
-		};
+				}, function () {
+					imgSelect.src = settings.img;}) //change img in hover and play sound
+
+		}};
 
 		if (typeof settings.txt != "undefined" && settings.txt.length > 0) {
-			let txt = settings.txt;
-			this.newTxt(newEl, txt);
+			this.newTxt(newEl, settings.txt);
 		};
 
 		let audio = this.buttonSound;
-		newEl.addEventListener("mouseover", function () {
+		$(newEl).hover(function () {
 			audio.play();
-		})
+		});
 
 		if (typeof settings.onclick != "undefined") {
-			newEl.addEventListener("click", function () {
+			$(newEl).click(function () {
 				settings.onclick();
 			})
 		};
 	} //function for new button
 
 	newTable(emplacement, numberofLine, numberofColumn, tableID) {
-		const newTable = document.createElement("table");
-		newTable.setAttribute("id", tableID);
+		const newTable = $("<table>");
+		$(newTable).attr("id", tableID);
 
-		const newTablBody = document.createElement("tbody");
+		const newTablBody = $("<tbody>");
 		for (let i = 0; i < numberofLine; i++) {
-			var newLine = document.createElement("tr");
+			var newLine = $("<tr>");
 			for (let o = 0; o < numberofColumn; o++) {
-				var newColumn = document.createElement("td");
-				newColumn.setAttribute("id", "gameplayer" + i);
-				newColumn.classList.add("large", "hoverTableCell");
-				newColumn.addEventListener("mouseover", () => {
+				var newColumn = $("<td>");
+				$(newColumn).attr("id", "gameplayer" + i);
+				$(newColumn).addClass("large", "hoverTableCell");
+				$(newColumn).hover(() => {
 					let sound = this.buttonSound;
 					sound.play();
 				}) //add sound on hover
-				newLine.appendChild(newColumn);
+				$(newLine).append(newColumn);
 			}
-			newTablBody.appendChild(newLine);
+			$(newTablBody).append(newLine);
 
 		}
-		newTable.appendChild(newTablBody);
-		emplacement.appendChild(newTable);
+		$(newTable).append(newTablBody);
+		$(emplacement).append(newTable);
 	} //function for new table
 
 	newHtmlElement(settings) {
-		const newEl = document.createElement(settings.element);
+		const newEl = $("<" + settings.element + ">");
 		if (typeof settings.id != "undefined" && settings.id.length > 0) {
-			newEl.setAttribute("id", settings.id);
+			$(newEl).attr("id", settings.id);
 		}
 		for (let x = 0; settings.class.length > x; x++) {
-			newEl.classList.add(settings.class[x]);
+			$(newEl).addClass(settings.class[x]);
 		}
 		$(settings.parent).append(newEl);
 	} //function for new div
 
-	supress(selection) {
-		while (selection.firstChild) {
-			selection.removeChild(selection.firstChild);
-		}
-	} //function for supress all child
-
 	supressAll() {
-		this.supress(this.header);
-		this.supress(this.main);
-		this.supress(this.footer);
+		$(this.header).empty();
+		$(this.main).empty();
+		$(this.footer).empty();
 	}
-
-	fadeIn(select) {
-		select.classList.add('show');
-		select.classList.remove('hide');
-	} //function for fade in
 
 	fadeInAll() {
-		this.fadeIn(this.header);
-		this.fadeIn(this.main);
-		this.fadeIn(this.footer);
+		$(this.header).fadeIn(500);
+		$(this.main).fadeIn(500);
+		$(this.footer).fadeIn(500);
 	}
 
-	fadeOut(select) {
-		select.classList.add('hide');
-		select.classList.remove('show');
-	} //function for fade out 
-
 	fadeOutAll() {
-		this.fadeOut(this.header);
-		this.fadeOut(this.main);
-		this.fadeOut(this.footer);
+		$(this.header).fadeOut(500);
+		$(this.main).fadeOut(500);
+		$(this.footer).fadeOut(500);
 	}
 
 	shipPresentation(settings) {
@@ -447,7 +428,6 @@ class Game {
 	}
 
 	supressPlayerMooves() {
-		let map = document.getElementById("myGameMap");
 		for (let x = 0; x < this.mapGame.map.length; x++) {
 			for (let y = 0; y < this.mapGame.map[x].length; y++) {
 				let columnMap = document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
@@ -466,9 +446,7 @@ class Game {
 		let x = settings.x;
 		let y = settings.y;
 		if (document.getElementById("orientationChoose")) {
-			let window = document.getElementById("orientationChoose");
-			this.supress(window);
-			window.remove();
+			$("#orientationChoose").remove();
 		}
 		this.newHtmlElement({
 			parent: this.container,
@@ -608,8 +586,7 @@ class Game {
 		};
 
 		let moovePosition = [x, y];
-		this.supress(document.getElementById("orientationChoose"));
-		document.getElementById("orientationChoose").remove();
+		$("#orientationChoose").remove();
 		this.supressPlayer(settings.player);
 		this.supressPlayerMooves();
 		this.mapGame.setPlayerPos({
@@ -687,7 +664,7 @@ class Game {
 				class: ["large", "margLr10", "overlay", "skip"],
 				onclick: () => {
 					this.supressAttackPossibl(player);
-					skipAttack.remove();
+					$(skipAttack).remove();
 					this.changeCurrentPlayer();
 					this.state = 103;
 				}
@@ -943,21 +920,11 @@ class Game {
 		for (let x = 0; x < this.players.length; x++) {
 			let player = this.players[x];
 			let div = document.getElementById(player.uuid);
-			let lifeID = document.getElementById("life" + player.uuid);
-			this.supress(lifeID);
-			lifeID.remove();
-			let speedID = document.getElementById("speed" + player.uuid);
-			this.supress(speedID);
-			speedID.remove();
-			let offID = document.getElementById("off" + player.uuid);
-			this.supress(offID);
-			offID.remove();
-			let defID = document.getElementById("def" + player.uuid);
-			this.supress(defID);
-			defID.remove();
-			let stuffID = document.getElementById("stuff" + player.uuid);
-			this.supress(stuffID);
-			stuffID.remove();
+			$("#life" + player.uuid).remove();
+			$("#speed" + player.uuid).remove();
+			$("#off" + player.uuid).remove();
+			$("#def" + player.uuid).remove();
+			$("#stuff" + player.uuid).remove();
 
 			if (player == this.currentPlayer()) {
 				div.classList.remove("inactiv");
@@ -974,7 +941,7 @@ class Game {
 				class: ["container", "centerWrap", "stats"]
 			});
 			let life = document.createTextNode("PV");
-			lifeID = document.getElementById("life" + player.uuid);
+			let lifeID = document.getElementById("life" + player.uuid);
 			lifeID.appendChild(life);
 			this.newHtmlElement({
 				element: "div",
@@ -994,7 +961,7 @@ class Game {
 				class: ["container", "centerWrap", "stats"]
 			});
 			let speed = document.createTextNode("Speed");
-			speedID = document.getElementById("speed" + player.uuid);
+			let speedID = document.getElementById("speed" + player.uuid);
 			speedID.appendChild(speed);
 			for (let i = 0; i < player.speed; i++) {
 				this.newImg({
@@ -1020,7 +987,7 @@ class Game {
 			});
 
 			let off = document.createTextNode("Offensif");
-			offID = document.getElementById("off" + player.uuid);
+			let offID = document.getElementById("off" + player.uuid);
 			offID.appendChild(off);
 			for (let y = 0; y < player.offensif; y++) {
 				this.newImg({
@@ -1046,7 +1013,7 @@ class Game {
 			});
 
 			let def = document.createTextNode("Defensif");
-			defID = document.getElementById("def" + player.uuid);
+			let defID = document.getElementById("def" + player.uuid);
 			defID.appendChild(def);
 			for (let y = 0; y < player.defensif; y++) {
 				this.newImg({
@@ -1072,7 +1039,7 @@ class Game {
 				class: ["container", "centerWrap", "flexColumn", "stuff"]
 			})
 			let stuff = document.createTextNode("weapon");
-			stuffID = document.getElementById("stuff" + player.uuid);
+			let stuffID = document.getElementById("stuff" + player.uuid);
 			stuffID.appendChild(stuff);
 			this.newHtmlElement({
 				element: "div",
@@ -1193,7 +1160,9 @@ class Game {
 
 	step0() {
 		this.supressAll();
-		this.fadeOutAll();
+		$(this.header).fadeOut(0);
+		$(this.main).fadeOut(0);
+		$(this.footer).fadeOut(0);
 
 		this.backgroundSound.addEventListener("load", function () {
 			this.backgroundSound.play();
@@ -1284,7 +1253,7 @@ class Game {
 	}
 
 	step1() {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
 			if (this.header.classList.contains("resizeSmall")) {
 				this.header.classList.remove("resizeSmall");
@@ -1294,7 +1263,7 @@ class Game {
 				this.main.classList.remove("margTopNeg50");
 				this.main.classList.add("margTop100");
 			};
-			this.supress(this.main);
+			$(this.main).empty();
 		}, 500);
 		setTimeout(() => {
 			this.newButton({
@@ -1322,13 +1291,13 @@ class Game {
 					this.state = 201;
 				}
 			});
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 
 	}
 
 	step101() {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
 			if (this.header.classList.contains("resizeSmall")) {
 				this.header.classList.remove("resizeSmall");
@@ -1338,7 +1307,7 @@ class Game {
 				this.main.classList.remove("margTopNeg50");
 				this.main.classList.add("margTop100");
 			};
-			this.supress(this.main);
+			$(this.main).empty();
 		}, 500);
 		setTimeout(() => {
 			this.newHtmlElement({
@@ -1405,14 +1374,14 @@ class Game {
 			});
 
 
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 	}
 
 	step102(player) {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			this.supress(this.main);
+			$(this.main).empty();
 		}, 500);
 		setTimeout(() => {
 			this.main.classList.add("margTopNeg50");
@@ -1545,15 +1514,15 @@ class Game {
 				};
 			};
 
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 	}
 
 	step103() {
 		if (this.state != this.previousState) {
-			this.fadeOut(this.main);
+			$(this.main).fadeOut(500);
 			setTimeout(() => {
-				this.supress(this.main);
+				$(this.main).empty();
 				this.main.classList.add("margTopNeg250");
 				this.main.classList.remove("margTopNeg50");
 			}, 500);
@@ -1570,7 +1539,7 @@ class Game {
 				this.printPlayer(this.player1);
 				this.printPlayer(this.player2);
 				this.playeTurn(this.currentPlayer());
-				this.fadeIn(this.main);
+				$(this.main).fadeIn(500);
 			}, 501);
 		}
 		if (this.state == this.previousState) {
@@ -1581,19 +1550,15 @@ class Game {
 	}
 
 	step104() {
-		let overlay1 = document.getElementById(this.currentPlayer().uuid);
-		let overlay2 = document.getElementById(this.getOpponent(this.currentPlayer()).uuid);
-		this.fadeOut(this.main);
-		this.fadeOut(overlay1);
-		this.fadeOut(overlay2);
+		$(this.main).fadeOut(500);
+		$("#" + this.currentPlayer().uuid).fadeOut(500);
+		$("#" + this.getOpponent(this.currentPlayer()).uuid).fadeOut(500);
 		setTimeout(() => {
-			this.supress(this.main);
+			$(this.main).empty();
 			this.main.classList.add("margTopNeg50");
 			this.main.classList.remove("margTopNeg250");
-			this.supress(overlay1);
-			overlay1.remove();
-			this.supress(overlay2);
-			overlay2.remove();
+			$("#" + this.currentPlayer().uuid).remove();
+			$("#" + this.getOpponent(this.currentPlayer()).uuid).remove();
 		}, 500);
 		setTimeout(() => {
 			this.newHtmlElement({
@@ -1652,14 +1617,14 @@ class Game {
 					this.state = 101;
 				}
 			});
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 	}
 
 	step201() {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			this.supress(this.main);
+			$(this.main).empty();
 		}, 500);
 		setTimeout(() => {
 			this.newButton({
@@ -1687,15 +1652,15 @@ class Game {
 					this.state = 203;
 				}
 			});
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 
 	}
 
 	step202() {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			this.supress(this.main);
+			$(this.main).empty();
 		}, 500);
 		setTimeout(() => {
 			const newGame = document.createElement("form");
@@ -1744,14 +1709,14 @@ class Game {
 			newGame.appendChild(newGameName);
 			newGame.appendChild(newGameButton);
 			titleCreat.appendChild(newTextLabel);
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 	}
 
 	step203() {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			this.supress(this.main);
+			$(this.main).empty();
 			this.header.classList.add("resizeSmall");
 			this.header.classList.remove("resizeBig");
 		}, 500);
@@ -1792,14 +1757,14 @@ class Game {
 				})
 			};
 
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 	}
 
 	step204() {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			this.supress(this.main);
+			$(this.main).empty();
 		}, 500);
 		setTimeout(() => {
 			if (this.main.classList.contains("margTop100") == true) {
@@ -1863,21 +1828,21 @@ class Game {
 				ship: shipSettings.spaceThunderSettings,
 			});
 
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 	}
 
 	step205() {
-		this.fadeOut(this.main);
+		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			this.supress(this.main);
+			$(this.main).empty();
 			this.main.classList.add("margTopNeg250");
 			this.main.classList.remove("margtopneg15");
 		}, 500);
 		setTimeout(() => {
 			this.printMap();
 			/*this.mapGame*/
-			this.fadeIn(this.main);
+			$(this.main).fadeIn(500);
 		}, 501);
 
 	}
