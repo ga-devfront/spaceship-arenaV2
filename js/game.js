@@ -216,9 +216,9 @@ class Game {
 	shipPresentation(settings) {
 		let emplacement = settings.parent
 		let sound = this.buttonSound;
-		emplacement.addEventListener("mouseover", function () {
+		$(emplacement).hover(function () {
 			sound.play();
-		})
+		});
 		let logo = settings.ship.shipname + " " + "logo";
 		let sprite = settings.ship.shipname + " " + "sprite";
 		let logoimg = settings.ship.logo;
@@ -235,8 +235,7 @@ class Game {
 			alt: sprite,
 			class: ["shipSelectAnim"]
 		});
-		let description = document.createTextNode(settings.ship.description);
-		emplacement.appendChild(description);
+		$(emplacement).append(document.createTextNode(settings.ship.description));
 
 		let speedship = settings.ship.abreviation + "speed";
 		this.newHtmlElement({
@@ -245,9 +244,8 @@ class Game {
 			id: speedship,
 			class: ["container", "centerWrap", "stats"]
 		});
-		let speedID = document.getElementById(speedship);
-		let speed = document.createTextNode("Speed");
-		speedID.appendChild(speed);
+		let speedID = $("#" + speedship);
+		$(speedID).append(document.createTextNode("Speed"));
 		for (let i = 0; i < settings.ship.speed; i++) {
 			this.newImg({
 				parent: speedID,
@@ -272,9 +270,8 @@ class Game {
 			class: ["container", "centerWrap", "stats"]
 		});
 
-		let offID = document.getElementById(offship);
-		let off = document.createTextNode("Offensif");
-		offID.appendChild(off);
+		let offID = $("#" + offship);
+		$(offID).append(document.createTextNode("Offensif"));
 		for (let y = 0; y < settings.ship.offensif; y++) {
 			this.newImg({
 				parent: offID,
@@ -299,9 +296,8 @@ class Game {
 			class: ["container", "centerWrap", "stats"]
 		});
 
-		let defID = document.getElementById(defship);
-		let def = document.createTextNode("Defensif");
-		defID.appendChild(def);
+		let defID = $("#" + defship);
+		$(defID).append(document.createTextNode("Defensif"));
 		for (let y = 0; y < settings.ship.defensif; y++) {
 			this.newImg({
 				parent: defID,
@@ -327,16 +323,16 @@ class Game {
 			class: ["mapGame", "mapMoove", "rotate"]
 		});
 		for (let x = 0; x < this.mapGame.map.length; x++) {
-			var newLine = document.createElement("div");
+			var newLine = $("<div>");
 			for (let y = 0; y < this.mapGame.map[x].length; y++) {
-				var newColumn = document.createElement("div");
-				newLine.appendChild(newColumn);
-				const newDiv = document.createElement("div");
-				newColumn.setAttribute("data-x", x);
-				newColumn.setAttribute("data-y", y);
-				newColumn.appendChild(newDiv);
-				newColumn.classList.add("gameGrid");
-				newDiv.classList.add("baseMap");
+				var newColumn = $("<div>");
+				$(newLine).append(newColumn);
+				const newDiv = $("<div>");
+				$(newColumn).attr("data-x", x);
+				$(newColumn).attr("data-y", y);
+				$(newColumn).append(newDiv);
+				$(newColumn).addClass("gameGrid");
+				$(newDiv).addClass("baseMap");
 				this.newImg({
 					parent: newDiv,
 					src: this.mapImg,
@@ -389,9 +385,9 @@ class Game {
 					})
 				}
 			}
-			myGameMap.appendChild(newLine);
+			$(myGameMap).append(newLine);
 		}
-		this.main.appendChild(myGameMap);
+		$(this.main).append(myGameMap);
 	}
 
 	printPlayer(player) {
@@ -401,9 +397,9 @@ class Game {
 		for (let x = 0; x < length; x++) {
 			let line = square[x][0];
 			let column = square[x][1];
-			let cellMap = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]>div`);
-			let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
-			divCell.classList.add("cellPlayer");
+			let cellMap = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]>div`);
+			let divCell = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+			$(divCell).addClass("cellPlayer");
 			this.newImg({
 				parent: cellMap,
 				src: player.ship.sprite[x][this.mapGame.getPlayerOrientation(player)],
@@ -419,23 +415,19 @@ class Game {
 		for (let x = 0; x < length; x++) {
 			let line = square[x][0];
 			let column = square[x][1];
-			let cellMap = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]>div`);
-			let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
-			divCell.classList.remove("cellPlayer");
-			let playerImg = cellMap.getElementsByClassName("playerImg")[0];
-			playerImg.remove();
+			let divCell = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+			$(divCell).removeClass("cellPlayer");
+			$(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]>div .playerImg`).remove();
 		}
 	}
 
 	supressPlayerMooves() {
 		for (let x = 0; x < this.mapGame.map.length; x++) {
 			for (let y = 0; y < this.mapGame.map[x].length; y++) {
-				let columnMap = document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
-				if (columnMap.classList.contains("moove")) {
-					columnMap.classList.remove("moove");
-					columnMap.onclick = () => {
-						void(0);
-					};
+				let columnMap = $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
+				if ($(columnMap).hasClass("moove")) {
+					$(columnMap).removeClass("moove");
+					$(columnMap).off();
 				}
 			}
 		}
@@ -566,7 +558,7 @@ class Game {
 	}
 
 	moveAction(settings) {
-		document.getElementById("skipMove").remove();
+		$("#skipMove").remove();
 		let x = settings.x;
 		let y = settings.y;
 		let mooveOrientation = "";
@@ -610,15 +602,15 @@ class Game {
 		for (let x = 0; x < mapTest.length; x++) {
 			for (let y = 0; y < mapTest[x].length; y++) {
 				if (mapTest[x][y].N === true || mapTest[x][y].S === true || mapTest[x][y].E === true || mapTest[x][y].W === true) {
-					let columnMap = document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
-					columnMap.classList.add("moove");
-					columnMap.onclick = () => {
+					let columnMap = $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
+					$(columnMap).addClass("moove");
+					$(columnMap).click (() => {
 						this.creatMoveChoice({
 							player: player,
 							x: x,
 							y: y
 						});
-					}
+					})
 				}
 			}
 		}
@@ -651,11 +643,11 @@ class Game {
 			for (let x = 0; x < length; x++) {
 				let line = square[x][0];
 				let column = square[x][1];
-				let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
-				divCell.classList.add("attack");
-				divCell.onclick = () => {
-					document.getElementById("skipAttack").remove();
-					this.attack(player)}
+				let divCell = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+				$(divCell).addClass("attack");
+				$(divCell).click (() => {
+					$("#skipAttack").remove();
+					this.attack(player)})
 			}
 			this.newButton({
 				parent: this.main,
@@ -685,11 +677,9 @@ class Game {
 			for (let x = 0; x < length; x++) {
 				let line = square[x][0];
 				let column = square[x][1];
-				let divCell = document.querySelector(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
-				divCell.classList.remove("attack");
-				divCell.onclick = () => {
-					void(0);
-				};
+				let divCell = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
+				$(divCell).removeClass("attack");
+				$(divCell).off();
 			}
 		}
 	}
@@ -707,7 +697,7 @@ class Game {
 		for (let x = 0; x < this.mapGame.map.length; x++) {
 			for (let y = 0; y < this.mapGame.map[x].length; y++) {
 				for (let z = 0; z < 4; z++) {
-					let weaponTest = document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div>#s${z}`);
+					let weaponTest = $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div>#s${z}`);
 					if (weaponTest != null) {
 						if (this.mapGame.map[x][y] === "s" + z) {} else {
 							weaponTest.remove()
@@ -727,7 +717,7 @@ class Game {
 									break;
 							}
 							this.newImg({
-								parent: document.querySelector(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div`),
+								parent: $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div`),
 								src: weaponImg,
 								id: "s" + z,
 								class: ["weaponImg"]
@@ -761,11 +751,11 @@ class Game {
 				id: player.uuid,
 				class: ["overlay", "player", direction, "container", "flexColumn", "spaceEvenly"]
 			})
-			let div = document.getElementById(player.uuid);
+			let div = $("#" + player.uuid);
 			if (player == this.currentPlayer()) {
-				div.classList.add("activ")
+				$(div).addClass("activ")
 			} else {
-				div.classList.add("inactiv")
+				$(div).addClass("inactiv")
 			}
 			let name = player.uuid + "name";
 			this.newHtmlElement({
@@ -774,7 +764,7 @@ class Game {
 				id: name,
 				class: ["container", "centerWrap", "bigFont"]
 			});
-			let divName = document.getElementById(name);
+			let divName = $("#" + name);
 			this.newTxt(divName, player.name);
 			let logo = player.ship.shipname + " " + "logo";
 			let sprite = player.ship.shipname + " " + "sprite";
@@ -799,19 +789,17 @@ class Game {
 				id: "life" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
-			let lifeID = document.getElementById("life" + player.uuid);
-			let life = document.createTextNode("PV");
-			lifeID.appendChild(life);
+			let lifeID = $("#life" + player.uuid);
+			$(lifeID).append(document.createTextNode("PV"));
 			this.newHtmlElement({
 				element: "div",
 				parent: lifeID,
 				id: "pv" + player.uuid,
 				class: ["container", "centerWrap", "life"]
 			});
-			let actualLifeID = document.getElementById("pv" + player.uuid);
-			let actualLife = document.createTextNode(player.pv + " / 100");
-			actualLifeID.appendChild(actualLife);
-			actualLifeID.style.background = "linear-gradient(to right, rgba(189,0,0,1) 0%, rgba(189,0,0,1) " + player.pv + "%, rgba(52,52,52,1) " + player.pv + "%, rgba(52,52,52,1) 100%)";
+			let actualLifeID = $("#pv" + player.uuid);
+			$(actualLifeID).append(document.createTextNode(player.pv + " / 100"));
+			$(actualLifeID).css("background", "linear-gradient(to right, rgba(189,0,0,1) 0%, rgba(189,0,0,1) " + player.pv + "%, rgba(52,52,52,1) " + player.pv + "%, rgba(52,52,52,1) 100%)");
 
 			this.newHtmlElement({
 				element: "div",
@@ -819,9 +807,8 @@ class Game {
 				id: "speed" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
-			let speedID = document.getElementById("speed" + player.uuid);
-			let speed = document.createTextNode("Speed");
-			speedID.appendChild(speed);
+			let speedID = $("#speed" + player.uuid);
+			$(speedID).append(document.createTextNode("Speed"));
 			for (let i = 0; i < player.speed; i++) {
 				this.newImg({
 					parent: speedID,
@@ -845,9 +832,8 @@ class Game {
 				class: ["container", "centerWrap", "stats"]
 			});
 
-			let offID = document.getElementById("off" + player.uuid);
-			let off = document.createTextNode("Offensif");
-			offID.appendChild(off);
+			let offID = $("#off" + player.uuid);
+			$(offID).append(document.createTextNode("Offensif"));
 			for (let y = 0; y < player.offensif; y++) {
 				this.newImg({
 					parent: offID,
@@ -871,9 +857,8 @@ class Game {
 				class: ["container", "centerWrap", "stats"]
 			});
 
-			let defID = document.getElementById("def" + player.uuid);
-			let def = document.createTextNode("Defensif");
-			defID.appendChild(def);
+			let defID = $("#def" + player.uuid);
+			$(defID).append(document.createTextNode("Defensif"));
 			for (let y = 0; y < player.defensif; y++) {
 				this.newImg({
 					parent: defID,
@@ -897,16 +882,15 @@ class Game {
 				id: "stuff" + player.uuid,
 				class: ["container", "centerWrap", "flexColumn", "stuff"]
 			})
-			let stuffID = document.getElementById("stuff" + player.uuid);
-			let stuff = document.createTextNode("weapon");
-			stuffID.appendChild(stuff);
+			let stuffID = $("#stuff" + player.uuid);
+			$(stuffID).append(document.createTextNode("weapon"));
 			this.newHtmlElement({
 				element: "div",
 				parent: stuffID,
 				id: "actualStuff" + player.uuid,
 				class: ["container", "centerWrap", "actualStuff", "margTop15"]
 			})
-			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
+			let actulStuffID = $("#actualStuff" + player.uuid);
 			this.newImg({
 				parent: actulStuffID,
 				src: "img/weapons/none.png",
@@ -1841,7 +1825,6 @@ class Game {
 		}, 500);
 		setTimeout(() => {
 			this.printMap();
-			/*this.mapGame*/
 			$(this.main).fadeIn(500);
 		}, 501);
 
@@ -1849,6 +1832,3 @@ class Game {
 }
 
 let game = new Game("#game1");
-
-/*let main2 = document.getElementById("game2");
-let game2 = new Game(main2);*/
