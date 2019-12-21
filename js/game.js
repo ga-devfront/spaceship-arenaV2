@@ -1,11 +1,3 @@
-let gameRule = `
-	<ul>
-		<li></li>
-		<li></li>
-		<li></li>
-	</ul>
-	<span></span>
-` /* a faire dans un autre fichier */
 import gameRules from "./gameRules.js";
 import shipSettings from "./shipsettings.js";
 import mapGame from "./map.js";
@@ -117,8 +109,7 @@ class Game {
 	}
 
 	newButton(settings) {
-		const newEl = $("<button>"); //creat button
-		$(newEl).attr("id", settings.id); //set the id
+		const newEl = $(`<button id="${settings.id}">`); //creat button
 		for (let x = 0; settings.class.length > x; x++) {
 			$(newEl).addClass(settings.class[x]);
 		}
@@ -1831,4 +1822,4 @@ class Game {
 	}
 }
 
-let game = new Game("#game1");
+new Game("#game1");

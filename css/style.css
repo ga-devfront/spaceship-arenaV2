@@ -16,6 +16,8 @@ html {
 }
 
 body {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     margin: 0;
     min-height: 100%;
@@ -170,11 +172,16 @@ button.square2 {
 }
 
 .container.spaceEvenly {
-    justify-content: space-evenly;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
 }
 
 .container.reverse {
-    flex-direction: row-reverse;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
 }
 
 .container.flexColumn {
@@ -412,8 +419,13 @@ button.square2 {
     border-radius: 35px;
     -webkit-transition-duration: 0.8s;
     transition-duration: 0.8s;
-    flex-direction: column;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     text-align: center;
     font-size: 0.8em;
 }
@@ -427,6 +439,19 @@ button.square2 {
     animation: shipSelect 1s ease-in-out infinite alternate;
     -webkit-filter: drop-shadow(0px 10px 20px black);
     filter: drop-shadow(0px 10px 20px black);
+}
+
+@-webkit-keyframes shipSelect {
+    from {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+    }
+
+    to {
+        -webkit-transform: translateY(-5px);
+        transform: translateY(-5px);
+
+    }
 }
 
 @keyframes shipSelect {
@@ -445,7 +470,9 @@ button.square2 {
 .stats {
     font-size: 1em;
     text-transform: uppercase;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .stats img:first-child {
@@ -472,7 +499,9 @@ button.square2 {
     height: 100px;
     width: 100px;
     border: 3px ridge #ffffff;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 /* OVERLAYS */
@@ -486,9 +515,14 @@ button.square2 {
 }
 
 .overlay.rules {
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     display: none;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 60%;
     height: 80%;
     top: 10%;
@@ -507,7 +541,8 @@ button.square2 {
     height: 200px;
     top: 10%;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
     border: solid white 3px;
     border-radius: 35px;
     background-color: rgba(0, 26, 36, 0.9);
@@ -521,7 +556,9 @@ button.square2 {
     padding: 5px;
     border: solid white 3px;
     border-radius: 35px;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     text-align: center;
 }
 
@@ -529,7 +566,8 @@ button.square2 {
     z-index: 3;
     bottom: 10%;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
 }
 
 .overlay.player.inactiv {

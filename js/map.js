@@ -1,5 +1,4 @@
 export {
-	mapGame as
 	default
 };
 class mapGame {
