@@ -7,7 +7,7 @@ import obstacles from "./obstacles.js";
 
 class Game {
 	constructor(container) {
-		if ((typeof container == "undefined") || (container.length == 0)) throw new Error("Merci de préciser un container pour initialiser l'instance de jeu");
+		if ((typeof container === "undefined") || (container.length == 0)) throw new Error("Merci de préciser un container pour initialiser l'instance de jeu");
 		this.header = $(container + ' header')[0];
 		this.main = $(container + ' main')[0];
 		this.footer = $(container + ' footer')[0];
@@ -122,7 +122,7 @@ class Game {
 			this.newImg({
 				parent: newEl,
 				src: img,
-				alt: alt,
+				alt,
 				class: [classe]
 			});
 			if (typeof settings.imghover != "undefined" && settings.imghover.length > 0) {
@@ -424,11 +424,38 @@ class Game {
 		}
 	}
 
+
+	buttonMoveChoice(settings) {
+		if (settings.test === true) {
+			this.newButton({
+				parent: $("#buttonOrientation"),
+				id: settings.orientation,
+				img: "img/arrow" + settings.orientation + ".png",
+				class: ["square2"]
+			});
+			$("#" + settings.orientation).click ( () => {
+				this.moveAction({
+					player: settings.player,
+					x: settings.x,
+					y: settings.y,
+					orientation: settings.orientation
+				})
+			})
+	} else {
+		this.newButton({
+			parent: $("#buttonOrientation"),
+			id: settings.direction,
+			img: "img/arrow" + settings.orientation + ".png",
+			class: ["square2", "opacity02"]
+		});
+	}
+	}
+
 	creatMoveChoice(settings) {
 		let mapTest = this.mapGame.testmove(settings.player);
 		let x = settings.x;
 		let y = settings.y;
-		if (document.getElementById("orientationChoose")) {
+		if ($("#orientationChoose")) {
 			$("#orientationChoose").remove();
 		}
 		this.newHtmlElement({
@@ -450,102 +477,27 @@ class Game {
 			id: "buttonOrientation",
 			class: ["container", "spaceAround", "margTop15"]
 		});
-		if (mapTest[x][y].N === true) {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "N",
-				img: "img/arrowN.png",
-				class: ["square2"]
-			});
-			N.onclick = () => {
-				this.moveAction({
-					player: settings.player,
-					x: x,
-					y: y,
-					orientation: "N"
-				})
-			};
-		} else {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "N",
-				img: "img/arrowN.png",
-				class: ["square2", "opacity02"]
-			});
-		}
 
-		if (mapTest[x][y].S === true) {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "S",
-				img: "img/arrowS.png",
-				class: ["square2"]
-			});
-			S.onclick = () => {
-				this.moveAction({
-					player: settings.player,
-					x: x,
-					y: y,
-					orientation: "S"
-				})
-			};
-		} else {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "S",
-				img: "img/arrowS.png",
-				class: ["square2", "opacity02"]
-			});
-		}
-
-		if (mapTest[x][y].E === true) {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "E",
-				img: "img/arrowE.png",
-				class: ["square2"]
-			});
-			E.onclick = () => {
-				this.moveAction({
-					player: settings.player,
-					x: x,
-					y: y,
-					orientation: "E"
-				})
-			};
-		} else {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "E",
-				img: "img/arrowE.png",
-				class: ["square2", "opacity02"]
-			});
-		}
-
-		if (mapTest[x][y].W === true) {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "W",
-				img: "img/arrowW.png",
-				class: ["square2"]
-			});
-			W.onclick = () => {
-				this.moveAction({
-					player: settings.player,
-					x: x,
-					y: y,
-					orientation: "W"
-				})
-			};
-		} else {
-			this.newButton({
-				parent: buttonOrientation,
-				id: "W",
-				img: "img/arrowW.png",
-				class: ["square2", "opacity02"]
-			});
-		}
-
+		this.buttonMoveChoice({test: mapTest[x][y].N,
+			orientation: "N",
+			player: settings.player,
+		x,
+		y,})
+		this.buttonMoveChoice({test: mapTest[x][y].S,
+			orientation: "S",
+			player: settings.player,
+		x,
+		y,})
+		this.buttonMoveChoice({test: mapTest[x][y].E,
+			orientation: "E",
+			player: settings.player,
+		x,
+		y,})
+		this.buttonMoveChoice({test: mapTest[x][y].W,
+			orientation: "W",
+			player: settings.player,
+		x,
+		y,})
 	}
 
 	moveAction(settings) {
