@@ -426,7 +426,7 @@ class Game {
 
 
 	buttonMoveChoice(settings) {
-		if (settings.test === true) {
+		if (settings.test) {
 			this.newButton({
 				parent: $("#buttonOrientation"),
 				id: settings.orientation,
@@ -465,7 +465,7 @@ class Game {
 			class: ["overlay", "container", "flexColumn", "moveChoose"]
 		});
 		this.newHtmlElement({
-			parent: orientationChoose,
+			parent: $("#" + orientationChoose),
 			element: "div",
 			id: "titleOrientation",
 			class: ["container", "centerWrap", "bigFont", "margTop15"]
