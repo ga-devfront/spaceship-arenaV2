@@ -1,6 +1,4 @@
-export {
-	default
-};
+export {mapGame as default};
 class mapGame {
 	constructor() {
 		this.size = 15;
