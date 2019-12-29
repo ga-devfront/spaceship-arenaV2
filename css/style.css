@@ -12,7 +12,7 @@ html {
     /*cursor: url("../img/pointeur.png"), default;*/
     height: 100%;
     background-image: url("../img/background.png"),
-    radial-gradient(ellipse at 50% 90%, rgba(1,33,50,1) 0%, rgba(116, 179, 180,1) 0%, rgba(1,130,173,1) 40%, rgba(1,33,50,1) 84%, rgba(1,33,50,1) 100%);
+        radial-gradient(ellipse at 50% 90%, rgba(1, 33, 50, 1) 0%, rgba(116, 179, 180, 1) 0%, rgba(1, 130, 173, 1) 40%, rgba(1, 33, 50, 1) 84%, rgba(1, 33, 50, 1) 100%);
 }
 
 body {
@@ -30,20 +30,20 @@ main {
     width: 100%;
 }
 
-main > header {
+main>header {
     padding-top: 100px;
     position: relative;
     z-index: 1;
     opacity: 1;
 }
 
-main > main {
+main>main {
     position: relative;
     z-index: 1;
     opacity: 1;
 }
 
-main > footer {
+main>footer {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -138,19 +138,19 @@ button.square2 {
 
 /* id */
 #shipbb {
-    background: linear-gradient(45deg, rgba(7,28,10,1) 0%, rgba(1,6,2,1) 100%);
+    background: linear-gradient(45deg, rgba(7, 28, 10, 1) 0%, rgba(1, 6, 2, 1) 100%);
 }
 
 #shipfc {
-    background: linear-gradient(45deg, rgba(0,27,37,1) 0%, rgba(0,5,7,1) 100%);
+    background: linear-gradient(45deg, rgba(0, 27, 37, 1) 0%, rgba(0, 5, 7, 1) 100%);
 }
 
 #shipsf {
-    background: linear-gradient(45deg, rgba(37,12,0,1) 0%, rgba(7,2,0,1) 100%);
+    background: linear-gradient(45deg, rgba(37, 12, 0, 1) 0%, rgba(7, 2, 0, 1) 100%);
 }
 
 #shipst {
-    background: linear-gradient(45deg, rgba(43,38,0,1) 0%, rgba(9,8,0,1) 100%);
+    background: linear-gradient(45deg, rgba(43, 38, 0, 1) 0%, rgba(9, 8, 0, 1) 100%);
 }
 
 /* container */
@@ -173,15 +173,15 @@ button.square2 {
 
 .container.spaceEvenly {
     -webkit-box-pack: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
 }
 
 .container.reverse {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: reverse;
-        -ms-flex-direction: row-reverse;
-            flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
 }
 
 .container.flexColumn {
@@ -421,11 +421,11 @@ button.square2 {
     transition-duration: 0.8s;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     text-align: center;
     font-size: 0.8em;
 }
@@ -471,8 +471,8 @@ button.square2 {
     font-size: 1em;
     text-transform: uppercase;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 .stats img:first-child {
@@ -500,14 +500,14 @@ button.square2 {
     width: 100px;
     border: 3px ridge #ffffff;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 /* OVERLAYS */
 
 .overlay {
-        position: fixed;
+    position: fixed;
 }
 
 .attack {
@@ -516,13 +516,13 @@ button.square2 {
 
 .overlay.rules {
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     display: none;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     width: 60%;
     height: 80%;
     top: 10%;
@@ -542,7 +542,7 @@ button.square2 {
     top: 10%;
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
     border: solid white 3px;
     border-radius: 35px;
     background-color: rgba(0, 26, 36, 0.9);
@@ -551,14 +551,14 @@ button.square2 {
 .overlay.player {
     z-index: 3;
     top: 10%;
-    height: 70% ;
+    height: 70%;
     max-width: 20%;
     padding: 5px;
     border: solid white 3px;
     border-radius: 35px;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     text-align: center;
 }
 
@@ -567,7 +567,7 @@ button.square2 {
     bottom: 10%;
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .overlay.player.inactiv {
@@ -579,7 +579,7 @@ button.square2 {
 }
 
 .overlay.player.left {
-    left : 3%;
+    left: 3%;
 }
 
 .overlay.player.right {
