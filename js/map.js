@@ -87,7 +87,7 @@ class mapGame {
 					}
 				}
 
-				if (testObstacl == 25) {
+				if (testObstacl === 25) {
 					this.map[randomX][randomY] = "x";
 				} else {
 					x--

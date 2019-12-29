@@ -18,7 +18,7 @@ class Player  {
         let randomUuid = "";
         for (let x = 0; x < 32; x++) {
             let randomCarac = carac[Math.floor(Math.random()*carac.length)];
-            if (x == 8 || x == 12 || x == 16 || x == 20) {randomUuid = randomUuid + "-" + randomCarac} else {randomUuid = randomUuid + randomCarac}
+            if (x === 12 || x === 16 || x === 20) {randomUuid = randomUuid + "-" + randomCarac} else {randomUuid = randomUuid + randomCarac}
         }
         return randomUuid;
         /*fonction pour généré un joueur random*/
