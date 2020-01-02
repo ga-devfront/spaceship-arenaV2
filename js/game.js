@@ -450,14 +450,14 @@ class Game {
 			class: ["overlay", "container", "flexColumn", "moveChoose"]
 		});
 		this.newHtmlElement({
-			parent: $("#" + orientationChoose),
+			parent: $("#orientationChoose"),
 			element: "div",
 			id: "titleOrientation",
 			class: ["container", "centerWrap", "bigFont", "margTop15"]
 		});
 		this.newTxt(titleOrientation, "Choose your orientation");
 		this.newHtmlElement({
-			parent: orientationChoose,
+			parent: $("#orientationChoose"),
 			element: "div",
 			id: "buttonOrientation",
 			class: ["container", "spaceAround", "margTop15"]
@@ -711,6 +711,8 @@ class Game {
 				class: ["shipSelectAnim"]
 			});
 
+
+
 			this.newHtmlElement({
 				element: "div",
 				parent: div,
@@ -719,15 +721,42 @@ class Game {
 			});
 			let lifeID = $("#life" + player.uuid);
 			$(lifeID).append(document.createTextNode("PV"));
+
 			this.newHtmlElement({
 				element: "div",
-				parent: lifeID,
-				id: "pv" + player.uuid,
+				parent: $(lifeID),
+				id: "contentPv" + player.uuid,
 				class: ["container", "centerWrap", "life"]
 			});
-			let actualLifeID = $("#pv" + player.uuid);
-			$(actualLifeID).append(document.createTextNode(player.pv + " / 100"));
-			$(actualLifeID).css("background", "linear-gradient(to right, rgba(189,0,0,1) 0%, rgba(189,0,0,1) " + player.pv + "%, rgba(52,52,52,1) " + player.pv + "%, rgba(52,52,52,1) 100%)");
+			let content = $("#contentPv" + player.uuid);
+
+			this.newHtmlElement({
+				element: "span",
+				parent: $(content),
+				id: "TxtActualPv" + player.uuid,
+				class: ["health"]
+			});
+			let actualPv = $("#TxtActualPv" + player.uuid);
+			$(actualPv).append(document.createTextNode(player.pv));
+
+			this.newHtmlElement({
+				element: "span",
+				parent: $(content),
+				id: "TxtMaxPv" + player.uuid,
+				class: []
+			});
+			let maxPv = $("#TxtMaxPv" + player.uuid);
+			$(maxPv).append(document.createTextNode(" / 100"));
+
+			this.newHtmlElement({
+				element: "div",
+				parent: $(content),
+				id: "healthProgress" + player.uuid,
+				class: ["healthProgress"]
+			});
+			$("#healthProgress" + player.uuid).width(player.health + "%");
+
+
 
 			this.newHtmlElement({
 				element: "div",
@@ -831,40 +860,38 @@ class Game {
 	refreshPlayerOverlay() {
 		for (let x = 0; x < this.players.length; x++) {
 			let player = this.players[x];
-			let div = document.getElementById(player.uuid);
-			$("#life" + player.uuid).remove();
+			let div = $("#" + player.uuid);
 			$("#speed" + player.uuid).remove();
 			$("#off" + player.uuid).remove();
 			$("#def" + player.uuid).remove();
 			$("#stuff" + player.uuid).remove();
 
 			if (player == this.currentPlayer()) {
-				div.classList.remove("inactiv");
-				div.classList.add("activ");
+				$(div).removeClass("inactiv");
+				$(div).addClass("activ");
 			} else {
-				div.classList.remove("activ");
-				div.classList.add("inactiv");
+				$(div).removeClass("activ");
+				$(div).addClass("inactiv");
 			}
 
-			this.newHtmlElement({
-				element: "div",
-				parent: div,
-				id: "life" + player.uuid,
-				class: ["container", "centerWrap", "stats"]
-			});
-			let life = document.createTextNode("PV");
-			let lifeID = document.getElementById("life" + player.uuid);
-			lifeID.appendChild(life);
-			this.newHtmlElement({
-				element: "div",
-				parent: lifeID,
-				id: "pv" + player.uuid,
-				class: ["container", "centerWrap", "life"]
-			});
-			let actualLifeID = document.getElementById("pv" + player.uuid);
-			let actualLife = document.createTextNode(player.pv + " / 100");
-			actualLifeID.appendChild(actualLife);
-			actualLifeID.style.background = "linear-gradient(to right, rgba(189,0,0,1) 0%, rgba(189,0,0,1) " + player.pv + "%, rgba(52,52,52,1) " + player.pv + "%, rgba(52,52,52,1) 100%)";
+			$("#healthProgress" + player.uuid).width(player.health + "%");
+
+			let interval = window.setInterval(() => {
+			  let displayedLife = $("#TxtActualPv" + player.uuid).text();
+			  if (displayedLife != player.pv)
+			  {
+				if (displayedLife > player.pv)
+				  $("#TxtActualPv" + player.uuid).text(Number(displayedLife) - Number(1));
+				else
+				  $("#TxtActualPv" + player.uuid).text(Number(displayedLife) + Number(1));
+			  }
+			  else
+			  {
+				window.clearInterval(interval);
+			  }
+			},
+			Math.abs(1000 / (Number($("#TxtActualPv" + player.uuid).text()) - Number(player.pv))));
+			$("#healthProgress" + player.uuid).width(player.pv + "%");
 
 			this.newHtmlElement({
 				element: "div",

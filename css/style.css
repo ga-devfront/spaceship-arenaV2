@@ -488,6 +488,19 @@ button.square2 {
     border-radius: 35px;
     margin-top: 4px;
     margin-left: 10px;
+    position : relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.healthProgress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(189,0,0,1);
+    z-index: -1;
+    transition: all 1s ease-in-out;
 }
 
 .stuff {
