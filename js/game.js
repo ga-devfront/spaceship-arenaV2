@@ -674,21 +674,20 @@ class Game {
 				direction = "right"
 			}
 			this.newHtmlElement({
-				parent: this.main,
 				element: "div",
+				parent: this.main,
 				id: player.uuid,
 				class: ["overlay", "player", direction, "container", "flexColumn", "spaceEvenly"]
-			})
-			let div = $("#" + player.uuid);
+			});			
 			if (player == this.currentPlayer()) {
-				$(div).addClass("activ")
+				$("#" + player.uuid).addClass("activ")
 			} else {
-				$(div).addClass("inactiv")
+				$("#" + player.uuid).addClass("inactiv")
 			}
 			let name = player.uuid + "name";
 			this.newHtmlElement({
-				parent: div,
 				element: "div",
+				parent: $("#" + player.uuid),
 				id: name,
 				class: ["container", "centerWrap", "bigFont"]
 			});
@@ -699,32 +698,29 @@ class Game {
 			let logoimg = player.ship.logo;
 			let spriteimg = player.ship.representation;
 			this.newImg({
-				parent: div,
+				parent:  $("#" + player.uuid),
 				src: logoimg,
 				alt: logo,
 				class: []
 			});
 			this.newImg({
-				parent: div,
+				parent:  $("#" + player.uuid),
 				src: spriteimg,
 				alt: sprite,
 				class: ["shipSelectAnim"]
 			});
 
-
-
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent:  $("#" + player.uuid),
 				id: "life" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
-			let lifeID = $("#life" + player.uuid);
-			$(lifeID).append(document.createTextNode("PV"));
+			$("#life" + player.uuid).append(document.createTextNode("PV"));
 
 			this.newHtmlElement({
 				element: "div",
-				parent: $(lifeID),
+				parent: $("#life" + player.uuid),
 				id: "contentPv" + player.uuid,
 				class: ["container", "centerWrap", "life"]
 			});
@@ -736,8 +732,7 @@ class Game {
 				id: "TxtActualPv" + player.uuid,
 				class: ["health"]
 			});
-			let actualPv = $("#TxtActualPv" + player.uuid);
-			$(actualPv).append(document.createTextNode(player.pv));
+			$("#TxtActualPv" + player.uuid).append(document.createTextNode(player.pv));
 
 			this.newHtmlElement({
 				element: "span",
@@ -745,8 +740,7 @@ class Game {
 				id: "TxtMaxPv" + player.uuid,
 				class: []
 			});
-			let maxPv = $("#TxtMaxPv" + player.uuid);
-			$(maxPv).append(document.createTextNode(" / 100"));
+			$("#TxtMaxPv" + player.uuid).append(document.createTextNode(" / 100"));
 
 			this.newHtmlElement({
 				element: "div",
@@ -760,7 +754,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent:  $("#" + player.uuid),
 				id: "speed" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
@@ -768,7 +762,7 @@ class Game {
 			$(speedID).append(document.createTextNode("Speed"));
 			for (let i = 0; i < player.speed; i++) {
 				this.newImg({
-					parent: speedID,
+					parent: $(speedID),
 					src: "img/power1.png",
 					class: []
 				});
@@ -776,7 +770,7 @@ class Game {
 			let negspeed = 6 - player.speed;
 			for (let x = 0; x < negspeed; x++) {
 				this.newImg({
-					parent: speedID,
+					parent: $(speedID),
 					src: "img/power0.png",
 					class: []
 				});
@@ -784,7 +778,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent:  $("#" + player.uuid),
 				id: "off" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
@@ -793,7 +787,7 @@ class Game {
 			$(offID).append(document.createTextNode("Offensif"));
 			for (let y = 0; y < player.offensif; y++) {
 				this.newImg({
-					parent: offID,
+					parent: $(offID),
 					src: "img/power1.png",
 					class: []
 				});
@@ -801,7 +795,7 @@ class Game {
 			let negoff = 6 - player.offensif;
 			for (let s = 0; s < negoff; s++) {
 				this.newImg({
-					parent: offID,
+					parent: $(offID),
 					src: "img/power0.png",
 					class: []
 				});
@@ -809,7 +803,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent:  $("#" + player.uuid),
 				id: "def" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
@@ -818,7 +812,7 @@ class Game {
 			$(defID).append(document.createTextNode("Defensif"));
 			for (let y = 0; y < player.defensif; y++) {
 				this.newImg({
-					parent: defID,
+					parent: $(defID),
 					src: "img/power1.png",
 					class: []
 				});
@@ -826,30 +820,27 @@ class Game {
 			let negdef = 6 - player.defensif;
 			for (let s = 0; s < negdef; s++) {
 				this.newImg({
-					parent: defID,
+					parent: $(defID),
 					src: "img/power0.png",
 					class: []
 				});
 			}
 
-
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent:  $("#" + player.uuid),
 				id: "stuff" + player.uuid,
 				class: ["container", "centerWrap", "flexColumn", "stuff"]
 			})
-			let stuffID = $("#stuff" + player.uuid);
-			$(stuffID).append(document.createTextNode("weapon"));
+			$("#stuff" + player.uuid).append(document.createTextNode("weapon"));
 			this.newHtmlElement({
 				element: "div",
-				parent: stuffID,
+				parent: $("#stuff" + player.uuid),
 				id: "actualStuff" + player.uuid,
 				class: ["container", "centerWrap", "actualStuff", "margTop15"]
 			})
-			let actulStuffID = $("#actualStuff" + player.uuid);
 			this.newImg({
-				parent: actulStuffID,
+				parent: $("#actualStuff" + player.uuid),
 				src: "img/weapons/none.png",
 				class: [],
 				title: "no equipment"
@@ -895,16 +886,15 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent: $(div),
 				id: "speed" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
-			let speed = document.createTextNode("Speed");
-			let speedID = document.getElementById("speed" + player.uuid);
-			speedID.appendChild(speed);
+			$("#speed" + player.uuid).append(document.createTextNode("Speed"));
+
 			for (let i = 0; i < player.speed; i++) {
 				this.newImg({
-					parent: speedID,
+					parent: $("#speed" + player.uuid),
 					src: "img/power1.png",
 					class: []
 				});
@@ -912,7 +902,7 @@ class Game {
 			let negspeed = 6 - player.speed;
 			for (let x = 0; x < negspeed; x++) {
 				this.newImg({
-					parent: speedID,
+					parent: $("#speed" + player.uuid),
 					src: "img/power0.png",
 					class: []
 				});
@@ -920,7 +910,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent: $(div),
 				id: "off" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
