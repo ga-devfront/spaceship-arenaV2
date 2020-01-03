@@ -724,11 +724,10 @@ class Game {
 				id: "contentPv" + player.uuid,
 				class: ["container", "centerWrap", "life"]
 			});
-			let content = $("#contentPv" + player.uuid);
 
 			this.newHtmlElement({
 				element: "span",
-				parent: $(content),
+				parent: $("#contentPv" + player.uuid),
 				id: "TxtActualPv" + player.uuid,
 				class: ["health"]
 			});
@@ -736,7 +735,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "span",
-				parent: $(content),
+				parent: $("#contentPv" + player.uuid),
 				id: "TxtMaxPv" + player.uuid,
 				class: []
 			});
@@ -744,7 +743,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: $(content),
+				parent: $("#contentPv" + player.uuid),
 				id: "healthProgress" + player.uuid,
 				class: ["healthProgress"]
 			});
@@ -758,11 +757,10 @@ class Game {
 				id: "speed" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
-			let speedID = $("#speed" + player.uuid);
-			$(speedID).append(document.createTextNode("Speed"));
+			$("#speed" + player.uuid).append(document.createTextNode("Speed"));
 			for (let i = 0; i < player.speed; i++) {
 				this.newImg({
-					parent: $(speedID),
+					parent: $("#speed" + player.uuid),
 					src: "img/power1.png",
 					class: []
 				});
@@ -770,7 +768,7 @@ class Game {
 			let negspeed = 6 - player.speed;
 			for (let x = 0; x < negspeed; x++) {
 				this.newImg({
-					parent: $(speedID),
+					parent: $("#speed" + player.uuid),
 					src: "img/power0.png",
 					class: []
 				});
@@ -783,11 +781,10 @@ class Game {
 				class: ["container", "centerWrap", "stats"]
 			});
 
-			let offID = $("#off" + player.uuid);
-			$(offID).append(document.createTextNode("Offensif"));
+			$("#off" + player.uuid).append(document.createTextNode("Offensif"));
 			for (let y = 0; y < player.offensif; y++) {
 				this.newImg({
-					parent: $(offID),
+					parent: $("#off" + player.uuid),
 					src: "img/power1.png",
 					class: []
 				});
@@ -795,7 +792,7 @@ class Game {
 			let negoff = 6 - player.offensif;
 			for (let s = 0; s < negoff; s++) {
 				this.newImg({
-					parent: $(offID),
+					parent: $("#off" + player.uuid),
 					src: "img/power0.png",
 					class: []
 				});
@@ -808,11 +805,10 @@ class Game {
 				class: ["container", "centerWrap", "stats"]
 			});
 
-			let defID = $("#def" + player.uuid);
-			$(defID).append(document.createTextNode("Defensif"));
+			$("#def" + player.uuid).append(document.createTextNode("Defensif"));
 			for (let y = 0; y < player.defensif; y++) {
 				this.newImg({
-					parent: $(defID),
+					parent: $("#def" + player.uuid),
 					src: "img/power1.png",
 					class: []
 				});
@@ -820,7 +816,7 @@ class Game {
 			let negdef = 6 - player.defensif;
 			for (let s = 0; s < negdef; s++) {
 				this.newImg({
-					parent: $(defID),
+					parent: $("#def" + player.uuid),
 					src: "img/power0.png",
 					class: []
 				});
@@ -851,30 +847,28 @@ class Game {
 	refreshPlayerOverlay() {
 		for (let x = 0; x < this.players.length; x++) {
 			let player = this.players[x];
-			let div = $("#" + player.uuid);
 			$("#speed" + player.uuid).remove();
 			$("#off" + player.uuid).remove();
 			$("#def" + player.uuid).remove();
 			$("#stuff" + player.uuid).remove();
 
 			if (player == this.currentPlayer()) {
-				$(div).removeClass("inactiv");
-				$(div).addClass("activ");
+				$("#" + player.uuid).removeClass("inactiv");
+				$("#" + player.uuid).addClass("activ");
 			} else {
-				$(div).removeClass("activ");
-				$(div).addClass("inactiv");
+				$("#" + player.uuid).removeClass("activ");
+				$("#" + player.uuid).addClass("inactiv");
 			}
 
 			$("#healthProgress" + player.uuid).width(player.health + "%");
 
 			let interval = window.setInterval(() => {
-			  let displayedLife = $("#TxtActualPv" + player.uuid).text();
-			  if (displayedLife != player.pv)
+			  if ($("#TxtActualPv" + player.uuid).text() != player.pv)
 			  {
-				if (displayedLife > player.pv)
-				  $("#TxtActualPv" + player.uuid).text(Number(displayedLife) - Number(1));
+				if ($("#TxtActualPv" + player.uuid).text() > player.pv)
+				  $("#TxtActualPv" + player.uuid).text(Number($("#TxtActualPv" + player.uuid).text()) - Number(1));
 				else
-				  $("#TxtActualPv" + player.uuid).text(Number(displayedLife) + Number(1));
+				  $("#TxtActualPv" + player.uuid).text(Number($("#TxtActualPv" + player.uuid).text()) + Number(1));
 			  }
 			  else
 			  {
@@ -886,7 +880,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: $(div),
+				parent: $("#" + player.uuid),
 				id: "speed" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
@@ -910,17 +904,15 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: $(div),
+				parent: $("#" + player.uuid),
 				id: "off" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
 
-			let off = document.createTextNode("Offensif");
-			let offID = document.getElementById("off" + player.uuid);
-			offID.appendChild(off);
+			$("#off" + player.uuid).append(document.createTextNode("Offensif"));
 			for (let y = 0; y < player.offensif; y++) {
 				this.newImg({
-					parent: offID,
+					parent: $("#off" + player.uuid),
 					src: "img/power1.png",
 					class: []
 				});
@@ -928,7 +920,7 @@ class Game {
 			let negoff = 6 - player.offensif;
 			for (let s = 0; s < negoff; s++) {
 				this.newImg({
-					parent: offID,
+					parent: $("#off" + player.uuid),
 					src: "img/power0.png",
 					class: []
 				});
@@ -936,17 +928,15 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent: $("#" + player.uuid),
 				id: "def" + player.uuid,
 				class: ["container", "centerWrap", "stats"]
 			});
 
-			let def = document.createTextNode("Defensif");
-			let defID = document.getElementById("def" + player.uuid);
-			defID.appendChild(def);
+			$("#def" + player.uuid).append(document.createTextNode("Defensif"));
 			for (let y = 0; y < player.defensif; y++) {
 				this.newImg({
-					parent: defID,
+					parent: $("#def" + player.uuid),
 					src: "img/power1.png",
 					class: []
 				});
@@ -954,33 +944,30 @@ class Game {
 			let negdef = 6 - player.defensif;
 			for (let s = 0; s < negdef; s++) {
 				this.newImg({
-					parent: defID,
+					parent: $("#def" + player.uuid),
 					src: "img/power0.png",
 					class: []
 				});
 			}
 
-
 			this.newHtmlElement({
 				element: "div",
-				parent: div,
+				parent: $("#" + player.uuid),
 				id: "stuff" + player.uuid,
 				class: ["container", "centerWrap", "flexColumn", "stuff"]
 			})
-			let stuff = document.createTextNode("weapon");
-			let stuffID = document.getElementById("stuff" + player.uuid);
-			stuffID.appendChild(stuff);
+			$("stuff" + player.uuid).append(document.createTextNode("weapon"));
 			this.newHtmlElement({
 				element: "div",
-				parent: stuffID,
+				parent: $("stuff" + player.uuid),
 				id: "actualStuff" + player.uuid,
 				class: ["container", "centerWrap", "actualStuff", "margTop15"]
 			})
-			let actulStuffID = document.getElementById("actualStuff" + player.uuid);
+
 			switch (player.weapon) {
 				case "s0":
 					this.newImg({
-						parent: actulStuffID,
+						parent: $("#actualStuff" + player.uuid),
 						src: "img/weapons/gun/gun.png",
 						class: [],
 						title: "+1 attack"
@@ -988,7 +975,7 @@ class Game {
 					break;
 				case "s1":
 					this.newImg({
-						parent: actulStuffID,
+						parent: $("#actualStuff" + player.uuid),
 						src: "img/weapons/speed/speed.png",
 						class: [],
 						title: "+1 speed"
@@ -996,7 +983,7 @@ class Game {
 					break;
 				case "s2":
 					this.newImg({
-						parent: actulStuffID,
+						parent: $("#actualStuff" + player.uuid),
 						src: "img/weapons/shield/shield.png",
 						class: [],
 						title: "+1 defense"
@@ -1004,7 +991,7 @@ class Game {
 					break;
 				default:
 					this.newImg({
-						parent: actulStuffID,
+						parent: $("#actualStuff" + player.uuid),
 						src: "img/weapons/none.png",
 						class: [],
 						title: "no equipment"
@@ -1022,40 +1009,37 @@ class Game {
 		});
 		this.newHtmlElement({
 			element: "header",
-			parent: rulesoverlay,
+			parent: $("#rulesoverlay"),
 			class: ["container", "flexColumn", "width100"]
 		});
-		let header = document.querySelector("#rulesoverlay header");
 		this.newHtmlElement({
 			element: "div",
-			parent: header,
+			parent: $("#rulesoverlay header"),
 			id: "rulesheader2",
 			class: ["container", "margLr10", "reverse"]
 		});
 		this.newHtmlElement({
 			element: "div",
-			parent: header,
+			parent: $("#rulesoverlay header"),
 			id: "rulesheader3",
 			class: ["titleFont", "centerWrap", "container"]
 		});
 		this.newButton({
-			parent: rulesheader2,
+			parent: $("#rulesheader2"),
 			id: "closeRules",
 			img: "img/cross.png",
 			class: ["noStyle", "margTop15", "margLr10"],
 			onclick: () => {
-				rulesoverlay.style.display = "none";
+				$("#rulesoverlay").css("display", "none");
 			}
 		});
-		const newTitle = document.createTextNode("Game Rules");
-		rulesheader3.appendChild(newTitle);
+		$("#rulesheader3").append(document.createTextNode("Game Rules"));
 		this.newHtmlElement({
 			element: "main",
-			parent: rulesoverlay,
+			parent: $("#rulesoverlay"),
 			class: ["overflowAuto", "margTop15", "margLr10", "rulesSize"]
 		});
-		let main = document.querySelector("#rulesoverlay main");
-		main.insertAdjacentHTML("afterbegin", gameRules());
+		$("#rulesoverlay main").append(gameRules());
 	}
 
 	changeCurrentPlayer() {
@@ -1093,9 +1077,8 @@ class Game {
 		$(this.main).fadeOut(0);
 		$(this.footer).fadeOut(0);
 
-		this.backgroundSound.addEventListener("load", function () {
-			this.backgroundSound.play();
-		}, true)
+		$(document).ready(() => {this.backgroundSound.play()})
+
 		this.backgroundSound.autoplay = true,
 			this.backgroundSound.loop = true,
 			this.backgroundSound.volume = 0.5,
@@ -1154,7 +1137,7 @@ class Game {
 			txt: "Game rules",
 			class: ["large", "margLr10"],
 			onclick: () => {
-				document.getElementById("rulesoverlay").style.display = "flex";
+				$("#rulesoverlay").css("display", "flex");
 			}
 		});
 		this.newButton({
@@ -1164,16 +1147,15 @@ class Game {
 			alt: "contrôle du son",
 			class: ["noStyle", "margLr10"],
 			onclick: () => {
-				let imgsound = (document.querySelector("#sound_volume>img"));
 				if (this.backgroundSound.volume === 0.5) {
 					this.backgroundSound.volume = 0.2;
-					imgsound.src = "img/middlesound.png";
+					$("#sound_volume>img").attr("src", "img/middlesound.png");
 				} else if (this.backgroundSound.volume === 0.2) {
 					this.backgroundSound.volume = 0;
-					imgsound.src = "img/nosound.png";
+					$("#sound_volume>img").attr("src", "img/nosound.png")
 				} else {
 					this.backgroundSound.volume = 0.5;
-					imgsound.src = "img/sound.png";
+					$("#sound_volume>img").attr("src", "img/sound.png")
 				}
 			}
 		});
@@ -1184,13 +1166,13 @@ class Game {
 	step1() {
 		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			if (this.header.classList.contains("resizeSmall")) {
-				this.header.classList.remove("resizeSmall");
-				this.header.classList.add("resizeBig");
+			if ($(this.header).hasClass("resizeSmall")) {
+				$(this.header).removeClass("resizeSmall");
+				$(this.header).addClass("resizeBig");
 			};
-			if (this.main.classList.contains("margTopNeg50")) {
-				this.main.classList.remove("margTopNeg50");
-				this.main.classList.add("margTop100");
+			if ($(this.header).hasClass("margTopNeg50")) {
+				$(this.header).removeClass("margTopNeg50");
+				$(this.header).addClass("margTop100");
 			};
 			$(this.main).empty();
 		}, 500);
@@ -1228,13 +1210,13 @@ class Game {
 	step101() {
 		$(this.main).fadeOut(500);
 		setTimeout(() => {
-			if (this.header.classList.contains("resizeSmall")) {
-				this.header.classList.remove("resizeSmall");
-				this.header.classList.add("resizeBig");
+			if ($(this.header).hasClass("resizeSmall")) {
+				$(this.header).removeClass("resizeSmall");
+				$(this.header).addClass("resizeBig");
 			};
-			if (this.main.classList.contains("margTopNeg50")) {
-				this.main.classList.remove("margTopNeg50");
-				this.main.classList.add("margTop100");
+			if ($(this.header).hasClass("margTopNeg50")) {
+				$(this.header).removeClass("margTopNeg50");
+				$(this.header).addClass("margTop100");
 			};
 			$(this.main).empty();
 		}, 500);
@@ -1248,56 +1230,57 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: playersName,
+				parent: $("#playersName"),
 				id: "titleName",
 				class: ["container", "centerWrap", "bigFont"]
 			});
-			this.newTxt(titleName, "Enter players name :");
+			this.newTxt($("#titleName"), "Enter players name :");
 			this.newHtmlElement({
 				element: "div",
-				parent: playersName,
+				parent: $("#playersName"),
 				id: "inputName",
 				class: ["container", "spaceAround", "margTop15"]
 			});
-			let player1Input = document.createElement("input");
-			let player2Input = document.createElement("input");
-			player1Input.type = "text";
-			player1Input.id = "inputP1Name";
-			player1Input.name = "Player 1 Name";
-			player1Input.required = true;
-			player1Input.minlength = 4;
-			player1Input.maxlength = 20;
-			player1Input.value = "Player 1";
-			player1Input.classList.add("small", "name", "margLr10");
+			let player1Input = $("<input>");
+			let player2Input = $("<input>");
+			$(player1Input).attr({
+				type: "text",
+				id: "inputP1Name",
+				name: "Player 1 Name",
+				required: true,
+				minlength: 4,
+				maxlength: 20,
+				value: "player 1"
+			});
+			$("#inputName").append(player1Input);
+			$("#inputP1Name").addClass("small name margLr10");
 
-			player2Input.type = "text";
-			player2Input.id = "inputP2Name";
-			player2Input.name = "Player 2 Name";
-			player2Input.required = true;
-			player2Input.minlength = 4;
-			player2Input.maxlength = 20;
-			player2Input.value = "Player 2";
-			player2Input.classList.add("small", "name", "margLr10");
-
-			inputName.appendChild(player1Input);
-			inputName.appendChild(player2Input);
+			$(player2Input).attr({
+				type: "text",
+				id: "inputP2Name",
+				name: "Player 2 Name",
+				required: true,
+				minlength: 4,
+				maxlength: 20,
+				value: "player 2"
+			});
+			$("#inputName").append(player2Input);
+			$("#inputP2Name").addClass("small name margLr10");
 
 			this.newHtmlElement({
 				element: "div",
-				parent: playersName,
+				parent: $("#playersName"),
 				id: "submitName",
 				class: ["container", "centerWrap", "margTop15"]
 			});
 
 			this.newButton({
-				parent: submitName,
+				parent: $("#submitName"),
 				txt: "next",
 				class: ["large"],
 				onclick: () => {
-					let nameP1 = document.getElementById("inputP1Name").value;
-					let nameP2 = document.getElementById("inputP2Name").value;
-					this.player1.name = nameP1;
-					this.player2.name = nameP2;
+					this.player1.name = $("#inputP1Name").val();
+					this.player2.name = $("#inputP2Name").val();
 					this.state = 102;
 				}
 			});
@@ -1313,11 +1296,11 @@ class Game {
 			$(this.main).empty();
 		}, 500);
 		setTimeout(() => {
-			this.main.classList.add("margTopNeg50");
-			this.main.classList.remove("margTop100");
+			$(this.main).addClass("margTopNeg50");
+			$(this.main).removeClass("margTop100");
 
-			this.header.classList.add("resizeSmall");
-			this.header.classList.remove("resizeBig");
+			$(this.header).addClass("resizeSmall");
+			$(this.header).removeClass("resizeBig");
 
 			this.newHtmlElement({
 				element: "div",
