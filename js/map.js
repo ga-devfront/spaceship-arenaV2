@@ -101,11 +101,46 @@ class mapGame {
 			let randomCoord = this.getRandomPos();
 			let randomX = randomCoord[0];
 			let randomY = randomCoord[1];
+			let xpos2 = randomX + 2;
+			let ypos2 = randomY + 2;
+			var plageX = [];
+			var plageY = [];
+			let testObstacl = 25;
 			if (this.map[randomX][randomY] == "x" || this.map[randomX][randomY] == "s" + "") {
 				x--
 			} else {
-				/*ajouter test stuff*/
-				this.map[randomX][randomY] = "s" + x
+				for (let z = 0; z < 5; z++) {
+					var finalX = undefined;
+					var numberX = xpos2 - z;
+					if (numberX > 14) {
+						finalX = 14
+					} else if (numberX < 0) {
+						finalX = 0
+					} else {
+						finalX = numberX
+					};
+					plageX.push(finalX);
+					var finalY = undefined;
+					let numberY = ypos2 - z;
+					if (numberY > 14) {
+						finalY = 14
+					} else if (numberY < 0) {
+						finalY = 0
+					} else {
+						finalY = numberY
+					};
+					plageY.push(finalY);
+				}
+				for (let u = 0; u < 5; u++) {
+					for (let s = 0; s < 5; s++) {
+						if (this.map[plageX[u]][plageY[s]].startsWith("s")) {
+							testObstacl = testObstacl - 1
+						}
+					}
+				}
+				if (testObstacl === 25) {
+				this.map[randomX][randomY] = "s" + x}
+				else {x--}
 			}
 		}
 	}
@@ -251,9 +286,44 @@ class mapGame {
 				for (let z = 0; z < squarePosition.length; z++) {
 					if (squarePosition[z][0] >= 0 && squarePosition[z][0] <= 14 && squarePosition[z][1] >= 0 && squarePosition[z][1] <= 14) {
 						/* verifie que la position est bien sur la carte*/
+						let xpos = squarePosition[z][0] + 1;
+						let ypos = squarePosition[z][1] + 1;
+						let test = 0;
+						var plageX = [];
+						var plageY = [];
+						for (let s = 0; s < 3; s++) {
+							var finalX = undefined;
+							var numberX = xpos - s;
+							if (numberX > 14) {
+								finalX = 14
+							} else if (numberX < 0) {
+								finalX = 0
+							} else {
+								finalX = numberX
+							};
+							plageX.push(finalX);
+							var finalY = undefined;
+							let numberY = ypos - s;
+							if (numberY > 14) {
+								finalY = 14
+							} else if (numberY < 0) {
+								finalY = 0
+							} else {
+								finalY = numberY
+							};
+							plageY.push(finalY);
+						}
+						for (let u = 0; u < 3; u++) {
+							for (let y = 0; y < 3; y++) {
+								if (this.map[plageX[u]][plageY[y]] === "") {
+									test = test + 1;
+								}
+							}
+						}
+						if (test === 9) {
 						if (this.map[squarePosition[z][0]][squarePosition[z][1]] === "") {
 							verification = verification + 1
-						} /*incrémente la verification si toutes les conditions son requises*/
+						} /*incrémente la verification si toutes les conditions son requises*/}
 					}
 				}
 				if (verification == squarePosition.length) {
