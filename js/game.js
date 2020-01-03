@@ -1170,9 +1170,9 @@ class Game {
 				$(this.header).removeClass("resizeSmall");
 				$(this.header).addClass("resizeBig");
 			};
-			if ($(this.header).hasClass("margTopNeg50")) {
-				$(this.header).removeClass("margTopNeg50");
-				$(this.header).addClass("margTop100");
+			if ($(this.main).hasClass("margTopNeg50")) {
+				$(this.main).removeClass("margTopNeg50");
+				$(this.main).addClass("margTop100");
 			};
 			$(this.main).empty();
 		}, 500);
@@ -1214,9 +1214,10 @@ class Game {
 				$(this.header).removeClass("resizeSmall");
 				$(this.header).addClass("resizeBig");
 			};
-			if ($(this.header).hasClass("margTopNeg50")) {
-				$(this.header).removeClass("margTopNeg50");
-				$(this.header).addClass("margTop100");
+
+			if ($(this.main).hasClass("margTopNeg50")) {
+				$(this.main).removeClass("margTopNeg50");
+				$(this.main).addClass("margTop100");
 			};
 			$(this.main).empty();
 		}, 500);
@@ -1311,7 +1312,7 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: shipChoice,
+				parent: $("#shipChoice"),
 				id: "titleShipChoice",
 				class: ["container", "centerWrap", "bigFont"]
 			});
@@ -1321,20 +1322,20 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: shipChoice,
+				parent: $("#shipChoice"),
 				id: "tableOfShip",
 				class: ["container", "spaceAround", "margTop15"]
 			});
 
 			this.newHtmlElement({
 				element: "div",
-				parent: tableOfShip,
+				parent: $("#tableOfShip"),
 				id: "shipbb",
 				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
-				parent: shipbb,
+				parent: $("#shipbb"),
 				ship: shipSettings.blackBirdSettings,
 			});
 
@@ -1353,13 +1354,13 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: tableOfShip,
+				parent: $("#tableOfShip"),
 				id: "shipfc",
 				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
-				parent: shipfc,
+				parent: $("#shipfc"),
 				ship: shipSettings.federalCruserSettings,
 			});
 
@@ -1378,13 +1379,13 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: tableOfShip,
+				parent: $("#tableOfShip"),
 				id: "shipsf",
 				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
-				parent: shipsf,
+				parent: $("#shipsf"),
 				ship: shipSettings.speedFireSettings,
 			});
 
@@ -1403,13 +1404,13 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: tableOfShip,
+				parent: $("#tableOfShip"),
 				id: "shipst",
 				class: ["container", "spaceAround", "selectShip"]
 			});
 
 			this.shipPresentation({
-				parent: shipst,
+				parent: $("#shipst"),
 				ship: shipSettings.spaceThunderSettings,
 			});
 
@@ -1435,8 +1436,8 @@ class Game {
 			$(this.main).fadeOut(500);
 			setTimeout(() => {
 				$(this.main).empty();
-				this.main.classList.add("margTopNeg250");
-				this.main.classList.remove("margTopNeg50");
+				$(this.main).addClass("margTopNeg250");
+				$(this.main).removeClass("margTopNeg50");
 			}, 500);
 			setTimeout(() => {
 				this.creatPlayersOverlay();
@@ -1482,13 +1483,13 @@ class Game {
 
 			this.newHtmlElement({
 				element: "div",
-				parent: endGameChoice,
+				parent: $("#endGameChoice"),
 				id: "endGameWiner",
 				class: ["container", "centerWrap", "bigFont"]
 			});
 			this.newHtmlElement({
 				element: "div",
-				parent: endGameChoice,
+				parent: $("#endGameChoice"),
 				id: "endGameButon",
 				class: ["container", "spaceAround", "margTop15"]
 			});
@@ -1502,7 +1503,7 @@ class Game {
 			}
 
 			this.newButton({
-				parent: endGameButon,
+				parent: $("#endGameButon"),
 				id: "gameMenu",
 				img: "img/local.png",
 				imghover: "img/local_hover.png",
@@ -1516,7 +1517,7 @@ class Game {
 				}
 			});
 			this.newButton({
-				parent: endGameButon,
+				parent: $("#endGameButon"),
 				id: "replay",
 				img: "img/replay.png",
 				imghover: "img/replay_hover.png",
