@@ -1,5 +1,4 @@
-export default () => {
-        return `<h2>What is SpaceShip Arena ?</h2>
+export default () => `<h2>What is SpaceShip Arena ?</h2>
         <p>Spaceship Arena is a turn-based board game for 2 players and is taking place in a futuristic spatial universe.</p>
         </br>
         <h2>Aim of the game :</h2>
@@ -33,4 +32,3 @@ export default () => {
         <li><img src="img/miniHealthpack.png">The healtpack : regenerates 25 points of life (it is destroyed once used).</li>
         It’s possible to use only one equipment at once on your ship. If you want to take an equipment, you need to move your ship on top of it. Warning : if you collect a new equipment but you already have one on your ship, the old equipement will stay on your box on your next move.
         </p>`;
-}
