@@ -1,3 +1,4 @@
+/* eslint max-len: ["error", { "code": 200 }] */
 import gameRules from './gameRules.js';
 import shipSettings from './shipsettings.js';
 import MapGame from './map.js';
@@ -26,20 +27,20 @@ class Game {
 
   set state(state) {
     this.previousState = this.state;
-    this._state = state;
+    this.state1 = state;
     this.computeState();
   }
 
   get state() {
-    return this._state;
+    return this.state1;
   }
 
   set previousState(state) {
-    this._previousState = state;
+    this.previousState1 = state;
   }
 
   get previousState() {
-    return this._previousState;
+    return this.previousState1;
   }
 
   computeState() {
@@ -197,8 +198,8 @@ class Game {
     $(emplacement).hover(() => {
       sound.play();
     });
-    const logo = `${settings.ship.shipname} ` + 'logo';
-    const sprite = `${settings.ship.shipname} ` + 'sprite';
+    const logo = `${settings.ship.shipname} logo`;
+    const sprite = `${settings.ship.shipname} sprite`;
     const logoimg = settings.ship.logo;
     const spriteimg = settings.ship.representation;
     this.newImg({
@@ -365,7 +366,6 @@ class Game {
       }
       $('#myGameMap').append(newLine);
     }
-    $(this.main).append('#myGameMap');
   }
 
   printPlayer(player) {
@@ -723,8 +723,8 @@ class Game {
       });
       const divName = $(`#${name}`);
       this.newTxt(divName, player.name);
-      const logo = `${player.ship.shipname} ` + 'logo';
-      const sprite = `${player.ship.shipname} ` + 'sprite';
+      const logo = `${player.ship.shipname} logo`;
+      const sprite = `${player.ship.shipname} sprite`;
       const logoimg = player.ship.logo;
       const spriteimg = player.ship.representation;
       this.newImg({
@@ -892,7 +892,7 @@ class Game {
       $(`#healthProgress${player.uuid}`).width(`${player.health}%`);
 
       const interval = window.setInterval(() => {
-        if ($(`#TxtActualPv${player.uuid}`).text() !== player.pv) {
+        if ($(`#TxtActualPv${player.uuid}`).text() !== player.pv.toString()) {
           if ($(`#TxtActualPv${player.uuid}`).text() > player.pv) $(`#TxtActualPv${player.uuid}`).text(Number($(`#TxtActualPv${player.uuid}`).text()) - Number(1));
           else $(`#TxtActualPv${player.uuid}`).text(Number($(`#TxtActualPv${player.uuid}`).text()) + Number(1));
         } else {
@@ -1316,6 +1316,7 @@ class Game {
     }, 501);
   }
 
+  /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["player"] }] */
   step102(player) {
     $(this.main).fadeOut(500);
     setTimeout(() => {
@@ -1342,7 +1343,7 @@ class Game {
         class: ['container', 'centerWrap', 'bigFont'],
       });
 
-      this.newTxt($('#titleShipChoice'), (`${player.name} ` + 'choose your ship'));
+      this.newTxt($('#titleShipChoice'), (`${player.name} choose your ship`));
 
 
       this.newHtmlElement({
