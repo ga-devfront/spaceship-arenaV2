@@ -227,7 +227,7 @@ export default class mapGame {
     return undefined;
   }
 
-  static updatePlayerStat(settings) {
+  updatePlayerStat(settings) {
     const {
       player,
     } = settings;
@@ -508,7 +508,7 @@ export default class mapGame {
       const columnMax = column + speed;
       for (let x = 0; x < (speed * 2 + 1); x += 1) {
         for (let y = 0; y < (speed * 2 + 1); y += 1) {
-          if (y > (speed - x) || (x + y) < ((speed + (x) * 2)) || x > (speed + y) || (x + y) < (speed * 3)) {
+          if (y < (speed - x) || (x + y) > ((speed + (x) * 2)) || x > (speed + y) || (x + y) > (speed * 3)) {} else {
             let posSearchX = lineMax - x;
             let posSearchY = columnMax - y;
             if (posSearchX < 0) {

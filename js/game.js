@@ -76,7 +76,7 @@ class Game {
     if (typeof settings.id !== 'undefined' && settings.id.length > 0) {
       $(newEl).attr('id', settings.id);
     } // set id attritube
-    for (let x = 0; settings.class.length > x; x++) {
+    for (let x = 0; settings.class.length > x; x += 1) {
       $(newEl).addClass(settings.class[x]);
     }
     if (typeof settings.title !== 'undefined' && settings.title.length > 0) {
@@ -91,14 +91,18 @@ class Game {
 
   newButton(settings) {
     const newEl = $(`<button id="${settings.id}">`); // creat button
-    for (let x = 0; settings.class.length > x; x++) {
+    for (let x = 0; settings.class.length > x; x += 1) {
       $(newEl).addClass(settings.class[x]);
     }
     $(settings.parent).append(newEl); // push button in dom
 
     if (typeof settings.img !== 'undefined' && settings.img.length > 0) {
-      const { img } = settings;
-      const { alt } = settings;
+      const {
+        img,
+      } = settings;
+      const {
+        alt,
+      } = settings;
       const classe = settings.imgclass;
       this.newImg({
         parent: newEl,
@@ -140,9 +144,9 @@ class Game {
     $(newTable).attr('id', tableID);
 
     const newTablBody = $('<tbody>');
-    for (let i = 0; i < numberofLine; i++) {
+    for (let i = 0; i < numberofLine; i += 1) {
       const newLine = $('<tr>');
-      for (let o = 0; o < numberofColumn; o++) {
+      for (let o = 0; o < numberofColumn; o += 1) {
         const newColumn = $('<td>');
         $(newColumn).attr('id', `gameplayer${i}`);
         $(newColumn).addClass('large', 'hoverTableCell');
@@ -163,7 +167,7 @@ class Game {
     if (typeof settings.id !== 'undefined' && settings.id.length > 0) {
       $(newEl).attr('id', settings.id);
     }
-    for (let x = 0; settings.class.length > x; x++) {
+    for (let x = 0; settings.class.length > x; x += 1) {
       $(newEl).addClass(settings.class[x]);
     }
     $(settings.parent).append(newEl);
@@ -220,7 +224,7 @@ class Game {
     });
     const speedID = $(`#${speedship}`);
     $(speedID).append(document.createTextNode('Speed'));
-    for (let i = 0; i < settings.ship.speed; i++) {
+    for (let i = 0; i < settings.ship.speed; i += 1) {
       this.newImg({
         parent: speedID,
         src: 'img/power1.png',
@@ -228,7 +232,7 @@ class Game {
       });
     }
     const negspeed = 6 - settings.ship.speed;
-    for (let x = 0; x < negspeed; x++) {
+    for (let x = 0; x < negspeed; x += 1) {
       this.newImg({
         parent: speedID,
         src: 'img/power0.png',
@@ -246,7 +250,7 @@ class Game {
 
     const offID = $(`#${offship}`);
     $(offID).append(document.createTextNode('Offensif'));
-    for (let y = 0; y < settings.ship.offensif; y++) {
+    for (let y = 0; y < settings.ship.offensif; y += 1) {
       this.newImg({
         parent: offID,
         src: 'img/power1.png',
@@ -254,7 +258,7 @@ class Game {
       });
     }
     const negoff = 6 - settings.ship.offensif;
-    for (let s = 0; s < negoff; s++) {
+    for (let s = 0; s < negoff; s += 1) {
       this.newImg({
         parent: offID,
         src: 'img/power0.png',
@@ -272,7 +276,7 @@ class Game {
 
     const defID = $(`#${defship}`);
     $(defID).append(document.createTextNode('Defensif'));
-    for (let y = 0; y < settings.ship.defensif; y++) {
+    for (let y = 0; y < settings.ship.defensif; y += 1) {
       this.newImg({
         parent: defID,
         src: 'img/power1.png',
@@ -280,7 +284,7 @@ class Game {
       });
     }
     const negdef = 6 - settings.ship.defensif;
-    for (let s = 0; s < negdef; s++) {
+    for (let s = 0; s < negdef; s += 1) {
       this.newImg({
         parent: defID,
         src: 'img/power0.png',
@@ -296,9 +300,9 @@ class Game {
       id: 'myGameMap',
       class: ['mapGame', 'mapMoove', 'rotate'],
     });
-    for (let x = 0; x < this.mapGame.map.length; x++) {
+    for (let x = 0; x < this.mapGame.map.length; x += 1) {
       const newLine = $('<div>');
-      for (let y = 0; y < this.mapGame.map[x].length; y++) {
+      for (let y = 0; y < this.mapGame.map[x].length; y += 1) {
         const newColumn = $('<div>');
         $(newLine).append(newColumn);
         const newDiv = $('<div>');
@@ -359,16 +363,16 @@ class Game {
           });
         }
       }
-      $(myGameMap).append(newLine);
+      $('#myGameMap').append(newLine);
     }
-    $(this.main).append(myGameMap);
+    $(this.main).append('#myGameMap');
   }
 
   printPlayer(player) {
     const length = this.mapGame.getPlayerLength(player);
     const square = this.mapGame.getPlayerSquarePos(player);
 
-    for (let x = 0; x < length; x++) {
+    for (let x = 0; x < length; x += 1) {
       const line = square[x][0];
       const column = square[x][1];
       const cellMap = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]>div`);
@@ -385,7 +389,7 @@ class Game {
   supressPlayer(player) {
     const length = this.mapGame.getPlayerLength(player);
     const square = this.mapGame.getPlayerSquarePos(player);
-    for (let x = 0; x < length; x++) {
+    for (let x = 0; x < length; x += 1) {
       const line = square[x][0];
       const column = square[x][1];
       const divCell = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
@@ -395,8 +399,8 @@ class Game {
   }
 
   supressPlayerMooves() {
-    for (let x = 0; x < this.mapGame.map.length; x++) {
-      for (let y = 0; y < this.mapGame.map[x].length; y++) {
+    for (let x = 0; x < this.mapGame.map.length; x += 1) {
+      for (let y = 0; y < this.mapGame.map[x].length; y += 1) {
         const columnMap = $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
         if ($(columnMap).hasClass('moove')) {
           $(columnMap).removeClass('moove');
@@ -435,8 +439,12 @@ class Game {
 
   creatMoveChoice(settings) {
     const mapTest = this.mapGame.testmove(settings.player);
-    const { x } = settings;
-    const { y } = settings;
+    const {
+      x,
+    } = settings;
+    const {
+      y,
+    } = settings;
     if ($('#orientationChoose')) {
       $('#orientationChoose').remove();
     }
@@ -452,7 +460,7 @@ class Game {
       id: 'titleOrientation',
       class: ['container', 'centerWrap', 'bigFont', 'margTop15'],
     });
-    this.newTxt(titleOrientation, 'Choose your orientation');
+    this.newTxt($('#titleOrientation'), 'Choose your orientation');
     this.newHtmlElement({
       parent: $('#orientationChoose'),
       element: 'div',
@@ -492,8 +500,12 @@ class Game {
 
   moveAction(settings) {
     $('#skipMove').remove();
-    const { x } = settings;
-    const { y } = settings;
+    const {
+      x,
+    } = settings;
+    const {
+      y,
+    } = settings;
     let mooveOrientation = '';
     switch (settings.orientation) {
       case 'N':
@@ -507,6 +519,8 @@ class Game {
         break;
       case 'W':
         mooveOrientation = 'W';
+        break;
+      default:
         break;
     }
 
@@ -536,8 +550,8 @@ class Game {
   playeTurn(player) {
     this.refreshPlayerOverlay();
     const mapTest = this.mapGame.testmove(player);
-    for (let x = 0; x < mapTest.length; x++) {
-      for (let y = 0; y < mapTest[x].length; y++) {
+    for (let x = 0; x < mapTest.length; x += 1) {
+      for (let y = 0; y < mapTest[x].length; y += 1) {
         if (mapTest[x][y].N === true || mapTest[x][y].S === true || mapTest[x][y].E === true || mapTest[x][y].W === true) {
           const columnMap = $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]`);
           $(columnMap).addClass('moove');
@@ -558,7 +572,7 @@ class Game {
       class: ['large', 'margLr10', 'overlay', 'skip'],
       onclick: () => {
         this.supressPlayerMooves();
-        skipMove.remove();
+        $('#skipMove').remove();
         if (this.mapGame.testAttack({
           player,
           ennemy: this.getOpponent(player),
@@ -581,7 +595,7 @@ class Game {
       const length = this.mapGame.getPlayerLength(opponent);
       const square = this.mapGame.getPlayerSquarePos(opponent);
 
-      for (let x = 0; x < length; x++) {
+      for (let x = 0; x < length; x += 1) {
         const line = square[x][0];
         const column = square[x][1];
         const divCell = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
@@ -598,7 +612,7 @@ class Game {
         class: ['large', 'margLr10', 'overlay', 'skip'],
         onclick: () => {
           this.supressAttackPossibl(player);
-          $(skipAttack).remove();
+          $('#skipAttack').remove();
           this.changeCurrentPlayer();
           this.state = 103;
         },
@@ -615,7 +629,7 @@ class Game {
       const length = this.mapGame.getPlayerLength(opponent);
       const square = this.mapGame.getPlayerSquarePos(opponent);
 
-      for (let x = 0; x < length; x++) {
+      for (let x = 0; x < length; x += 1) {
         const line = square[x][0];
         const column = square[x][1];
         const divCell = $(`#myGameMap>div>[data-x="${line}"][data-y="${column}"]`);
@@ -638,12 +652,12 @@ class Game {
   }
 
   refreshMap() {
-    for (let x = 0; x < this.mapGame.map.length; x++) {
-      for (let y = 0; y < this.mapGame.map[x].length; y++) {
-        for (let z = 0; z < 4; z++) {
+    for (let x = 0; x < this.mapGame.map.length; x += 1) {
+      for (let y = 0; y < this.mapGame.map[x].length; y += 1) {
+        for (let z = 0; z < 4; z += 1) {
           const weaponTest = $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div>#s${z}`);
           if (weaponTest != null) {
-            if (this.mapGame.map[x][y] === `s${z}`) {} else {
+            if (this.mapGame.map[x][y] === `s${z}`) { /* */ } else {
               weaponTest.remove();
             }
           } else if (this.mapGame.map[x][y] === `s${z}`) {
@@ -657,6 +671,8 @@ class Game {
                 break;
               case 's2':
                 weaponImg = weapon.shieldSettings.sprite[Math.floor(Math.random() * weapon.shieldSettings.sprite.length)];
+                break;
+              default:
                 break;
             }
             this.newImg({
@@ -672,14 +688,14 @@ class Game {
   }
 
   getOpponent(player) {
-    if (player == this.players[0]) {
+    if (player === this.players[0]) {
       return this.players[1];
     }
     return this.players[0];
   }
 
   creatPlayersOverlay() {
-    for (let x = 0; x < this.players.length; x++) {
+    for (let x = 0; x < this.players.length; x += 1) {
       const player = this.players[x];
       let direction = '';
       if (x === 0) {
@@ -693,7 +709,7 @@ class Game {
         id: player.uuid,
         class: ['overlay', 'player', direction, 'container', 'flexColumn', 'spaceEvenly'],
       });
-      if (player == this.currentPlayer()) {
+      if (player === this.currentPlayer()) {
         $(`#${player.uuid}`).addClass('activ');
       } else {
         $(`#${player.uuid}`).addClass('inactiv');
@@ -771,7 +787,7 @@ class Game {
         class: ['container', 'centerWrap', 'stats'],
       });
       $(`#speed${player.uuid}`).append(document.createTextNode('Speed'));
-      for (let i = 0; i < player.speed; i++) {
+      for (let i = 0; i < player.speed; i += 1) {
         this.newImg({
           parent: $(`#speed${player.uuid}`),
           src: 'img/power1.png',
@@ -779,7 +795,7 @@ class Game {
         });
       }
       const negspeed = 6 - player.speed;
-      for (let x = 0; x < negspeed; x++) {
+      for (let s = 0; s < negspeed; s += 1) {
         this.newImg({
           parent: $(`#speed${player.uuid}`),
           src: 'img/power0.png',
@@ -795,7 +811,7 @@ class Game {
       });
 
       $(`#off${player.uuid}`).append(document.createTextNode('Offensif'));
-      for (let y = 0; y < player.offensif; y++) {
+      for (let y = 0; y < player.offensif; y += 1) {
         this.newImg({
           parent: $(`#off${player.uuid}`),
           src: 'img/power1.png',
@@ -803,7 +819,7 @@ class Game {
         });
       }
       const negoff = 6 - player.offensif;
-      for (let s = 0; s < negoff; s++) {
+      for (let s = 0; s < negoff; s += 1) {
         this.newImg({
           parent: $(`#off${player.uuid}`),
           src: 'img/power0.png',
@@ -819,7 +835,7 @@ class Game {
       });
 
       $(`#def${player.uuid}`).append(document.createTextNode('Defensif'));
-      for (let y = 0; y < player.defensif; y++) {
+      for (let y = 0; y < player.defensif; y += 1) {
         this.newImg({
           parent: $(`#def${player.uuid}`),
           src: 'img/power1.png',
@@ -827,7 +843,7 @@ class Game {
         });
       }
       const negdef = 6 - player.defensif;
-      for (let s = 0; s < negdef; s++) {
+      for (let s = 0; s < negdef; s += 1) {
         this.newImg({
           parent: $(`#def${player.uuid}`),
           src: 'img/power0.png',
@@ -858,14 +874,14 @@ class Game {
   }
 
   refreshPlayerOverlay() {
-    for (let x = 0; x < this.players.length; x++) {
+    for (let x = 0; x < this.players.length; x += 1) {
       const player = this.players[x];
       $(`#speed${player.uuid}`).remove();
       $(`#off${player.uuid}`).remove();
       $(`#def${player.uuid}`).remove();
       $(`#stuff${player.uuid}`).remove();
 
-      if (player == this.currentPlayer()) {
+      if (player === this.currentPlayer()) {
         $(`#${player.uuid}`).removeClass('inactiv');
         $(`#${player.uuid}`).addClass('activ');
       } else {
@@ -876,7 +892,7 @@ class Game {
       $(`#healthProgress${player.uuid}`).width(`${player.health}%`);
 
       const interval = window.setInterval(() => {
-        if ($(`#TxtActualPv${player.uuid}`).text() != player.pv) {
+        if ($(`#TxtActualPv${player.uuid}`).text() !== player.pv) {
           if ($(`#TxtActualPv${player.uuid}`).text() > player.pv) $(`#TxtActualPv${player.uuid}`).text(Number($(`#TxtActualPv${player.uuid}`).text()) - Number(1));
           else $(`#TxtActualPv${player.uuid}`).text(Number($(`#TxtActualPv${player.uuid}`).text()) + Number(1));
         } else {
@@ -894,7 +910,7 @@ class Game {
       });
       $(`#speed${player.uuid}`).append(document.createTextNode('Speed'));
 
-      for (let i = 0; i < player.speed; i++) {
+      for (let i = 0; i < player.speed; i += 1) {
         this.newImg({
           parent: $(`#speed${player.uuid}`),
           src: 'img/power1.png',
@@ -902,7 +918,7 @@ class Game {
         });
       }
       const negspeed = 6 - player.speed;
-      for (let x = 0; x < negspeed; x++) {
+      for (let o = 0; o < negspeed; o += 1) {
         this.newImg({
           parent: $(`#speed${player.uuid}`),
           src: 'img/power0.png',
@@ -918,7 +934,7 @@ class Game {
       });
 
       $(`#off${player.uuid}`).append(document.createTextNode('Offensif'));
-      for (let y = 0; y < player.offensif; y++) {
+      for (let y = 0; y < player.offensif; y += 1) {
         this.newImg({
           parent: $(`#off${player.uuid}`),
           src: 'img/power1.png',
@@ -926,7 +942,7 @@ class Game {
         });
       }
       const negoff = 6 - player.offensif;
-      for (let s = 0; s < negoff; s++) {
+      for (let s = 0; s < negoff; s += 1) {
         this.newImg({
           parent: $(`#off${player.uuid}`),
           src: 'img/power0.png',
@@ -942,7 +958,7 @@ class Game {
       });
 
       $(`#def${player.uuid}`).append(document.createTextNode('Defensif'));
-      for (let y = 0; y < player.defensif; y++) {
+      for (let y = 0; y < player.defensif; y += 1) {
         this.newImg({
           parent: $(`#def${player.uuid}`),
           src: 'img/power1.png',
@@ -950,7 +966,7 @@ class Game {
         });
       }
       const negdef = 6 - player.defensif;
-      for (let s = 0; s < negdef; s++) {
+      for (let s = 0; s < negdef; s += 1) {
         this.newImg({
           parent: $(`#def${player.uuid}`),
           src: 'img/power0.png',
@@ -1051,7 +1067,7 @@ class Game {
   }
 
   changeCurrentPlayer() {
-    if (this.currentPlayerId == 0) {
+    if (this.currentPlayerId === 0) {
       this.currentPlayerId = 1;
     } else {
       this.currentPlayerId = 0;
@@ -1066,7 +1082,7 @@ class Game {
   }
 
   resetPlayer() {
-    for (let x = 0; x < this.players.length; x++) {
+    for (let x = 0; x < this.players.length; x += 1) {
       this.players[x].pv = 100;
       this.players[x].ship = undefined;
       this.players[x].orientation = undefined;
@@ -1089,9 +1105,9 @@ class Game {
       this.backgroundSound.play();
     });
 
-    this.backgroundSound.autoplay = true,
-    this.backgroundSound.loop = true,
-    this.backgroundSound.volume = 0.5,
+    this.backgroundSound.autoplay = true;
+    this.backgroundSound.loop = true;
+    this.backgroundSound.volume = 0.5;
     this.creatRulesOverlay();
     this.newImg({
       parent: this.header,
@@ -1326,7 +1342,7 @@ class Game {
         class: ['container', 'centerWrap', 'bigFont'],
       });
 
-      this.newTxt(titleShipChoice, (`${player.name} ` + 'choose your ship'));
+      this.newTxt($('#titleShipChoice'), (`${player.name} ` + 'choose your ship'));
 
 
       this.newHtmlElement({
@@ -1348,18 +1364,18 @@ class Game {
         ship: shipSettings.blackBirdSettings,
       });
 
-      shipbb.onclick = () => {
+      $('#shipbb').click(() => {
         player.ship = shipSettings.blackBirdSettings;
         player.speed = shipSettings.blackBirdSettings.speed;
         player.offensif = shipSettings.blackBirdSettings.offensif;
         player.defensif = shipSettings.blackBirdSettings.defensif;
         this.changeCurrentPlayer();
-        if (this.currentPlayer().ship != undefined) {
+        if (this.currentPlayer().ship !== undefined) {
           this.state = 103;
         } else {
           this.step102(this.currentPlayer());
         }
-      };
+      });
 
       this.newHtmlElement({
         element: 'div',
@@ -1373,18 +1389,18 @@ class Game {
         ship: shipSettings.federalCruserSettings,
       });
 
-      shipfc.onclick = () => {
+      $('#shipfc').click(() => {
         player.ship = shipSettings.federalCruserSettings;
         player.speed = shipSettings.federalCruserSettings.speed;
         player.offensif = shipSettings.federalCruserSettings.offensif;
         player.defensif = shipSettings.federalCruserSettings.defensif;
         this.changeCurrentPlayer();
-        if (this.currentPlayer().ship != undefined) {
+        if (this.currentPlayer().ship !== undefined) {
           this.state = 103;
         } else {
           this.step102(this.currentPlayer());
         }
-      };
+      });
 
       this.newHtmlElement({
         element: 'div',
@@ -1398,18 +1414,18 @@ class Game {
         ship: shipSettings.speedFireSettings,
       });
 
-      shipsf.onclick = () => {
+      $('#shipsf').click(() => {
         player.ship = shipSettings.speedFireSettings;
         player.speed = shipSettings.speedFireSettings.speed;
         player.offensif = shipSettings.speedFireSettings.offensif;
         player.defensif = shipSettings.speedFireSettings.defensif;
         this.changeCurrentPlayer();
-        if (this.currentPlayer().ship != undefined) {
+        if (this.currentPlayer().ship !== undefined) {
           this.state = 103;
         } else {
           this.step102(this.currentPlayer());
         }
-      };
+      });
 
       this.newHtmlElement({
         element: 'div',
@@ -1423,25 +1439,25 @@ class Game {
         ship: shipSettings.spaceThunderSettings,
       });
 
-      shipst.onclick = () => {
+      $('#shipst').click(() => {
         player.ship = shipSettings.spaceThunderSettings;
         player.speed = shipSettings.spaceThunderSettings.speed;
         player.offensif = shipSettings.spaceThunderSettings.offensif;
         player.defensif = shipSettings.spaceThunderSettings.defensif;
         this.changeCurrentPlayer();
-        if (this.currentPlayer().ship != undefined) {
+        if (this.currentPlayer().ship !== undefined) {
           this.state = 103;
         } else {
           this.step102(this.currentPlayer());
         }
-      };
+      });
 
       $(this.main).fadeIn(500);
     }, 501);
   }
 
   step103() {
-    if (this.state != this.previousState) {
+    if (this.state !== this.previousState) {
       $(this.main).fadeOut(500);
       setTimeout(() => {
         $(this.main).empty();
@@ -1451,7 +1467,7 @@ class Game {
       setTimeout(() => {
         this.creatPlayersOverlay();
         this.printMap();
-        for (let u = 0; u < this.players.length; u++) {
+        for (let u = 0; u < this.players.length; u += 1) {
           this.mapGame.setPlayerPos({
             player: this.players[u],
             newPos: undefined,
@@ -1464,7 +1480,7 @@ class Game {
         $(this.main).fadeIn(500);
       }, 501);
     }
-    if (this.state == this.previousState) {
+    if (this.state === this.previousState) {
       this.checkEnd(this.currentPlayer());
       this.playeTurn(this.currentPlayer());
     }
