@@ -1,4 +1,5 @@
 /* eslint max-len: ["error", { "code": 200 }] */
+/* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["player"] }] */
 import gameRules from './gameRules.js';
 import shipSettings from './shipsettings.js';
 import MapGame from './map.js';
@@ -1316,7 +1317,6 @@ class Game {
     }, 501);
   }
 
-  /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["player"] }] */
   step102(player) {
     $(this.main).fadeOut(500);
     setTimeout(() => {

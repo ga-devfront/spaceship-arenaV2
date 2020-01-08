@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 290 }] */
+/* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["settings"] }] */
 export default class mapGame {
   constructor() {
     this.size = 15;
@@ -11,12 +13,14 @@ export default class mapGame {
     this.oldWeapon = [];
   }
 
+  /* construction of the map */
   generateMapGame() {
     this.map = this.newmapGameArray();
     this.addObstacle();
     this.addStuff();
   }
 
+  /* creat the array for the map */
   newmapGameArray() {
     const map = [];
     for (let x = 0; x < this.size; x += 1) {
@@ -28,19 +32,21 @@ export default class mapGame {
     return map;
   }
 
-
+  /* RANDOM */
+  /* for having a random position of player */
   getRandomPos() {
     const randomLineNumber = Math.floor(Math.random() * this.size);
     const randomCollumnNumber = Math.floor(Math.random() * this.size);
     return [randomLineNumber, randomCollumnNumber];
   }
 
+  /* for having a random orientation of player */
   getRandomOrientation() {
     const randomOrientation = this.orientation[Math.floor(Math.random() * this.orientation.length)];
     return randomOrientation;
   }
 
-  /* obstacle */
+  /* add obstacle on map */
   addObstacle() {
     for (let x = 0; x < this.obstacles; x += 1) {
       const randomCoord = this.getRandomPos();
@@ -95,7 +101,7 @@ export default class mapGame {
     }
   }
 
-  /* equipement */
+  /* add stuff on map */
   addStuff() {
     for (let x = 0; x < 4; x += 1) {
       const randomCoord = this.getRandomPos();
@@ -146,9 +152,8 @@ export default class mapGame {
       }
     }
   }
-  /* joueurs */
 
-  /* position */
+  /* for havin player position */
   getPlayerOrientation(player) {
     if (this.playerOrientation[player.uuid]) {
       return this.playerOrientation[player.uuid];
@@ -156,20 +161,13 @@ export default class mapGame {
     return undefined;
   }
 
-  setPlayerOrientation(settings) {
-    if (this.getPlayerOrientation(settings.player) === undefined) {
-      const randomOrientation = this.getRandomOrientation();
-      this.playerOrientation[settings.player.uuid] = randomOrientation;
-    } else {
-      this.playerOrientation[settings.player.uuid] = settings.orientation;
-    }
-  }
-
+  /* for having the length of the ship's player */
   getPlayerLength(player) {
     const playerLength = player.ship.sprite.length;
     return playerLength;
   }
 
+  /* calcul the square of the player with length, position and orientation */
   getPlayerSquare(player) {
     const orientation = this.getPlayerOrientation(player);
     const length = this.getPlayerLength(player);
@@ -225,6 +223,16 @@ export default class mapGame {
       return this.playerPosSquare[player.uuid];
     }
     return undefined;
+  }
+
+  /*  */
+  setPlayerOrientation(settings) {
+    if (this.getPlayerOrientation(settings.player) === undefined) {
+      const randomOrientation = this.getRandomOrientation();
+      this.playerOrientation[settings.player.uuid] = randomOrientation;
+    } else {
+      this.playerOrientation[settings.player.uuid] = settings.orientation;
+    }
   }
 
   updatePlayerStat(settings) {
@@ -508,7 +516,7 @@ export default class mapGame {
       const columnMax = column + speed;
       for (let x = 0; x < (speed * 2 + 1); x += 1) {
         for (let y = 0; y < (speed * 2 + 1); y += 1) {
-          if (y < (speed - x) || (x + y) > ((speed + (x) * 2)) || x > (speed + y) || (x + y) > (speed * 3)) {} else {
+          if (y < (speed - x) || (x + y) > ((speed + (x) * 2)) || x > (speed + y) || (x + y) > (speed * 3)) { /* */ } else {
             let posSearchX = lineMax - x;
             let posSearchY = columnMax - y;
             if (posSearchX < 0) {
