@@ -112,7 +112,8 @@ export default class mapGame {
       const plageX = [];
       const plageY = [];
       let testObstacl = 25;
-      if (this.map[randomX][randomY] === 'x' || this.map[randomX][randomY] == 's' + '') {
+      const regex = /[s][1-9]/g;
+      if (this.map[randomX][randomY] === 'x' || this.map[randomX][randomY] === regex) {
         x -= 1;
       } else {
         for (let z = 0; z < 5; z += 1) {
@@ -413,8 +414,6 @@ export default class mapGame {
   attack(settings) {
     const {
       player,
-    } = settings;
-    const {
       ennemi,
     } = settings;
     ennemi.pv = ennemi.pv - (player.offensif * 5) - (ennemi.defensif);

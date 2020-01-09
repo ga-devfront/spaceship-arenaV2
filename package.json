@@ -1,5 +1,5 @@
 {
-  "name": "spaceship-arenaV2",
+  "name": "spaceship-arena-v2",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,6 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint": "^6.8.0"
   },
-  "description": ""
+  "description": "mini spaceship game"
   
 }

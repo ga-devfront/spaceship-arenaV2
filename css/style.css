@@ -487,7 +487,7 @@ button.square2 {
     border-radius: 35px;
     margin-top: 4px;
     margin-left: 10px;
-    position : relative;
+    position: relative;
     overflow: hidden;
     z-index: 1;
 }
@@ -497,7 +497,7 @@ button.square2 {
     top: 0;
     left: 0;
     bottom: 0;
-    background: rgba(189,0,0,1);
+    background: rgba(189, 0, 0, 1);
     z-index: -1;
     -webkit-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out;
@@ -525,6 +525,33 @@ button.square2 {
 
 .attack {
     cursor: url(../img/attack.png) 15 15, pointer;
+}
+
+.overlay.alert {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    align-items: center;
+    vertical-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 50%;
+    height: 15%;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
+    border: solid white 3px;
+    border-radius: 35px;
+    background-color: rgba(0, 26, 36, 0.9);
+    z-index: 5;
 }
 
 .overlay.rules {

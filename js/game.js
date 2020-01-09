@@ -1,5 +1,6 @@
 /* eslint max-len: ["error", { "code": 200 }] */
 /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["player"] }] */
+/* eslint-disable no-new */
 import gameRules from './gameRules.js';
 import shipSettings from './shipsettings.js';
 import MapGame from './map.js';
@@ -1226,7 +1227,22 @@ class Game {
         alt: 'Play online',
         class: ['margLr10', 'square', 'bigFont'],
         onclick: () => {
-          alert('online mode is in development');
+          this.newHtmlElement({
+            element: 'div',
+            parent: this.container,
+            id: 'onlineDisabled',
+            class: ['overlay', 'alert', 'bigFont'],
+          });
+          $('#onlineDisabled').append(document.createTextNode('online mode is in development'));
+          this.newButton({
+            parent: $('#onlineDisabled'),
+            id: 'supressAlert',
+            txt: 'Close',
+            class: ['margLr10', 'large', 'margTop15'],
+            onclick: () => {
+              $('#onlineDisabled').remove();
+            },
+          });
         },
       });
       $(this.main).fadeIn(500);
