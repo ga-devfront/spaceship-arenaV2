@@ -3,7 +3,7 @@ export default {
     shipname: 'Black Bird',
     abreviation: 'bb',
     logo: 'img/ships/logo/blackbird-logo.png',
-    description: 'Vaisseau concu pour la destruction, ce chasseur lourd possede une puissance de frappe inegale au detriment de sa vitesse bien qu’il conserve une legere defense.',
+    description: 'A ship designed for destruction, this heavy hunter has unequal striking power at the expense of his speed, although he retains a slight defense.',
     representation: 'img/ships/repr/repbb.png',
     speed: 3,
     offensif: 3,
@@ -26,10 +26,10 @@ export default {
     shipname: 'Federal Cruser',
     abreviation: 'fc',
     logo: 'img/ships/logo/federalcruser-logo.png',
-    description: "Vaisseau federal destine a la defense des forteresses de l’empire galactique, c’est un vaisseau tres peut mobile mais dote d'une grande capacite defensive",
+    description: 'Federal ship intended for the defense of the fortresses\'s galactic empire, it\'s not a very mobile ship but equipped with a great defensive capacity.',
     representation: 'img/ships/repr/repfc.png',
     speed: 3,
-    offensif: 1,
+    offensif: 2,
     defensif: 5,
     sprite: [
       {
@@ -55,10 +55,10 @@ export default {
     shipname: 'Speed Fire',
     abreviation: 'sf',
     logo: 'img/ships/logo/speedfire-logo.png',
-    description: 'Vaisseau utilise par les pirates lors de courses illegales, c’est un vaisseau extremement rapide mais dote d’une faible force de frappe et d’une defense quasi inexistante.',
+    description: 'Ship used by pirates during illegal races, it is an extremely fast ship but equipped with a weak strike force and an almost nonexistent defense.',
     representation: 'img/ships/repr/repsf.png',
     speed: 5,
-    offensif: 3,
+    offensif: 2,
     defensif: 1,
     sprite: [
       {
@@ -78,11 +78,11 @@ export default {
     shipname: 'Space Thunder',
     abreviation: 'st',
     logo: 'img/ships/logo/spacethunder-logo.png',
-    description: 'Vaisseau concu pour la destruction, ce chasseur lourd possede une puissance de frappe inegale au detriment de sa vitesse bien qu’il conserve une legere defense.',
+    description: 'A ship designed for destruction, this heavy hunter has unequal striking power at the expense of his speed, although he retains a slight defense.',
     representation: 'img/ships/repr/repst.png',
     speed: 2,
-    offensif: 5,
-    defensif: 3,
+    offensif: 4,
+    defensif: 2,
     sprite: [
       {
         N: 'img/ships/sprite/st/nord.png',
