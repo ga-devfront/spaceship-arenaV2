@@ -13,14 +13,18 @@ export default class mapGame {
     this.oldWeapon = [];
   }
 
-  /* construction of the map */
+  /**
+   * Generate the new map game.
+   */
   generateMapGame() {
     this.map = this.newmapGameArray();
     this.addObstacle();
     this.addStuff();
   }
 
-  /* creat the array for the map */
+  /**
+   * Create new array for the map game.
+   */
   newmapGameArray() {
     const map = [];
     for (let x = 0; x < this.size; x += 1) {
@@ -32,21 +36,26 @@ export default class mapGame {
     return map;
   }
 
-  /* RANDOM */
-  /* for having a random position of player */
+  /**
+   * To get a random position in the map.
+   */
   getRandomPos() {
     const randomLineNumber = Math.floor(Math.random() * this.size);
     const randomCollumnNumber = Math.floor(Math.random() * this.size);
     return [randomLineNumber, randomCollumnNumber];
   }
 
-  /* for having a random orientation of player */
+  /**
+   * To get a random orientation for a player.
+   */
   getRandomOrientation() {
     const randomOrientation = this.orientation[Math.floor(Math.random() * this.orientation.length)];
     return randomOrientation;
   }
 
-  /* add obstacle on map */
+  /**
+   * Add obstacle on the map.
+   */
   addObstacle() {
     for (let x = 0; x < this.obstacles; x += 1) {
       const randomCoord = this.getRandomPos();
@@ -101,7 +110,9 @@ export default class mapGame {
     }
   }
 
-  /* add stuff on map */
+  /**
+   * Add stuff on the map.
+   */
   addStuff() {
     for (let x = 0; x < 4; x += 1) {
       const randomCoord = this.getRandomPos();
@@ -154,7 +165,10 @@ export default class mapGame {
     }
   }
 
-  /* for havin player position */
+  /**
+   * To get the player orientation.
+   * @param {Object} player select the player to get his orientation.
+   */
   getPlayerOrientation(player) {
     if (this.playerOrientation[player.uuid]) {
       return this.playerOrientation[player.uuid];
@@ -162,13 +176,19 @@ export default class mapGame {
     return undefined;
   }
 
-  /* for having the length of the ship's player */
+  /**
+   * To get the player length.
+   * @param {Object} player select the player to get his length.
+   */
   getPlayerLength(player) {
     const playerLength = player.ship.sprite.length;
     return playerLength;
   }
 
-  /* calcul the square of the player with length, position and orientation */
+  /**
+   * To get the player square.
+   * @param {Object} player select the player to get his square.
+   */
   getPlayerSquare(player) {
     const orientation = this.getPlayerOrientation(player);
     const length = this.getPlayerLength(player);
@@ -212,6 +232,10 @@ export default class mapGame {
     return square;
   }
 
+  /**
+   * To get the player position.
+   * @param {Object} player select the player to get his position.
+   */
   getPlayerPos(player) {
     if (this.playersPos[player.uuid]) {
       return this.playersPos[player.uuid];
@@ -219,6 +243,10 @@ export default class mapGame {
     return undefined;
   }
 
+  /**
+   * To get the player square positions.
+   * @param {Object} player select the player to get his square positions.
+   */
   getPlayerSquarePos(player) {
     if (this.playerPosSquare[player.uuid]) {
       return this.playerPosSquare[player.uuid];
@@ -226,7 +254,10 @@ export default class mapGame {
     return undefined;
   }
 
-  /*  */
+  /**
+   * To set the player orientation.
+   * @param {Object} settings settings for orientation and player value.
+   */
   setPlayerOrientation(settings) {
     if (this.getPlayerOrientation(settings.player) === undefined) {
       const randomOrientation = this.getRandomOrientation();
@@ -236,48 +267,10 @@ export default class mapGame {
     }
   }
 
-  updatePlayerStat(settings) {
-    const {
-      player,
-    } = settings;
-    const {
-      weapon,
-    } = settings;
-    const {
-      oldWeapon,
-    } = settings;
-    switch (oldWeapon) {
-      case 's0':
-        player.offensif -= 1;
-        break;
-      case 's1':
-        player.speed -= 1;
-        break;
-      case 's2':
-        player.defensif -= 1;
-        break;
-      default:
-    }
-    switch (weapon) {
-      case 's0':
-        player.offensif += 1;
-        break;
-      case 's1':
-        player.speed += 1;
-        break;
-      case 's2':
-        player.defensif += 1;
-        break;
-      case 's3':
-        player.pv += 25;
-        if (player.pv > 100) {
-          player.pv = 100;
-        }
-        break;
-      default:
-    }
-  }
-
+  /**
+   * To set the player position (including square).
+   * @param {Object} settings settings for position of player value.
+   */
   setPlayerPos(settings) {
     if (this.getPlayerPos(settings.player) === undefined) {
       for (let x = 0; x < 1; x += 1) {
@@ -299,7 +292,6 @@ export default class mapGame {
         }
         for (let z = 0; z < squarePosition.length; z += 1) {
           if (squarePosition[z][0] >= 0 && squarePosition[z][0] <= 14 && squarePosition[z][1] >= 0 && squarePosition[z][1] <= 14) {
-            /* verifie que la position est bien sur la carte */
             const xpos = squarePosition[z][0] + 1;
             const ypos = squarePosition[z][1] + 1;
             let test = 0;
@@ -337,7 +329,7 @@ export default class mapGame {
             if (test === 9) {
               if (this.map[squarePosition[z][0]][squarePosition[z][1]] === '') {
                 verification += 1;
-              } /* incrémente la verification si toutes les conditions son requises */
+              }
             }
           }
         }
@@ -409,12 +401,65 @@ export default class mapGame {
       this.playerPosSquare[settings.player.uuid] = squareFinal;
     }
   }
-  /* attaque */
 
+  /**
+   * Update the player stats.
+   * @param {Object} settings settings for update the player stats.
+   */
+  updatePlayerStat(settings) {
+    const {
+      player,
+    } = settings;
+    const {
+      weapon,
+    } = settings;
+    const {
+      oldWeapon,
+    } = settings;
+    switch (oldWeapon) {
+      case 's0':
+        player.offensif -= 1;
+        break;
+      case 's1':
+        player.speed -= 1;
+        break;
+      case 's2':
+        player.defensif -= 1;
+        break;
+      default:
+    }
+    switch (weapon) {
+      case 's0':
+        player.offensif += 1;
+        break;
+      case 's1':
+        player.speed += 1;
+        break;
+      case 's2':
+        player.defensif += 1;
+        break;
+      case 's3':
+        player.pv += 25;
+        if (player.pv > 100) {
+          player.pv = 100;
+        }
+        break;
+      default:
+    }
+  }
+
+  /**
+  * Calcul for attack.
+  * @param {Object} settings settings for attack value.
+  */
   attack(settings) {
     settings.ennemi.pv = settings.ennemi.pv - (settings.player.offensif * 5) - (settings.ennemi.defensif);
   }
 
+  /**
+   * test if the attack is possible.
+   * @param {Object} settings settings for attack value.
+   */
   testAttack(settings) {
     const pos = this.getPlayerPos(settings.player);
     const direction = this.getPlayerOrientation(settings.player);
@@ -471,8 +516,11 @@ export default class mapGame {
     return false;
   }
 
-  /* mouvement autorise */
-
+  /**
+   * Search an element on an array.
+   * @param {*} searchElement the element we search on the array.
+   * @param {*} array the array in which we are searching.
+   */
   searchOnArray(searchElement, array) {
     const toFind = JSON.stringify(searchElement);
     const source = JSON.stringify(array);
@@ -483,6 +531,10 @@ export default class mapGame {
     return false;
   }
 
+  /**
+   * Test the possibility of moove for player.
+   * @param {Object} player select the player test value.
+   */
   testmove(player) {
     const pos = this.getPlayerSquarePos(player);
     const {
@@ -491,10 +543,7 @@ export default class mapGame {
     const playerlength = this.getPlayerLength(player);
     const mapTest = this.newmapGameArray();
     const testPos = [];
-
-
     for (let k = 0; k < mapTest.length; k += 1) {
-      /* on passe chaque ligne de mapTest en test */
       for (let w = 0; w < mapTest[k].length; w += 1) {
         mapTest[k][w] = {
           N: false,
@@ -533,6 +582,7 @@ export default class mapGame {
         }
       }
     }
+
     for (let x = 0; x < testPos.length; x += 1) {
       const test = testPos[x];
 
@@ -547,14 +597,13 @@ export default class mapGame {
         if (lineX > 14) {
           break;
         }
-        /* si il correspond a une des testPos */
         if (this.searchOnArray([lineX, columnY], testPos)) {
           testNord += 1;
         }
         if (testNord === playerlength) {
           mapTest[liX][columnY].N = true;
         }
-      } /* test de la case nord en prenan compte du square du vaisseau */
+      }
 
       let testSud = 0;
       for (let s = 0; s < playerlength; s += 1) {
@@ -573,7 +622,7 @@ export default class mapGame {
         if (testSud === playerlength) {
           mapTest[liX][columnY].S = true;
         }
-      } /* test de la case sud en prenan compte du square du vaisseau */
+      }
 
       let testEst = 0;
       for (let e = 0; e < playerlength; e += 1) {
@@ -592,7 +641,7 @@ export default class mapGame {
         if (testEst === playerlength) {
           mapTest[lineX][colY].E = true;
         }
-      } /* test de la case est en prenan compte du square du vaisseau */
+      }
 
       let testOuest = 0;
       for (let o = 0; o < playerlength; o += 1) {
@@ -611,7 +660,7 @@ export default class mapGame {
         if (testOuest === playerlength) {
           mapTest[lineX][colY].W = true;
         }
-      } /* test de la case ouest en prenan compte du square du vaisseau */
+      }
     }
 
 

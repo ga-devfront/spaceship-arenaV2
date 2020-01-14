@@ -9,6 +9,9 @@ import weapon from './weapon.js';
 import obstacles from './obstacles.js';
 
 class Game {
+  /**
+   * @param {domObject} container htlm container for the game.
+   */
   constructor(container) {
     if ((typeof container === 'undefined') || (container.length === 0)) throw new Error("Merci de préciser un container pour initialiser l'instance de jeu");
     [this.header, this.main, this.footer] = [$(`${container} header`)[0], $(`${container} main`)[0], $(`${container} footer`)[0]];
@@ -71,7 +74,7 @@ class Game {
   }
 
   /**
-   * Create a new img in dom
+   * Create a new img in dom.
    * @param {Object} settings settings of images's value.
    */
   newImg(settings) {
@@ -92,16 +95,25 @@ class Game {
     $(settings.parent).append(newEl);
   }
 
+  /**
+   * Create new text in dom.
+   * @param {domObject} emplacement select the html emplacement.
+   * @param {string} myTxt choose the text.
+   */
   newTxt(emplacement, myTxt) {
     $(emplacement).append(document.createTextNode(myTxt));
   }
 
+  /**
+   * Create new button in dom.
+   * @param {Object} settings settings of button's value.
+   */
   newButton(settings) {
-    const newEl = $(`<button id="${settings.id}">`); // creat button
+    const newEl = $(`<button id="${settings.id}">`);
     for (let x = 0; settings.class.length > x; x += 1) {
       $(newEl).addClass(settings.class[x]);
     }
-    $(settings.parent).append(newEl); // push button in dom
+    $(settings.parent).append(newEl);
 
     if (typeof settings.img !== 'undefined' && settings.img.length > 0) {
       const {
@@ -126,7 +138,7 @@ class Game {
           () => {
             imgSelect.src = settings.img;
           },
-        ); // change img in hover and play sound
+        );
       }
     }
 
@@ -144,8 +156,15 @@ class Game {
         settings.onclick();
       });
     }
-  } // function for new button
+  }
 
+  /**
+   * Create a new table in dom.
+   * @param {domObject} emplacement select the html emplacement.
+   * @param {number} numberofLine choose the number of line.
+   * @param {number} numberofColumn choose the number of column.
+   * @param {string} tableID choose the table ID.
+   */
   newTable(emplacement, numberofLine, numberofColumn, tableID) {
     const newTable = $('<table>');
     $(newTable).attr('id', tableID);
@@ -160,15 +179,19 @@ class Game {
         $(newColumn).hover(() => {
           const sound = this.buttonSound;
           sound.play();
-        }); // add sound on hover
+        });
         $(newLine).append(newColumn);
       }
       $(newTablBody).append(newLine);
     }
     $(newTable).append(newTablBody);
     $(emplacement).append(newTable);
-  } // function for new table
+  }
 
+  /**
+   * Create a new HTML element in dom.
+   * @param {Object} settings settings of HTML element's value.
+   */
   newHtmlElement(settings) {
     const newEl = $(`<${settings.element}>`);
     if (typeof settings.id !== 'undefined' && settings.id.length > 0) {
@@ -178,26 +201,39 @@ class Game {
       $(newEl).addClass(settings.class[x]);
     }
     $(settings.parent).append(newEl);
-  } // function for new div
+  }
 
+  /**
+   * Supress all the container of the game (header, main, footer).
+   */
   supressAll() {
     $(this.header).empty();
     $(this.main).empty();
     $(this.footer).empty();
   }
 
+  /**
+   * Make animation of fade in for all container of the game (header, main, footer).
+   */
   fadeInAll() {
     $(this.header).fadeIn(500);
     $(this.main).fadeIn(500);
     $(this.footer).fadeIn(500);
   }
 
+  /**
+   * Make animation of fade out for all container of the game (header, main, footer).
+   */
   fadeOutAll() {
     $(this.header).fadeOut(500);
     $(this.main).fadeOut(500);
     $(this.footer).fadeOut(500);
   }
 
+  /**
+   * Create new presentation for a ship in dom.
+   * @param {Object} settings settings of ship presentation's value.
+   */
   shipPresentation(settings) {
     const emplacement = settings.parent;
     const sound = this.buttonSound;
@@ -300,6 +336,9 @@ class Game {
     }
   }
 
+  /**
+   * Print the map in the dom.
+   */
   printMap() {
     this.newHtmlElement({
       element: 'div',
@@ -374,6 +413,10 @@ class Game {
     }
   }
 
+  /**
+   * Print the player in the dom.
+   * @param {Object} player choose the printed player.
+   */
   printPlayer(player) {
     const length = this.mapGame.getPlayerLength(player);
     const square = this.mapGame.getPlayerSquarePos(player);
@@ -392,6 +435,10 @@ class Game {
     }
   }
 
+  /**
+   * Supress the player in the dom.
+   * @param {Object} player choose the supressed player.
+   */
   supressPlayer(player) {
     const length = this.mapGame.getPlayerLength(player);
     const square = this.mapGame.getPlayerSquarePos(player);
@@ -404,6 +451,9 @@ class Game {
     }
   }
 
+  /**
+   * Supress the players moove possible in dom.
+   */
   supressPlayerMooves() {
     for (let x = 0; x < this.mapGame.map.length; x += 1) {
       for (let y = 0; y < this.mapGame.map[x].length; y += 1) {
@@ -416,7 +466,10 @@ class Game {
     }
   }
 
-
+  /**
+  * Create a button for move choice.
+  * @param {Object} settings settings of button's value.
+  */
   buttonMoveChoice(settings) {
     if (settings.test) {
       this.newButton({
@@ -443,6 +496,10 @@ class Game {
     }
   }
 
+  /**
+   * Create a div with possibility move for the player.
+   * @param {Object} settings settings of move possibility's value.
+   */
   creatMoveChoice(settings) {
     const mapTest = this.mapGame.testmove(settings.player);
     const {
@@ -504,6 +561,10 @@ class Game {
     });
   }
 
+  /**
+   * Move the player in the html map.
+   * @param {Object} settings settings of move's value.
+   */
   moveAction(settings) {
     $('#skipMove').remove();
     const {
@@ -553,6 +614,10 @@ class Game {
     }
   }
 
+  /**
+   * Start the player turn.
+   * @param {Object} player choose the player for his turn.
+   */
   playeTurn(player) {
     this.refreshPlayerOverlay();
     const mapTest = this.mapGame.testmove(player);
@@ -592,6 +657,10 @@ class Game {
     });
   }
 
+  /**
+   * Add the option of attack if player can attack.
+   * @param {Object} player choose the tested player.
+   */
   attackPossibl(player) {
     const opponent = this.getOpponent(player);
     if (this.mapGame.testAttack({
@@ -626,6 +695,10 @@ class Game {
     }
   }
 
+  /**
+   * Supress the option of attack.
+   * @param {Object} player choose the player for supress is attack option.
+   */
   supressAttackPossibl(player) {
     const opponent = this.getOpponent(player);
     if (this.mapGame.testAttack({
@@ -645,6 +718,10 @@ class Game {
     }
   }
 
+  /**
+   * Make all the action for figth.
+   * @param {Object} player chosse the player for figth action.
+   */
   attack(player) {
     const opponent = this.getOpponent(player);
     this.mapGame.attack({
@@ -657,6 +734,9 @@ class Game {
     this.state = 103;
   }
 
+  /**
+   * Refresh the map's weapon.
+   */
   refreshMap() {
     for (let x = 0; x < this.mapGame.map.length; x += 1) {
       for (let y = 0; y < this.mapGame.map[x].length; y += 1) {
@@ -692,6 +772,11 @@ class Game {
     }
   }
 
+  /**
+   * Return the player opponent.
+   * @param {Object} player choose the player for have his opponent.
+   * @return {Object} return the player opponent.
+   */
   getOpponent(player) {
     if (player === this.players[0]) {
       return this.players[1];
@@ -699,6 +784,9 @@ class Game {
     return this.players[0];
   }
 
+  /**
+   * Creat the players' overlay in dom.
+   */
   creatPlayersOverlay() {
     for (let x = 0; x < this.players.length; x += 1) {
       const player = this.players[x];
@@ -878,6 +966,9 @@ class Game {
     }
   }
 
+  /**
+   * Refresh the players overlay.
+   */
   refreshPlayerOverlay() {
     for (let x = 0; x < this.players.length; x += 1) {
       const player = this.players[x];
@@ -1029,6 +1120,9 @@ class Game {
     }
   }
 
+  /**
+   * Create the overlay's rules.
+   */
   creatRulesOverlay() {
     this.newHtmlElement({
       element: 'div',
@@ -1071,6 +1165,9 @@ class Game {
     $('#rulesoverlay main').append(gameRules());
   }
 
+  /**
+   * Change the current player for his opponent.
+   */
   changeCurrentPlayer() {
     if (this.currentPlayerId === 0) {
       this.currentPlayerId = 1;
@@ -1079,6 +1176,10 @@ class Game {
     }
   }
 
+  /**
+   * Check if the game is finish.
+   * @param {Object} player select the player for looking to his life point.
+   */
   checkEnd(player) {
     const opponent = this.getOpponent(player);
     if (player.pv <= 0 || opponent.pv <= 0) {
@@ -1086,6 +1187,9 @@ class Game {
     }
   }
 
+  /**
+   * Reset all the player with iniatial status.
+   */
   resetPlayer() {
     for (let x = 0; x < this.players.length; x += 1) {
       this.players[x].pv = 100;
@@ -1100,6 +1204,9 @@ class Game {
     this.mapGame.playerOrientation = [];
   }
 
+  /**
+   * start menu.
+   */
   step0() {
     this.supressAll();
     $(this.header).fadeOut(0);
@@ -1194,6 +1301,9 @@ class Game {
     this.fadeInAll();
   }
 
+  /**
+   * menu for choose online or offline mode.
+   */
   step1() {
     $(this.main).fadeOut(500);
     setTimeout(() => {
@@ -1210,7 +1320,7 @@ class Game {
     setTimeout(() => {
       this.newButton({
         parent: this.main,
-        id: 'creat',
+        id: 'create',
         img: 'img/local.png',
         imghover: 'img/local_hover.png',
         txt: 'Play local',
@@ -1252,6 +1362,10 @@ class Game {
     }, 501);
   }
 
+  /**
+   * OFFLINE MODE
+   * Enter player's name.
+   */
   step101() {
     $(this.main).fadeOut(500);
     setTimeout(() => {
@@ -1336,6 +1450,11 @@ class Game {
     }, 501);
   }
 
+  /**
+   * OFFLINE MODE
+   * Players select her ship.
+   * @param {Object} player choose the player who select her ship.
+   */
   step102(player) {
     $(this.main).fadeOut(500);
     setTimeout(() => {
@@ -1476,6 +1595,10 @@ class Game {
     }, 501);
   }
 
+  /**
+   * OFFLINE MODE
+   * Start the game.
+   */
   step103() {
     if (this.state !== this.previousState) {
       $(this.main).fadeOut(500);
@@ -1506,6 +1629,10 @@ class Game {
     }
   }
 
+  /**
+   * OFFLINE MODE
+   * End game menu, choose replay or return to menu.
+   */
   step104() {
     $(this.main).fadeOut(500);
     $(`#${this.currentPlayer().uuid}`).fadeOut(500);
