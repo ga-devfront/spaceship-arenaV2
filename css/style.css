@@ -12,10 +12,12 @@ html {
     /*cursor: url("../img/pointeur.png"), default;*/
     height: 100%;
     background-image: url("../img/background.png"),
-    radial-gradient(ellipse at 50% 90%, rgba(1,33,50,1) 0%, rgba(116, 179, 180,1) 0%, rgba(1,130,173,1) 40%, rgba(1,33,50,1) 84%, rgba(1,33,50,1) 100%);
+        radial-gradient(ellipse at 50% 90%, rgba(1, 33, 50, 1) 0%, rgba(116, 179, 180, 1) 0%, rgba(1, 130, 173, 1) 40%, rgba(1, 33, 50, 1) 84%, rgba(1, 33, 50, 1) 100%);
 }
 
 body {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     margin: 0;
     min-height: 100%;
@@ -28,25 +30,25 @@ main {
     width: 100%;
 }
 
-main > header {
+main>header {
     padding-top: 100px;
     position: relative;
     z-index: 1;
-    opacity: 0;
+    opacity: 1;
 }
 
-main > main {
+main>main {
     position: relative;
     z-index: 1;
-    opacity: 0;
+    opacity: 1;
 }
 
-main > footer {
+main>footer {
     position: absolute;
     bottom: 10px;
     right: 10px;
     z-index: 1;
-    opacity: 0;
+    opacity: 1;
 }
 
 /* input & button */
@@ -55,9 +57,8 @@ input {
     font-family: "pixelmix", Arial;
     font-size: 1em;
     text-transform: uppercase;
-    background: none;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(116, 179, 180, 0)), to(rgb(116, 179, 180)));
-    background-image: linear-gradient(rgba(116, 179, 180, 0), rgb(116, 179, 180));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(116, 179, 180, 0)), to(rgb(116, 179, 180)));
+    background: linear-gradient(rgba(116, 179, 180, 0), rgb(116, 179, 180));
     -webkit-transition-duration: 0.8s;
     transition-duration: 0.8s;
     color: white;
@@ -136,19 +137,19 @@ button.square2 {
 
 /* id */
 #shipbb {
-    background: linear-gradient(45deg, rgba(7,28,10,1) 0%, rgba(1,6,2,1) 100%);
+    background: linear-gradient(45deg, rgba(7, 28, 10, 1) 0%, rgba(1, 6, 2, 1) 100%);
 }
 
 #shipfc {
-    background: linear-gradient(45deg, rgba(0,27,37,1) 0%, rgba(0,5,7,1) 100%);
+    background: linear-gradient(45deg, rgba(0, 27, 37, 1) 0%, rgba(0, 5, 7, 1) 100%);
 }
 
 #shipsf {
-    background: linear-gradient(45deg, rgba(37,12,0,1) 0%, rgba(7,2,0,1) 100%);
+    background: linear-gradient(45deg, rgba(37, 12, 0, 1) 0%, rgba(7, 2, 0, 1) 100%);
 }
 
 #shipst {
-    background: linear-gradient(45deg, rgba(43,38,0,1) 0%, rgba(9,8,0,1) 100%);
+    background: linear-gradient(45deg, rgba(43, 38, 0, 1) 0%, rgba(9, 8, 0, 1) 100%);
 }
 
 /* container */
@@ -170,22 +171,15 @@ button.square2 {
 }
 
 .container.spaceEvenly {
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
     justify-content: space-evenly;
 }
 
-.container.show {
-    opacity: 1;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-}
-
-.container.hide {
-    opacity: 0;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-}
-
 .container.reverse {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
     flex-direction: row-reverse;
 }
 
@@ -304,38 +298,32 @@ button.square2 {
 
 .margTop100 {
     margin-top: 100px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
-.margtop15 {
+.margTop15 {
     margin-top: 15px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
-.margtopneg50 {
+.margTopNeg50 {
     margin-top: -50px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
-.margtopneg250 {
+.margTopNeg250 {
     margin-top: -250px;
-    -webkit-transition: margin-top 10s;
-    transition: margin-top 10s;
+    -webkit-transition: margin-top 1s;
+    transition: margin-top 1s;
 }
 
-.marg-lr10 {
+.margLr10 {
     margin-left: 10px;
     margin-right: 10px;
 }
-
-.marg-bot15 {
-    margin-bottom: 15px;
-}
-
-
 
 .listTable {
     -webkit-box-orient: vertical;
@@ -377,16 +365,6 @@ button.square2 {
     overflow: auto;
 }
 
-.tableCell {
-    max-height: 350px;
-    margin-bottom: 10px;
-}
-
-.rulesSize {
-    height: 80%;
-    width: 90%;
-}
-
 .overflowAuto::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -403,6 +381,16 @@ button.square2 {
 .overflowAuto::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #ffffff;
+}
+
+.tableCell {
+    max-height: 350px;
+    margin-bottom: 10px;
+}
+
+.rulesSize {
+    height: 80%;
+    width: 90%;
 }
 
 .hoverTableCell {
@@ -430,7 +418,12 @@ button.square2 {
     border-radius: 35px;
     -webkit-transition-duration: 0.8s;
     transition-duration: 0.8s;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     text-align: center;
     font-size: 0.8em;
@@ -445,6 +438,19 @@ button.square2 {
     animation: shipSelect 1s ease-in-out infinite alternate;
     -webkit-filter: drop-shadow(0px 10px 20px black);
     filter: drop-shadow(0px 10px 20px black);
+}
+
+@-webkit-keyframes shipSelect {
+    from {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+    }
+
+    to {
+        -webkit-transform: translateY(-5px);
+        transform: translateY(-5px);
+
+    }
 }
 
 @keyframes shipSelect {
@@ -463,6 +469,8 @@ button.square2 {
 .stats {
     font-size: 1em;
     text-transform: uppercase;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 }
 
@@ -470,15 +478,90 @@ button.square2 {
     margin-left: 5px;
 }
 
+
+.life {
+    font-size: 0.7em;
+    height: 12px;
+    width: 200px;
+    border: solid white 2px;
+    border-radius: 35px;
+    margin-top: 4px;
+    margin-left: 10px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.healthProgress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(189, 0, 0, 1);
+    z-index: -1;
+    -webkit-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+
+.stuff {
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+.actualStuff {
+    height: 100px;
+    width: 100px;
+    border: 3px ridge #ffffff;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
 /* OVERLAYS */
 
 .overlay {
-        position: fixed;
+    position: fixed;
+}
+
+.attack {
+    cursor: url(../img/attack.png) 15 15, pointer;
+}
+
+.overlay.alert {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    align-items: center;
+    vertical-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 50%;
+    height: 15%;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
+    border: solid white 3px;
+    border-radius: 35px;
+    background-color: rgba(0, 26, 36, 0.9);
+    z-index: 5;
 }
 
 .overlay.rules {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     display: none;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     width: 60%;
     height: 80%;
@@ -498,6 +581,7 @@ button.square2 {
     height: 200px;
     top: 10%;
     left: 50%;
+    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     border: solid white 3px;
     border-radius: 35px;
@@ -507,10 +591,13 @@ button.square2 {
 .overlay.player {
     z-index: 3;
     top: 10%;
-    height: 70% ;
-    width: 300px;
+    height: 70%;
+    max-width: 20%;
+    padding: 5px;
     border: solid white 3px;
     border-radius: 35px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     text-align: center;
 }
@@ -519,6 +606,7 @@ button.square2 {
     z-index: 3;
     bottom: 10%;
     left: 50%;
+    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
 }
 
@@ -531,35 +619,9 @@ button.square2 {
 }
 
 .overlay.player.left {
-    left : 3%;
+    left: 3%;
 }
 
 .overlay.player.right {
     right: 3%;
-}
-
-.attack {
-    cursor: url(../img/attack.png) 15 15, pointer;
-}
-
-.life {
-    font-size: 0.7em;
-    height: 12px;
-    width: 200px;
-    border: solid white 2px;
-    border-radius: 35px;
-    margin-top: 4px;
-    margin-left: 10px;
-}
-
-.stuff {
-    font-size: 1em;
-    text-transform: uppercase;
-}
-
-.actualStuff {
-    height: 100px;
-    width: 100px;
-    border: 3px ridge #ffffff;
-    align-items: center;
 }

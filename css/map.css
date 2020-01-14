@@ -1,11 +1,11 @@
 .rotate {
     -webkit-transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg);
-            transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg);
 }
 
 .baseMap {
     -webkit-transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
-            transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
+    transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
     width: 40px;
     height: 40px;
     padding: 0;
@@ -15,7 +15,7 @@
 .noSell {
     padding: 0;
     -webkit-transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
-            transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
+    transform: rotateZ(-45deg) rotateX(0deg) scaleX(0.5);
     width: 50px;
     height: 50px;
 }
@@ -25,9 +25,11 @@
     top: -45px;
     right: -120%;
     width: 145px;
+    -o-object-fit: scale-down;
     object-fit: scale-down;
     -webkit-animation: shipGame 3s ease-in-out infinite alternate;
     animation: shipGame 3s ease-in-out infinite alternate;
+    -webkit-clip-path: view-box;
     clip-path: view-box;
     pointer-events: none;
 }
@@ -35,7 +37,7 @@
 .gameGrid {
     position: relative;
     -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -48,6 +50,7 @@
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     width: 145px;
+    -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
 
@@ -68,7 +71,7 @@
     width: 145px;
 }
 
-.opacity02{
+.opacity02 {
     opacity: 0.25;
 }
 
@@ -82,11 +85,11 @@
 }
 
 .moove {
-            background: rgba(0, 143, 197, 0.8);
+    background: rgba(0, 143, 197, 0.8);
 }
 
 .moove:hover {
-            background: rgba(0, 143, 197, 1);
+    background: rgba(0, 143, 197, 1);
     border: 4px solid rgba(99, 201, 220, 1);
 
 }
