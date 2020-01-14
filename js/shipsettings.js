@@ -80,7 +80,7 @@ export default {
     logo: 'img/ships/logo/spacethunder-logo.png',
     description: 'A ship designed for destruction, this heavy hunter has unequal striking power at the expense of his speed, although he retains a slight defense.',
     representation: 'img/ships/repr/repst.png',
-    speed: 2,
+    speed: 1,
     offensif: 4,
     defensif: 2,
     sprite: [

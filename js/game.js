@@ -658,11 +658,10 @@ class Game {
       for (let y = 0; y < this.mapGame.map[x].length; y += 1) {
         for (let z = 0; z < 4; z += 1) {
           const weaponTest = $(`#myGameMap>div>[data-x="${x}"][data-y="${y}"]>div>#s${z}`);
-          if (weaponTest != null) {
-            if (this.mapGame.map[x][y] === `s${z}`) { /* */ } else {
-              weaponTest.remove();
-            }
-          } else if (this.mapGame.map[x][y] === `s${z}`) {
+          if (this.mapGame.map[x][y] !== `s${z}`) {
+            $(weaponTest).remove();
+          }
+          if (this.mapGame.map[x][y] === `s${z}` && $(weaponTest).val() === undefined) {
             let weaponImg;
             switch (`s${z}`) {
               case 's0':
@@ -985,7 +984,7 @@ class Game {
       $(`stuff${player.uuid}`).append(document.createTextNode('weapon'));
       this.newHtmlElement({
         element: 'div',
-        parent: $(`stuff${player.uuid}`),
+        parent: $(`#stuff${player.uuid}`),
         id: `actualStuff${player.uuid}`,
         class: ['container', 'centerWrap', 'actualStuff', 'margTop15'],
       });

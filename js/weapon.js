@@ -10,7 +10,7 @@ export default {
     name: 'Reactor',
     id: 's1',
     sprite: ['img/weapons/speed/speedW.png',
-      'img/weapons/speed/speedW.png'],
+      'img/weapons/speed/speedN.png'],
   },
   shieldSettings: {
     name: 'Shield',
