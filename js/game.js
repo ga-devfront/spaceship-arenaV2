@@ -70,23 +70,27 @@ class Game {
     }
   }
 
+  /**
+   * Create a new img in dom
+   * @param {Object} settings settings of images's value.
+   */
   newImg(settings) {
-    const newEl = $('<img>'); // creat img
-    $(newEl).attr('src', settings.src); // set src attribute
+    const newEl = $('<img>');
+    $(newEl).attr('src', settings.src);
     if (typeof settings.alt !== 'undefined' && settings.alt.length > 0) {
       $(newEl).attr('alt', settings.alt);
-    } // set alt attritube
+    }
     if (typeof settings.id !== 'undefined' && settings.id.length > 0) {
       $(newEl).attr('id', settings.id);
-    } // set id attritube
+    }
     for (let x = 0; settings.class.length > x; x += 1) {
       $(newEl).addClass(settings.class[x]);
     }
     if (typeof settings.title !== 'undefined' && settings.title.length > 0) {
       $(newEl).attr('title', settings.title);
-    } // set id attritube
-    $(settings.parent).append(newEl); // push img in dom
-  } // function for new image
+    }
+    $(settings.parent).append(newEl);
+  }
 
   newTxt(emplacement, myTxt) {
     $(emplacement).append(document.createTextNode(myTxt));
