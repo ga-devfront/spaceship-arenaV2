@@ -412,11 +412,7 @@ export default class mapGame {
   /* attaque */
 
   attack(settings) {
-    const {
-      player,
-      ennemi,
-    } = settings;
-    ennemi.pv = ennemi.pv - (player.offensif * 5) - (ennemi.defensif);
+    settings.ennemi.pv = settings.ennemi.pv - (settings.player.offensif * 5) - (settings.ennemi.defensif);
   }
 
   testAttack(settings) {
