@@ -643,6 +643,7 @@ class Game {
       class: ['large', 'margLr10', 'overlay', 'skip'],
       onclick: () => {
         this.supressPlayerMooves();
+        $('#orientationChoose').remove();
         $('#skipMove').remove();
         if (this.mapGame.testAttack({
           player,

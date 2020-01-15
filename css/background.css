@@ -1,4 +1,8 @@
-#lune {
+.planet {
+    position: absolute;
+}
+
+#moon {
     left: 75%;
     top: 60%;
 }
